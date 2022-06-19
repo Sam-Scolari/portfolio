@@ -56,7 +56,7 @@ const Home: NextPage = () => {
     }
 
     setLastData(data);
-  }, [data]);
+  }, [data, lastData, once]);
 
   return (
     <main>
@@ -85,7 +85,9 @@ const Home: NextPage = () => {
                           >
                             Connect
                           </button>
-                          <small>I won't make you sign any transactions</small>
+                          <small>
+                            I won{`'`}t make you sign any transactions
+                          </small>
                         </>
                       );
                     return (

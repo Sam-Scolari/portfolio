@@ -5,6 +5,8 @@ import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
+import Link from "next/link";
+import Image from "next/image";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { chains, provider } = configureChains(
@@ -24,36 +26,56 @@ function MyApp({ Component, pageProps }: AppProps) {
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <nav>
-          <a href="/">
-            <img src="pfp.jpg" alt="Sam's profile picture"></img>
-          </a>
+          <Link href="/">
+            <Image src="pfp.jpg" alt="Sam's profile picture" />
+          </Link>
 
           <section id="links">
-            <a href="https://rainbow.me/samscolari.eth" target="_blank">
-              <img
+            <Link
+              href="https://rainbow.me/samscolari.eth"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image
                 style={{ borderRadius: 6 }}
                 src="/rainbow.svg"
                 alt="Rainbow Wallet"
               />
-            </a>
-            <a href="https://lenster.xyz/u/samscolari.lens" target="_blank">
-              <img src="/lens.svg" alt="Lens Protocol" />
-            </a>
-            <a href="https://github.com/Sam-Scolari" target="_blank">
-              <img src="/github.svg" alt="Github" />
-            </a>
-            <a href="https://twitter.com/SamScolari" target="_blank">
-              <img src="/twitter.svg" alt="Twitter" />
-            </a>
-            <a
+            </Link>
+            <Link
+              href="https://lenster.xyz/u/samscolari.lens"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image src="/lens.svg" alt="Lens Protocol" />
+            </Link>
+            <Link
+              href="https://github.com/Sam-Scolari"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image src="/github.svg" alt="Github" />
+            </Link>
+            <Link
+              href="https://twitter.com/SamScolari"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image src="/twitter.svg" alt="Twitter" />
+            </Link>
+            <Link
               href="https://discordapp.com/users/174640628456620032/"
               target="_blank"
             >
-              <img src="/discord.svg" alt="Discord" />
-            </a>
-            <a href="https://www.linkedin.com/in/sam-scolari/" target="_blank">
-              <img src="/linkedin.svg" alt="LinkedIn" />
-            </a>
+              <Image src="/discord.svg" alt="Discord" />
+            </Link>
+            <Link
+              href="https://www.linkedin.com/in/sam-scolari/"
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Image src="/linkedin.svg" alt="LinkedIn" />
+            </Link>
           </section>
         </nav>
         <Component {...pageProps} />
