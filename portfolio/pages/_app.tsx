@@ -3,79 +3,81 @@ import type { AppProps } from "next/app";
 import "@rainbow-me/rainbowkit/styles.css";
 import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
-import { alchemyProvider } from "wagmi/providers/alchemy";
 import { publicProvider } from "wagmi/providers/public";
-import Link from "next/link";
+import { animated, useSpring } from "react-spring";
+import Icon from "../components/Icon";
 import Image from "next/image";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { chains, provider } = configureChains(
-    [chain.mainnet, chain.polygon, chain.optimism, chain.arbitrum],
-    [alchemyProvider({ alchemyId: process.env.ALCHEMY_ID }), publicProvider()]
+    [chain.optimism],
+    [publicProvider()]
   );
   const { connectors } = getDefaultWallets({
     appName: "Sam's Portfolio",
     chains,
   });
   const wagmiClient = createClient({
-    autoConnect: true,
     connectors,
     provider,
   });
+  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
         <nav>
-          <Link href="/">
-            <Image src="pfp.jpg" alt="Sam's profile picture" />
-          </Link>
-
-          <section id="links">
-            <Link
-              href="https://rainbow.me/samscolari.eth"
-              target="_blank"
-              rel="noreferrer"
+          <animated.div
+            style={{
+              scale,
+            }}
+          >
+            <a
+              href="/"
+              onMouseEnter={() => set({ scale: 1.25 })}
+              onMouseLeave={() => set({ scale: 1 })}
             >
               <Image
-                style={{ borderRadius: 6 }}
-                src="/rainbow.svg"
-                alt="Rainbow Wallet"
-              />
-            </Link>
-            <Link
+                src="/pfp.jpg"
+                alt="Sam's profile picture"
+                width={60}
+                height={60}
+                style={{ borderRadius: "100%" }}
+              ></Image>
+            </a>
+          </animated.div>
+
+          <section id="links">
+            <Icon
+              href="https://rainbow.me/samscolari.eth"
+              src="/rainbow.svg"
+              alt="Rainbow Wallet"
+            />
+            <Icon
               href="https://lenster.xyz/u/samscolari.lens"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Image src="/lens.svg" alt="Lens Protocol" />
-            </Link>
-            <Link
+              src="/lens.svg"
+              alt="Lens Protocol"
+            />
+            <Icon
               href="https://github.com/Sam-Scolari"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Image src="/github.svg" alt="Github" />
-            </Link>
-            <Link
+              src="/github.svg"
+              alt="Github"
+            />
+            <Icon
               href="https://twitter.com/SamScolari"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Image src="/twitter.svg" alt="Twitter" />
-            </Link>
-            <Link
+              src="/twitter.svg"
+              alt="Twitter"
+            />
+            <Icon
               href="https://discordapp.com/users/174640628456620032/"
-              target="_blank"
-            >
-              <Image src="/discord.svg" alt="Discord" />
-            </Link>
-            <Link
+              src="/discord.svg"
+              alt="Discord"
+            />
+            <Icon
               href="https://www.linkedin.com/in/sam-scolari/"
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Image src="/linkedin.svg" alt="LinkedIn" />
-            </Link>
+              src="/linkedin.svg"
+              alt="LinkedIn"
+              style={{ paddingRight: 0 }}
+            />
           </section>
         </nav>
         <Component {...pageProps} />
@@ -94,29 +96,9 @@ function MyApp({ Component, pageProps }: AppProps) {
           padding-right: 80px;
         }
 
-        nav > a > img {
-          border-radius: 100%;
-          width: 60px;
-          height: 60px;
-        }
-
         #links {
           display: flex;
           align-items: center;
-        }
-
-        #links > a:hover > img {
-          width: 40px;
-          height: 40px;
-        }
-
-        #links > a {
-          padding-left: 12px;
-          padding-right: 12px;
-        }
-
-        #links:last-child {
-          padding-right: 0;
         }
       `}</style>
     </WagmiConfig>

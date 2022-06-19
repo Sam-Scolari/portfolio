@@ -5,32 +5,23 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 import confetti from "canvas-confetti";
 import { useAccount } from "wagmi";
+import useTyper, { TypePhase } from "../components/hooks/useTyper";
+import { useSpring, animated } from "react-spring";
+
+const extensions = [".eth", ".lens", ".me", ".wallet"];
 
 const Home: NextPage = () => {
   const { data } = useAccount();
 
-  const names = [
-    "samscolari.eth",
-    "samscolari.lens",
-    "samscolari.me",
-    "samscolari.wallet",
-  ];
-
   const [currentPage, setCurrentPage] = useState(0);
 
-  // Greeting section
-  const [currentDomain, setCurrentDomain] = useState("samscolari");
-  const [currentExtension, setCurrentExtension] = useState(".eth");
-
-  const [lastData, setLastData] = useState(data);
+  const [buttonPress, setButtonPress] = useState(false);
   const [once, setOnce] = useState(true);
 
+  const { currentText, selectedText, phase } = useTyper(extensions);
+
   useEffect(() => {
-    if (
-      once &&
-      (lastData === null || lastData === undefined) &&
-      data?.address
-    ) {
+    if (once && buttonPress && data?.address) {
       var end = Date.now() + 15 * 200;
 
       (function frame() {
@@ -54,9 +45,8 @@ const Home: NextPage = () => {
 
       setOnce(false);
     }
-
-    setLastData(data);
-  }, [data, lastData, once]);
+  }, [data, buttonPress, once]);
+  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
 
   return (
     <main>
@@ -66,34 +56,57 @@ const Home: NextPage = () => {
             <>
               <section id="greeting">
                 <span id="gm">GM, my name is</span>
+
                 <h1>
-                  {currentDomain}
-                  <span id="extension">{currentExtension}</span>
+                  samscolari
+                  <span id="extension" aria-label={selectedText}>
+                    {currentText}
+                  </span>
                 </h1>
                 <p id="tagline">I design and build fun web3 experiences!</p>
               </section>
+
               <section id="connect">
                 <ConnectButton.Custom>
                   {({ account, openConnectModal, mounted }) => {
                     if (!mounted || !account)
                       return (
                         <>
-                          <button
-                            onClick={() => {
-                              openConnectModal();
+                          <animated.div
+                            style={{
+                              scale,
                             }}
                           >
-                            Connect
-                          </button>
+                            <button
+                              onMouseEnter={() => set({ scale: 1.1 })}
+                              onMouseLeave={() => set({ scale: 1 })}
+                              onClick={() => {
+                                setButtonPress(true);
+                                openConnectModal();
+                              }}
+                            >
+                              Connect
+                            </button>
+                          </animated.div>
                           <small>
                             I won{`'`}t make you sign any transactions
                           </small>
                         </>
                       );
                     return (
-                      <button onClick={() => setCurrentPage(1)}>
-                        Lets go!
-                      </button>
+                      <animated.div
+                        style={{
+                          scale,
+                        }}
+                      >
+                        <button
+                          onClick={() => setCurrentPage(1)}
+                          onMouseEnter={() => set({ scale: 1.1 })}
+                          onMouseLeave={() => set({ scale: 1 })}
+                        >
+                          Lets go!
+                        </button>
+                      </animated.div>
                     );
                   }}
                 </ConnectButton.Custom>
@@ -113,8 +126,8 @@ const Home: NextPage = () => {
 
         h1 {
           font-size: 6rem;
-          line-height: 1rem;
           font-weight: bold;
+          line-height: 1rem;
         }
 
         h1::before {
@@ -157,6 +170,26 @@ const Home: NextPage = () => {
           );
           background-clip: text;
           -webkit-text-fill-color: transparent;
+        }
+
+        #extension:after {
+          content: ${phase === TypePhase.Deleting ? '""' : '"|"'};
+          -webkit-text-fill-color: black;
+          animation: ${phase === TypePhase.Pausing
+            ? "blink 1s step-start infinite"
+            : "none"};
+        }
+
+        @keyframes blink {
+          0% {
+            opacity: 1;
+          }
+          50% {
+            opacity: 0;
+          }
+          100% {
+            opacity: 1;
+          }
         }
 
         #connect {
