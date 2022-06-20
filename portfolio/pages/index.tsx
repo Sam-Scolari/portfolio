@@ -8,7 +8,7 @@ import { useAccount } from "wagmi";
 import useTyper, { TypePhase } from "../components/hooks/useTyper";
 import { useSpring, animated } from "react-spring";
 
-const extensions = [".eth", ".lens", ".me", ".wallet"];
+const extensions = [".eth", ".lens", ".me", ".wallet", ".⌐◨-◨"];
 
 const Home: NextPage = () => {
   const { data } = useAccount();
@@ -24,18 +24,22 @@ const Home: NextPage = () => {
     if (once && buttonPress && data?.address) {
       var end = Date.now() + 15 * 200;
 
+      const colors = ["#8247e5", "#e52268", "#ff00e5"];
+
       (function frame() {
         confetti({
-          particleCount: 2,
+          particleCount: 3,
           angle: 60,
-          spread: 55,
+          spread: 60,
           origin: { x: 0, y: 0.6 },
+          colors: colors,
         });
         confetti({
-          particleCount: 2,
+          particleCount: 3,
           angle: 120,
-          spread: 55,
+          spread: 60,
           origin: { x: 1, y: 0.6 },
+          colors: colors,
         });
 
         if (Date.now() < end) {
@@ -94,22 +98,87 @@ const Home: NextPage = () => {
                         </>
                       );
                     return (
-                      <animated.div
-                        style={{
-                          scale,
-                        }}
-                      >
-                        <button
-                          onClick={() => setCurrentPage(1)}
-                          onMouseEnter={() => set({ scale: 1.1 })}
-                          onMouseLeave={() => set({ scale: 1 })}
+                      <>
+                        <svg
+                          width="24"
+                          viewBox="0 0 71 100"
+                          fill="none"
+                          xmlns="http://www.w3.org/2000/svg"
                         >
-                          Lets go!
-                        </button>
-                      </animated.div>
+                          <rect
+                            x="3"
+                            y="3"
+                            width="65"
+                            height="94"
+                            rx="32.5"
+                            stroke="black"
+                            stroke-width="6"
+                          />
+                          <rect
+                            x="28"
+                            y="16"
+                            width="14"
+                            height="27"
+                            rx="7"
+                            fill="black"
+                          />
+                        </svg>
+
+                        <span
+                          style={{
+                            marginTop: 8,
+                            fontWeight: "bold",
+                            fontSize: "1.15rem",
+                          }}
+                        >
+                          Scroll Down
+                        </span>
+                      </>
+                      // <animated.div
+                      //   style={{
+                      //     scale,
+                      //   }}
+                      // >
+                      //   <button
+                      //     onClick={() => setCurrentPage(1)}
+                      //     onMouseEnter={() => set({ scale: 1.1 })}
+                      //     onMouseLeave={() => set({ scale: 1 })}
+                      //   >
+                      //     Lets go!
+                      //   </button>
+                      // </animated.div>
                     );
                   }}
                 </ConnectButton.Custom>
+              </section>
+            </>
+          ),
+
+          1: (
+            <>
+              <section>
+                <h2>Interactive mini-projects</h2>
+                <p>
+                  See my skills in action with some fun interactive
+                  mini-projects!
+                </p>
+                <div>
+                  <h3>Rubik's Cube</h3>
+                  <p>
+                    An interactive custom Rubik's Cube with your favorite NFTs!
+                  </p>
+                </div>
+                <div>
+                  <h3>Slot Machine</h3>
+                  <p>
+                    Learn about some of my favorite web3 projects and win some
+                    tokens while you're at it!
+                  </p>
+                </div>
+                <div>
+                  <h3>Price Feeds</h3>
+                  <p>Create your own custom realtime crypto watchlist!</p>
+                </div>
               </section>
             </>
           ),

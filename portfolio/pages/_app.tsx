@@ -7,6 +7,7 @@ import { publicProvider } from "wagmi/providers/public";
 import { animated, useSpring } from "react-spring";
 import Icon from "../components/Icon";
 import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
 
 function MyApp({ Component, pageProps }: AppProps) {
   const { chains, provider } = configureChains(
@@ -22,6 +23,15 @@ function MyApp({ Component, pageProps }: AppProps) {
     provider,
   });
   const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
+
+  const videoRef = useRef();
+
+  // useEffect(() => {
+  //   videoRef.current.playbackRate = 0.5;
+  // }, []);
+
+  const [meatspace, setMeatspace] = useState(false);
+
   return (
     <WagmiConfig client={wagmiClient}>
       <RainbowKitProvider chains={chains}>
@@ -31,19 +41,17 @@ function MyApp({ Component, pageProps }: AppProps) {
               scale,
             }}
           >
-            <a
-              href="/"
+            <Image
+              src={meatspace ? "/meatspacepfp.jpg" : "/pfp.png"}
+              alt="Sam's profile picture"
+              width={60}
+              height={60}
+              objectFit="cover"
+              onClick={() => setMeatspace(!meatspace)}
               onMouseEnter={() => set({ scale: 1.25 })}
               onMouseLeave={() => set({ scale: 1 })}
-            >
-              <Image
-                src="/pfp.jpg"
-                alt="Sam's profile picture"
-                width={60}
-                height={60}
-                style={{ borderRadius: "100%" }}
-              ></Image>
-            </a>
+              style={{ borderRadius: "100%", cursor: "pointer" }}
+            ></Image>
           </animated.div>
 
           <section id="links">
@@ -82,6 +90,9 @@ function MyApp({ Component, pageProps }: AppProps) {
         </nav>
         <Component {...pageProps} />
       </RainbowKitProvider>
+      {/* <video autoPlay muted loop ref={videoRef}>
+        <source src="/wave.mp4" type="video/mp4" />
+      </video> */}
       <style jsx>{`
         nav {
           display: flex;
@@ -99,6 +110,15 @@ function MyApp({ Component, pageProps }: AppProps) {
         #links {
           display: flex;
           align-items: center;
+        }
+
+        video {
+          position: fixed;
+          z-index: -1;
+          min-height: 100%;
+          min-width: 100%;
+          filter: blur(100px);
+          opacity: 0.8;
         }
       `}</style>
     </WagmiConfig>
