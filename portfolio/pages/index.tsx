@@ -96,7 +96,7 @@ const Home: NextPage = () => {
                             I won{`'`}t make you sign any transactions
                           </small>
                         </>
-                      );
+                      ); //
                     return (
                       <>
                         <svg
