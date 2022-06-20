@@ -112,7 +112,7 @@ const Home: NextPage = () => {
                             height="94"
                             rx="32.5"
                             stroke="black"
-                            stroke-width="6"
+                            strokeWidth="6"
                           />
                           <rect
                             x="28"
@@ -163,16 +163,17 @@ const Home: NextPage = () => {
                   mini-projects!
                 </p>
                 <div>
-                  <h3>Rubik's Cube</h3>
+                  <h3>Rubik{"'"}s Cube</h3>
                   <p>
-                    An interactive custom Rubik's Cube with your favorite NFTs!
+                    An interactive custom Rubik{"'"}s Cube with your favorite
+                    NFTs!
                   </p>
                 </div>
                 <div>
                   <h3>Slot Machine</h3>
                   <p>
                     Learn about some of my favorite web3 projects and win some
-                    tokens while you're at it!
+                    tokens while you{"'"}re at it!
                   </p>
                 </div>
                 <div>
