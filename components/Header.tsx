@@ -1,11 +1,15 @@
-import { useState } from "react";
-import { animated, useSpring } from "react-spring";
+import { useState, useTransition } from "react";
+import { animated, config, useSpring } from "react-spring";
 import Image from "next/image";
 import Icon from "./Icon";
+import DarkModeToggle from "./DarkModeToggle";
 
 export default function Header() {
   const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
   const [meatspace, setMeatspace] = useState(false);
+
+  const [darkMode, setDarkMode] = useState(false);
+
   return (
     <header>
       <nav>
@@ -58,8 +62,18 @@ export default function Header() {
             href="https://www.linkedin.com/in/sam-scolari/"
             src="/linkedin.svg"
             alt="LinkedIn"
-            style={{ paddingRight: 0 }}
           />
+          <div
+            style={{
+              marginRight: 80,
+              height: 36,
+              marginLeft: 64,
+              marginTop: -4,
+              cursor: "pointer",
+            }}
+          >
+            <DarkModeToggle />
+          </div>
         </section>
       </nav>
       <style jsx>{`

@@ -40,8 +40,8 @@ export default function Icon({
       </Link>
       <style jsx>{`
         a {
-          padding-left: 12px;
-          padding-right: 12px;
+          margin-left: 12px;
+          margin-right: 12px;
         }
       `}</style>
     </animated.div>
