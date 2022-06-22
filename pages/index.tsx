@@ -2,7 +2,7 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import type { NextPage } from "next";
 import Head from "next/head";
 import Image from "next/image";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 import { useAccount } from "wagmi";
 import useTyper, { TypePhase } from "../components/hooks/useTyper";
@@ -14,6 +14,12 @@ const Home: NextPage = () => {
   const { data } = useAccount();
 
   const [currentPage, setCurrentPage] = useState(0);
+  // const currentPageRef = useRef(0);
+
+  // useEffect(() => {
+  //   console.log(currentPageRef.current);
+  //   setCurrentPage(currentPageRef.current);
+  // }, [currentPageRef.current]);
 
   const [buttonPress, setButtonPress] = useState(false);
   const [once, setOnce] = useState(true);
@@ -50,142 +56,164 @@ const Home: NextPage = () => {
       setOnce(false);
     }
   }, [data, buttonPress, once]);
+
   const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
+
+  function handleScroll(e) {
+    const delta = Math.sign(e.deltaY);
+
+    if (delta === 1)
+      window.scrollBy({ top: window.innerHeight, behavior: "smooth" });
+    else window.scrollBy({ top: -window.innerHeight, behavior: "smooth" });
+  }
+
+  useEffect(() => {
+    if (once && buttonPress && data?.address) {
+      window.addEventListener("wheel", handleScroll, { passive: true });
+    }
+  }, [once, buttonPress, data?.address, currentPage]);
+
+  // useEffect(() => {
+  //   console.log(ref.current);
+  // }, [ref.current]);
 
   return (
     <main>
-      {
-        {
-          0: (
-            <>
-              <section id="greeting">
-                <span id="gm">GM, my name is</span>
+      <section id="page1">
+        <div id="greeting">
+          <span id="gm">GM, my name is</span>
 
-                <h1>
-                  samscolari
-                  <span id="extension" aria-label={selectedText}>
-                    {currentText}
+          <h1>
+            samscolari
+            <span id="extension" aria-label={selectedText}>
+              {currentText}
+            </span>
+          </h1>
+          <p id="tagline">I design and build fun web3 experiences!</p>
+        </div>
+
+        <div id="connect">
+          <ConnectButton.Custom>
+            {({ account, openConnectModal, mounted }) => {
+              if (!mounted || !account)
+                return (
+                  <>
+                    <animated.div
+                      style={{
+                        scale,
+                      }}
+                    >
+                      <button
+                        onMouseEnter={() => set({ scale: 1.1 })}
+                        onMouseLeave={() => set({ scale: 1 })}
+                        onClick={() => {
+                          setButtonPress(true);
+                          openConnectModal();
+                        }}
+                      >
+                        Connect
+                      </button>
+                    </animated.div>
+                    <small>I won{`'`}t make you sign any transactions</small>
+                  </>
+                );
+              return (
+                <>
+                  <svg
+                    width="24"
+                    viewBox="0 0 71 100"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <rect
+                      x="3"
+                      y="3"
+                      width="65"
+                      height="94"
+                      rx="32.5"
+                      stroke="black"
+                      strokeWidth="6"
+                    />
+                    <rect
+                      x="28"
+                      y="16"
+                      width="14"
+                      height="27"
+                      rx="7"
+                      fill="black"
+                    />
+                  </svg>
+
+                  <span
+                    style={{
+                      marginTop: 8,
+                      fontWeight: "bold",
+                      fontSize: "1.15rem",
+                    }}
+                  >
+                    Scroll Down
                   </span>
-                </h1>
-                <p id="tagline">I design and build fun web3 experiences!</p>
-              </section>
+                </>
+                // <animated.div
+                //   style={{
+                //     scale,
+                //   }}
+                // >
+                //   <button
+                //     onClick={() => setCurrentPage(1)}
+                //     onMouseEnter={() => set({ scale: 1.1 })}
+                //     onMouseLeave={() => set({ scale: 1 })}
+                //   >
+                //     Lets go!
+                //   </button>
+                // </animated.div>
+              );
+            }}
+          </ConnectButton.Custom>
+        </div>
+      </section>
 
-              <section id="connect">
-                <ConnectButton.Custom>
-                  {({ account, openConnectModal, mounted }) => {
-                    if (!mounted || !account)
-                      return (
-                        <>
-                          <animated.div
-                            style={{
-                              scale,
-                            }}
-                          >
-                            <button
-                              onMouseEnter={() => set({ scale: 1.1 })}
-                              onMouseLeave={() => set({ scale: 1 })}
-                              onClick={() => {
-                                setButtonPress(true);
-                                openConnectModal();
-                              }}
-                            >
-                              Connect
-                            </button>
-                          </animated.div>
-                          <small>
-                            I won{`'`}t make you sign any transactions
-                          </small>
-                        </>
-                      ); //
-                    return (
-                      <>
-                        <svg
-                          width="24"
-                          viewBox="0 0 71 100"
-                          fill="none"
-                          xmlns="http://www.w3.org/2000/svg"
-                        >
-                          <rect
-                            x="3"
-                            y="3"
-                            width="65"
-                            height="94"
-                            rx="32.5"
-                            stroke="black"
-                            strokeWidth="6"
-                          />
-                          <rect
-                            x="28"
-                            y="16"
-                            width="14"
-                            height="27"
-                            rx="7"
-                            fill="black"
-                          />
-                        </svg>
+      <section id="page2">
+        <h2>Interactive mini-projects</h2>
+        <p>See my skills in action with some fun interactive mini-projects!</p>
+        <div>
+          <h3>Rubik{"'"}s Cube</h3>
+          <p>An interactive custom Rubik{"'"}s Cube with your favorite NFTs!</p>
+        </div>
+        <div>
+          <h3>Slot Machine</h3>
+          <p>
+            Learn about some of my favorite web3 projects and win some tokens
+            while you{"'"}re at it!
+          </p>
+        </div>
+        <div>
+          <h3>Price Feeds</h3>
+          <p>Create your own custom realtime crypto watchlist!</p>
+        </div>
+      </section>
 
-                        <span
-                          style={{
-                            marginTop: 8,
-                            fontWeight: "bold",
-                            fontSize: "1.15rem",
-                          }}
-                        >
-                          Scroll Down
-                        </span>
-                      </>
-                      // <animated.div
-                      //   style={{
-                      //     scale,
-                      //   }}
-                      // >
-                      //   <button
-                      //     onClick={() => setCurrentPage(1)}
-                      //     onMouseEnter={() => set({ scale: 1.1 })}
-                      //     onMouseLeave={() => set({ scale: 1 })}
-                      //   >
-                      //     Lets go!
-                      //   </button>
-                      // </animated.div>
-                    );
-                  }}
-                </ConnectButton.Custom>
-              </section>
-            </>
-          ),
+      <section>
+        <p>test</p>
+      </section>
 
-          1: (
-            <>
-              <section>
-                <h2>Interactive mini-projects</h2>
-                <p>
-                  See my skills in action with some fun interactive
-                  mini-projects!
-                </p>
-                <div>
-                  <h3>Rubik{"'"}s Cube</h3>
-                  <p>
-                    An interactive custom Rubik{"'"}s Cube with your favorite
-                    NFTs!
-                  </p>
-                </div>
-                <div>
-                  <h3>Slot Machine</h3>
-                  <p>
-                    Learn about some of my favorite web3 projects and win some
-                    tokens while you{"'"}re at it!
-                  </p>
-                </div>
-                <div>
-                  <h3>Price Feeds</h3>
-                  <p>Create your own custom realtime crypto watchlist!</p>
-                </div>
-              </section>
-            </>
-          ),
-        }[currentPage]
-      }
       <style jsx>{`
+        section {
+          width: 100%;
+          height: 100vh;
+          display: flex;
+          flex-direction: column;
+        }
+        #page1 {
+          align-items: center;
+          justify-content: center;
+        }
+
+        #page2 {
+          align-items: center;
+          justify-content: center;
+        }
+
         main {
           text-align: center;
 
@@ -224,9 +252,7 @@ const Home: NextPage = () => {
         }
 
         #greeting {
-          position: fixed;
-          top: 50%;
-          transform: translateY(-50%);
+          position: absolute;
         }
 
         #extension {
@@ -263,8 +289,8 @@ const Home: NextPage = () => {
         }
 
         #connect {
-          position: fixed;
           bottom: 80px;
+          position: absolute;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -284,6 +310,7 @@ const Home: NextPage = () => {
           font-size: 2rem;
           cursor: pointer;
           outline: none;
+          border: none;
         }
       `}</style>
     </main>
