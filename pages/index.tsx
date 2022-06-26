@@ -20,7 +20,7 @@ const Home: NextPage = () => {
   // Confetti
   useEffect(() => {
     if (wasUsed && wasPressed && data?.address) {
-      var end = Date.now() + 15 * 200;
+      var end = Date.now() + 15 * 100;
 
       const colors = ["#8247e5", "#e52268", "#ff00e5"];
 
