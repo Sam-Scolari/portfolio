@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { CSSProperties } from "react";
+import { CSSProperties, useContext } from "react";
 import { animated, useSpring } from "react-spring";
 import Image from "next/image";
+import { ThemeContext } from "../../pages/_app";
 
 export default function Icon({
   href,
@@ -15,10 +16,13 @@ export default function Icon({
   style?: CSSProperties;
 }) {
   const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
+  const { isDark, setIsDark } = useContext(ThemeContext);
+
   return (
     <animated.div
       style={{
         scale,
+        userSelect: "none",
       }}
     >
       <Link href={href}>
@@ -30,11 +34,19 @@ export default function Icon({
           style={style}
         >
           <Image
-            style={{ borderRadius: src === "/rainbow.svg" ? 6 : 0 }}
+            style={{
+              borderRadius:
+                src === "/rainbow.svg" ? 6 : src === "/linkedin.svg" ? 5 : 0,
+              filter: src === "/github.svg" && isDark ? "invert(1)" : "none",
+              transition: "filter 0.5s",
+              backgroundColor:
+                src === "/linkedin.svg" ? "white" : "transparent",
+            }}
             src={src}
             alt={alt}
             width={32}
             height={32}
+            draggable={false}
           />
         </a>
       </Link>

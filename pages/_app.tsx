@@ -1,14 +1,30 @@
 import "../styles/globals.css";
 import type { AppProps } from "next/app";
 import "@rainbow-me/rainbowkit/styles.css";
-import { getDefaultWallets, RainbowKitProvider } from "@rainbow-me/rainbowkit";
+import {
+  getDefaultWallets,
+  RainbowKitProvider,
+  darkTheme,
+  lightTheme,
+} from "@rainbow-me/rainbowkit";
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import Head from "next/head";
-import Header from "../components/Header";
-import { useEffect, useLayoutEffect } from "react";
-
+import Header from "../components/header/Header";
+import {
+  createContext,
+  useContext,
+  useEffect,
+  useLayoutEffect,
+  useState,
+} from "react";
+// import ThemeProvider, {
+//   ThemeContext,
+// } from "../components/providers/ThemeProvider";
+export const ThemeContext = createContext(null);
 function MyApp({ Component, pageProps }: AppProps) {
+  const [isDark, setIsDark] = useState<boolean | undefined>(false);
+
   const { chains, provider } = configureChains(
     [chain.optimism],
     [publicProvider()]
@@ -28,28 +44,65 @@ function MyApp({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <>
+    <ThemeContext.Provider value={{ isDark, setIsDark }}>
       <Head>
         <title>Sam Scolari</title>
       </Head>
       <Header />
       <WagmiConfig client={wagmiClient}>
-        <RainbowKitProvider chains={chains}>
+        <RainbowKitProvider
+          chains={chains}
+          theme={isDark ? darkTheme() : lightTheme()}
+        >
           <Component {...pageProps} />
         </RainbowKitProvider>
       </WagmiConfig>
       <style jsx global>{`
-        body {
-          overflow-y: hidden;
-          scrollbar-width: none;
+        * {
+          font-family: "Inter";
+          box-sizing: border-box;
         }
 
-        body::-webkit-scrollbar {
-          width: 0;
-          height: 0;
+        body {
+          width: 100vw;
+          height: 100vh;
+          margin: 0;
+
+          transition: background-color 0.25s;
+          background-color: ${isDark ? "#131313" : "white"};
+        }
+
+        section {
+          position: relative;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          width: 100%;
+          height: 100%;
+          scroll-snap-align: start;
+        }
+
+        h2 {
+          font-size: 3rem;
+          color: ${isDark ? "white" : "black"};
+        }
+
+        a {
+          color: inherit;
+          text-decoration: none;
+        }
+
+        p {
+          color: #a9a9a9;
+          font-size: 1rem;
+        }
+
+        small {
+          color: #a9a9a9;
         }
       `}</style>
-    </>
+    </ThemeContext.Provider>
   );
 }
 
