@@ -6,31 +6,31 @@ import useTyper, { TypePhase } from "../../hooks/useTyper";
 const extensions = [".eth", ".lens", ".me", ".wallet", ".⌐◨-◨"];
 
 export default function Greeting() {
-  // const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
+  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
 
   const { currentText, selectedText, phase } = useTyper(extensions);
   const { isDark, setIsDark } = useContext(ThemeContext);
   return (
     <div id="greeting">
       <span id="gm">GM, my name is</span>
-      {/* <animated.div
+      <animated.div
         style={{
           scale,
         }}
-      > */}
-      <h1
-        // onMouseEnter={() => set({ scale: 1.1 })}
-        // onMouseLeave={() => set({ scale: 1 })}
-        onClick={(e) =>
-          navigator.clipboard.writeText(`samscolari${selectedText}`)
-        }
       >
-        samscolari
-        <span id="extension" aria-label={selectedText}>
-          {currentText}
-        </span>
-      </h1>
-      {/* </animated.div> */}
+        <h1
+          onMouseEnter={() => set({ scale: 1.1 })}
+          onMouseLeave={() => set({ scale: 1 })}
+          onClick={(e) =>
+            navigator.clipboard.writeText(`samscolari${selectedText}`)
+          }
+        >
+          samscolari
+          <span id="extension" aria-label={selectedText}>
+            {currentText}
+          </span>
+        </h1>
+      </animated.div>
       <p id="tagline">I design and build fun web3 experiences!</p>
       <style jsx>{`
         h1 {
@@ -40,12 +40,11 @@ export default function Greeting() {
           cursor: pointer;
         }
 
-        /*h1::before {
+        h1::before {
           content: url("/nounglasses.svg");
           position: absolute;
-          top: 0;
-          transform: translateY(4rem) translateX(-2.5rem) rotate(-15deg);
-        }*/
+          transform: translateY(-3.25rem) translateX(-2.5rem) rotate(-15deg);
+        }
 
         #tagline {
           font-size: 1.25rem;
@@ -58,7 +57,6 @@ export default function Greeting() {
         }
 
         #greeting {
-          /*position: absolute;*/
           color: ${isDark ? "white" : "black"};
           transition: color 0.25s;
         }
