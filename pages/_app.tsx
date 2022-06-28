@@ -18,10 +18,7 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
-import getConfig from "next/config";
-// import ThemeProvider, {
-//   ThemeContext,
-// } from "../components/providers/ThemeProvider";
+
 export const ThemeContext = createContext(null);
 function MyApp({ Component, pageProps }: AppProps) {
   const [isDark, setIsDark] = useState<boolean | undefined>(false);

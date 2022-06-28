@@ -14,13 +14,13 @@ export default function MyWork() {
         </ul>
       </div>
 
-      <div
+      {/* <div
         className="frame"
         style={{ display: currentFrame === 0 ? "flex" : "none" }}
       >
         <iframe src="https://nft-cal.vercel.app" />
-      </div>
-      <div
+      </div> */}
+      {/* <div
         className="frame"
         style={{ display: currentFrame === 1 ? "flex" : "none" }}
       >
@@ -35,7 +35,7 @@ export default function MyWork() {
 
           src="https://www.figma.com/embed?embed_host=share&url=https%3A%2F%2Fwww.figma.com%2Ffile%2F55mRZluubESkaLNJjfGnQS%2FWeb3-Brand-Assets%3Fnode-id%3D0%253A1"
         />
-      </div>
+      </div> */}
 
       <style jsx>{`
         #heading {

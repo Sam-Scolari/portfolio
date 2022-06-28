@@ -7,7 +7,6 @@ import { FBXLoader } from "three/examples/jsm/loaders/FBXLoader";
 import { useLoader } from "@react-three/fiber";
 import { useFBX, useTexture } from "@react-three/drei";
 import { GLTFLoader } from "three/examples/jsm/loaders/GLTFLoader";
-import getConfig from "next/config";
 
 export default function MiniProjects() {
   const { isDark, setIsDark } = useContext(ThemeContext);
@@ -293,10 +292,7 @@ const RedBox = () => {
     redAPI.rotation.set(-time / 6, -time / 6, -time / 6);
   });
 
-  const { publicRuntimeConfig } = getConfig();
-  const endpoint = publicRuntimeConfig.ENDPOINT;
-
-  const gltf = useLoader(GLTFLoader, `${endpoint}slots/scene.gltf`);
+  const gltf = useLoader(GLTFLoader, "/slots/scene.gltf");
   return (
     <Suspense fallback={null}>
       <primitive object={gltf.scene} ref={red} />
