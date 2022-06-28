@@ -18,6 +18,7 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
+import getConfig from "next/config";
 // import ThemeProvider, {
 //   ThemeContext,
 // } from "../components/providers/ThemeProvider";
