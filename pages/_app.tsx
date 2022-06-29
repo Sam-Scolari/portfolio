@@ -65,7 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 100vw;
           height: 100vh;
           margin: 0;
-          overflow-y: hidden;
+
           transition: background-color 0.25s;
           background-color: ${isDark ? "#131313" : "white"};
         }
@@ -79,6 +79,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 100%;
           height: 100%;
           scroll-snap-align: start;
+          overflow-y: hidden;
         }
 
         h2 {
