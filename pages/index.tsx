@@ -60,7 +60,7 @@ const Home: NextPage = () => {
           width: 100vw;
           height: 100vh;
           scroll-snap-type: y mandatory;
-
+          overflow-x: hidden;
           overflow-y: ${data?.address ? "scroll" : "hidden"};
           text-align: center;
         }
