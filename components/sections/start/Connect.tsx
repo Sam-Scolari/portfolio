@@ -128,6 +128,12 @@ export default function Connect({ setWasPressed }) {
           border: none;
           user-select: none;
         }
+
+        @media only screen and (max-width: 650px) {
+          button {
+            font-size: 1.5rem;
+          }
+        }
       `}</style>
     </div>
   );

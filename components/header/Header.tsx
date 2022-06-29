@@ -110,8 +110,16 @@ export default function Header() {
 
         @media only screen and (max-width: 700px) {
           header {
-            padding-left: 40px;
-            padding-right: 40px;
+            padding-left: 32px;
+            padding-right: 32px;
+          }
+        }
+
+        @media only screen and (max-width: 450px) {
+          header {
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 30px;
           }
         }
       `}</style>
