@@ -79,7 +79,6 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 100%;
           height: 100%;
           scroll-snap-align: start;
-          overflow-y: hidden;
         }
 
         h2 {
