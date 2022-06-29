@@ -65,7 +65,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 100vw;
           height: 100vh;
           margin: 0;
-
+          overflow-y: hidden;
           transition: background-color 0.25s;
           background-color: ${isDark ? "#131313" : "white"};
         }
