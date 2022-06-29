@@ -16,36 +16,38 @@ export default function Header() {
     <header>
       <ProfilePicture />
       <nav>
-        <SocialIcon
-          href="https://rainbow.me/samscolari.eth"
-          src="/rainbow.svg"
-          alt="Rainbow Wallet"
-        />
-        <SocialIcon
-          href="https://lenster.xyz/u/samscolari.lens"
-          src="/lens.svg"
-          alt="Lens Protocol"
-        />
-        <SocialIcon
-          href="https://github.com/Sam-Scolari"
-          src="/github.svg"
-          alt="Github"
-        />
-        <SocialIcon
-          href="https://twitter.com/SamScolari"
-          src="/twitter.svg"
-          alt="Twitter"
-        />
-        <SocialIcon
-          href="https://discordapp.com/users/174640628456620032/"
-          src="/discord.svg"
-          alt="Discord"
-        />
-        <SocialIcon
-          href="https://www.linkedin.com/in/sam-scolari/"
-          src="/linkedin.svg"
-          alt="LinkedIn"
-        />
+        <div className="social-icons">
+          <SocialIcon
+            href="https://rainbow.me/samscolari.eth"
+            src="/rainbow.svg"
+            alt="Rainbow Wallet"
+          />
+          <SocialIcon
+            href="https://lenster.xyz/u/samscolari.lens"
+            src="/lens.svg"
+            alt="Lens Protocol"
+          />
+          <SocialIcon
+            href="https://github.com/Sam-Scolari"
+            src="/github.svg"
+            alt="Github"
+          />
+          <SocialIcon
+            href="https://twitter.com/SamScolari"
+            src="/twitter.svg"
+            alt="Twitter"
+          />
+          <SocialIcon
+            href="https://discordapp.com/users/174640628456620032/"
+            src="/discord.svg"
+            alt="Discord"
+          />
+          <SocialIcon
+            href="https://www.linkedin.com/in/sam-scolari/"
+            src="/linkedin.svg"
+            alt="LinkedIn"
+          />
+        </div>
         <animated.div
           onClick={() => {
             set({ scale: 1 });
@@ -93,6 +95,24 @@ export default function Header() {
         nav {
           display: flex;
           align-items: center;
+        }
+
+        .social-icons {
+          display: flex;
+          align-items: center;
+        }
+
+        @media only screen and (max-width: 850px) {
+          .social-icons {
+            display: none;
+          }
+        }
+
+        @media only screen and (max-width: 700px) {
+          header {
+            padding-left: 40px;
+            padding-right: 40px;
+          }
         }
       `}</style>
     </header>

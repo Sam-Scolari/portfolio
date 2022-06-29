@@ -94,6 +94,72 @@ export default function Greeting() {
             opacity: 1;
           }
         }
+
+        @media only screen and (max-width: 1050px) {
+          h1 {
+            font-size: 5rem;
+          }
+          h1::before {
+            transform: translateY(-2.75rem) translateX(-2.5rem) rotate(-15deg);
+          }
+        }
+
+        @media only screen and (max-width: 950px) {
+          h1 {
+            font-size: 4rem;
+          }
+
+          h1::before {
+            transform: translateY(-2rem) translateX(-2.5rem) rotate(-15deg)
+              scale(0.75);
+          }
+
+          #tagline {
+            font-size: 1.15rem;
+          }
+
+          #gm {
+            font-size: 1.75rem;
+          }
+        }
+
+        @media only screen and (max-width: 750px) {
+          h1 {
+            font-size: 3rem;
+          }
+
+          h1::before {
+            transform: translateY(-1.6rem) translateX(-2.5rem) rotate(-15deg)
+              scale(0.6);
+          }
+
+          #tagline {
+            font-size: 1rem;
+          }
+
+          #gm {
+            font-size: 1.5rem;
+          }
+        }
+
+        @media only screen and (max-width: 550px) {
+          h1 {
+            font-size: 2.5rem;
+          }
+
+          h1::before {
+            transform: translateY(-1.4rem) translateX(-2.5rem) rotate(-15deg)
+              scale(0.45);
+          }
+
+          #tagline {
+            font-size: 0.85rem;
+          }
+
+          #gm {
+            font-size: 1.25rem;
+          }
+        }
       `}</style>
     </div>
   );
