@@ -51,9 +51,9 @@ const Home: NextPage = () => {
   return (
     <main>
       <StartPage setWasPressed={setWasPressed} />
-      <MiniProjects />
-      <MyWork />
+      {/* <MiniProjects /> */}
       <MySkills />
+      <MyWork />
       <EndPage />
       <style jsx>{`
         main {
