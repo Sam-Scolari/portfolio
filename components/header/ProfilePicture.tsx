@@ -13,7 +13,7 @@ export default function ProfilePicture() {
       }}
     >
       <Image
-        src={meatspace ? "/meatspacepfp.jpg" : "/pfp.png"}
+        src={meatspace ? "/meatspacepfp.jpg" : "/pfp.webp"}
         loading="eager"
         alt="Sam's profile picture"
         width={60}

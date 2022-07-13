@@ -2,16 +2,10 @@ import { useContext, useState, useTransition } from "react";
 import { animated, config, useSpring } from "react-spring";
 import Image from "next/image";
 import SocialIcon from "./SocialIcon";
-import ThemeToggle from "./ThemeToggle";
 import { ThemeContext } from "../../pages/_app";
 import ProfilePicture from "./ProfilePicture";
 
 export default function Header() {
-  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
-
-  const { isDark, setIsDark } = useContext(ThemeContext);
-  const [isHover, setIsHover] = useState(false);
-  const [clicked, setClicked] = useState(false);
   return (
     <header>
       <ProfilePicture />
@@ -48,33 +42,6 @@ export default function Header() {
             alt="LinkedIn"
           />
         </div>
-        <animated.div
-          onClick={() => {
-            set({ scale: 1 });
-            setClicked(true);
-          }}
-          onMouseEnter={() => {
-            setIsHover(true);
-            set({ scale: 1.25 });
-            setIsDark(!isDark);
-          }}
-          onMouseLeave={() => {
-            setIsHover(false);
-            set({ scale: 1 });
-            if (!clicked) setIsDark(false);
-            setClicked(false);
-          }}
-          style={{
-            marginRight: 80,
-            height: 36,
-            marginLeft: 64,
-            marginTop: -4,
-            cursor: "pointer",
-            scale: scale,
-          }}
-        >
-          <ThemeToggle />
-        </animated.div>
       </nav>
 
       <style jsx>{`

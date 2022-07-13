@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "../../../pages/_app";
 import data from "@emoji-mart/data";
 import { Picker } from "emoji-mart";
@@ -7,10 +7,17 @@ export default function EndPage() {
   const { isDark, setIsDark } = useContext(ThemeContext);
 
   const canvas = useRef<any | undefined>();
+  const COLORS = ["red", "blue", "green", "yellow"];
+  const [currentColor, setCurrentColor] = useState(0);
 
   useEffect(() => {
-    // get canvas 2D context and set him correct size
-    var ctx = canvas.current.getContext("2d");
+    const ctx = canvas.current.getContext("2d");
+
+    // Resize canvas with window
+    function resize() {
+      ctx.canvas.width = window.innerWidth;
+      ctx.canvas.height = window.innerHeight;
+    }
     resize();
 
     // last known position
@@ -27,12 +34,6 @@ export default function EndPage() {
       pos.y = e.clientY;
     }
 
-    // resize canvas
-    function resize() {
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
-    }
-
     function draw(e) {
       // mouse left button must be pressed
       if (e.buttons !== 1) return;
@@ -41,7 +42,7 @@ export default function EndPage() {
 
       ctx.lineWidth = 5;
       ctx.lineCap = "round";
-      ctx.strokeStyle = "#c0392b";
+      ctx.strokeStyle = COLORS[currentColor];
 
       ctx.moveTo(pos.x, pos.y); // from
       setPosition(e);
@@ -56,6 +57,25 @@ export default function EndPage() {
       <h2>Thanks for stopping by!</h2>
       <p>Let's get in touch!</p>
       <canvas ref={canvas}></canvas>
+      <div>
+        <button
+          onClick={() => setCurrentColor(0)}
+          style={{ backgroundColor: "red" }}
+        />
+        <button
+          onClick={() => setCurrentColor(1)}
+          style={{ backgroundColor: "blue" }}
+        />
+        <button
+          onClick={() => setCurrentColor(2)}
+          style={{ backgroundColor: "green" }}
+        />
+        <button
+          onClick={() => setCurrentColor(3)}
+          style={{ backgroundColor: "yellow" }}
+        />
+      </div>
+
       <style jsx>{`
         h2 {
           font-size: 3rem;
@@ -76,6 +96,20 @@ export default function EndPage() {
           height: 100%;
 
           position: absolute;
+        }
+
+        div {
+          display: flex;
+          gap: 8px;
+        }
+
+        button {
+          z-index: 1;
+          border: none;
+          width: 50px;
+          height: 50px;
+          border-radius: 100%;
+          cursor: pointer;
         }
       `}</style>
     </section>

@@ -2,16 +2,18 @@ import { useState } from "react";
 
 export default function MyWork() {
   const [currentFrame, setCurrentFrame] = useState(0);
+
   return (
     <section>
       <div id="heading">
         <h2>My Work</h2>
         <p>Check out some of my professional work</p>
-        <ul>
+
+        {/* <ul>
           <li onClick={() => setCurrentFrame(0)}>NFT Cal</li>
           <li onClick={() => setCurrentFrame(1)}>Portfolio</li>
           <li onClick={() => setCurrentFrame(2)}>Web3 Assets</li>
-        </ul>
+        </ul> */}
       </div>
 
       {/* <div
