@@ -40,9 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     window.addEventListener("unload", () => window.scrollTo(0, 0));
     window.addEventListener("keydown", (e) => {
-      if (e.key === "space" && e.target == document.body) {
-        e.preventDefault();
-      }
+      if (e.key === "space") e.preventDefault();
     });
   });
 
@@ -50,6 +48,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeContext.Provider value={{ isDark, setIsDark }}>
       <Head>
         <title>Sam Scolari</title>
+        <link rel="icon" type="image/x-icon" href="favicon.ico"></link>
       </Head>
       <Header />
       <WagmiConfig client={wagmiClient}>
@@ -103,6 +102,15 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         small {
           color: #a9a9a9;
+        }
+
+        h1,
+        h2,
+        a,
+        p,
+        small,
+        span {
+          user-select: none;
         }
       `}</style>
     </ThemeContext.Provider>

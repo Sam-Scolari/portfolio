@@ -61,7 +61,7 @@ const Home: NextPage = () => {
           height: 100vh;
           scroll-snap-type: y mandatory;
           overflow-x: hidden;
-          overflow-y: ${data?.address ? "scroll" : "hidden"};
+          overflow-y: ${/*data?.address*/ true ? "scroll" : "hidden"};
           text-align: center;
         }
 

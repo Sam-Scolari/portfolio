@@ -15,6 +15,7 @@ export default function MySkills() {
   const graphql = useRef<any | undefined>();
 
   const shipAsset = useRef<any | undefined>();
+  const shipFireAsset = useRef<any | undefined>();
 
   let keys = [];
 
@@ -40,9 +41,9 @@ export default function MySkills() {
     update(canvas, image) {
       // If asteroid goes off screen
       if (this.x > canvas.width + image.width) this.x = 0 - image.width;
-      if (this.x < -image.width) this.x = canvas.width - image.width;
+      if (this.x < -image.width) this.x = canvas.width + image.width;
       if (this.y > canvas.height + image.height) this.y = 0 - image.height;
-      if (this.y < -image.height) this.y = canvas.height - image.height;
+      if (this.y < -image.height) this.y = canvas.height + image.height;
 
       this.x += this.velocityX * this.direction;
       this.y += this.velocityY * this.direction;
@@ -62,8 +63,8 @@ export default function MySkills() {
     moving: boolean;
 
     constructor(ctx) {
-      this.x = canvas.current.width / 2;
-      this.y = canvas.current.height / 2;
+      this.x = canvas.current.width / 2 - shipAsset.current.width / 2;
+      this.y = canvas.current.height - 250;
       this.direction = Math.PI / 2;
 
       this.velocityX = 0;
@@ -83,12 +84,12 @@ export default function MySkills() {
       if (this.x > canvas.width + shipAsset.current.width)
         this.x = 0 - shipAsset.current.width;
       if (this.x < -shipAsset.current.width)
-        this.x = canvas.width - shipAsset.current.width;
+        this.x = canvas.width + shipAsset.current.width;
 
       if (this.y > canvas.height + shipAsset.current.height)
         this.y = 0 - shipAsset.current.height;
       if (this.y < -shipAsset.current.height)
-        this.y = canvas.height - shipAsset.current.height;
+        this.y = canvas.height + shipAsset.current.height;
 
       // Moving
       if (keys["w"]) {
@@ -123,7 +124,11 @@ export default function MySkills() {
       //   ctx.rotate(-Math.PI / 100);
       //   ctx.drawImage(shipAsset.current, this.x, this.y);
       // } else {
-      ctx.drawImage(shipAsset.current, this.x, this.y);
+      ctx.drawImage(
+        keys["w"] ? shipFireAsset.current : shipAsset.current,
+        this.x,
+        this.y
+      );
       // }
     }
   }
@@ -157,10 +162,10 @@ export default function MySkills() {
       asteroids.push(new Asteroid());
     }
 
-    const render = () => {
-      // Update width and height on window resize
-      window.addEventListener("resize", resize);
+    // Update width and height on window resize
+    window.addEventListener("resize", resize);
 
+    const render = () => {
       // Clear canvas each frame
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
 
@@ -197,6 +202,7 @@ export default function MySkills() {
         <img ref={graphql} src="/asteroids/graphql.svg" />
 
         <img ref={shipAsset} src="/ship.svg" />
+        <img ref={shipFireAsset} src="/shipfire.svg" />
       </div>
 
       <style jsx>{`
