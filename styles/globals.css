@@ -22,3 +22,11 @@
   font-weight: 700;
 }
 
+@font-face {
+  font-family: "PressStartP2";
+  src: url("../public/fonts/PressStart2P-Regular.ttf") format("truetype");
+  font-weight: normal;
+}
+
+
+

@@ -40,7 +40,7 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     window.addEventListener("unload", () => window.scrollTo(0, 0));
     window.addEventListener("keydown", (e) => {
-      if (e.key === "space") e.preventDefault();
+      if (e.key === " ") e.preventDefault();
     });
   });
 

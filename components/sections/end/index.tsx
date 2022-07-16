@@ -141,6 +141,9 @@ export default function EndPage() {
   const [clicking, setClicking] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  const [erasing, setErasing] = useState(false);
+  const eraser = useRef<any | undefined>();
+
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -158,26 +161,49 @@ export default function EndPage() {
   return (
     <section
       id="end"
-      onMouseDown={(e) => {
-        if (e.button === 0) setClicking(true);
-      }}
+      onMouseDown={(e) => setClicking(e.button === 0)}
       onMouseUp={() => setClicking(false)}
       onMouseMove={(e) => {
         setPosition({ x: e.clientX, y: e.clientY });
         const ctx = canvas.current.getContext("2d");
 
-        if (clicking) {
-          ctx.beginPath();
-          ctx.lineWidth = 5;
-          ctx.lineCap = "round";
-          ctx.strokeStyle = COLORS[currentColor];
-          // Start at (x,y) get new position and end at (x,y)
-          ctx.moveTo(position.x, position.y);
-          setPosition({ x: e.clientX, y: e.clientY });
-          ctx.lineTo(e.clientX, e.clientY);
+        if (erasing) {
+          // ctx.clearRect();
 
-          // Paint to canvas
-          ctx.stroke();
+          if (clicking) {
+            ctx.beginPath();
+            ctx.lineWidth = 50;
+            ctx.lineCap = "round";
+            ctx.globalCompositeOperation = "destination-out";
+
+            ctx.moveTo(position.x, position.y);
+            setPosition({ x: e.clientX, y: e.clientY });
+            ctx.lineTo(e.clientX, e.clientY);
+
+            // Paint to canvas
+            ctx.stroke();
+          } else {
+            ctx.globalCompositeOperation = "destination-over";
+            ctx.drawImage(
+              eraser.current,
+              position.x - eraser.current.width / 2,
+              position.y - eraser.current.height / 2
+            );
+          }
+        } else {
+          if (clicking) {
+            ctx.beginPath();
+            ctx.lineWidth = 5;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = COLORS[currentColor];
+            // Start at (x,y) get new position and end at (x,y)
+            ctx.moveTo(position.x, position.y);
+            setPosition({ x: e.clientX, y: e.clientY });
+            ctx.lineTo(e.clientX, e.clientY);
+
+            // Paint to canvas
+            ctx.stroke();
+          }
         }
       }}
     >
@@ -185,35 +211,10 @@ export default function EndPage() {
       <p>Let's get in touch!</p>
       <canvas ref={canvas}></canvas>
       <div className="tools">
-        <div>
-          <button
-            onClick={() => setCurrentColor(0)}
-            style={{
-              backgroundColor: "red",
-              borderColor: currentColor === 0 && "rgba(0,0,0,0.3)",
-            }}
-          />
-          <button
-            onClick={() => setCurrentColor(1)}
-            style={{
-              backgroundColor: "blue",
-              borderColor: currentColor === 1 && "rgba(0,0,0,0.3)",
-            }}
-          />
-          <button
-            onClick={() => setCurrentColor(2)}
-            style={{
-              backgroundColor: "green",
-              borderColor: currentColor === 2 && "rgba(0,0,0,0.3)",
-            }}
-          />
-          <button
-            onClick={() => setCurrentColor(3)}
-            style={{
-              backgroundColor: "yellow",
-              borderColor: currentColor === 3 && "rgba(0,0,0,0.3)",
-            }}
-          />
+        <div className="drawing">
+          <button onClick={() => setErasing(false)} />
+          <img ref={eraser} src="eraser.svg" onClick={() => setErasing(true)} />
+          <input type="range" min="1" max="100" value="50"></input>
         </div>
         <div>
           {/* <input type="text" placeholder="Leave a message..." />
@@ -222,17 +223,20 @@ export default function EndPage() {
       </div>
 
       <style jsx>{`
+        section {
+          background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'  stroke-width='1' stroke='hsla(0, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+        }
         h2 {
           font-size: 3rem;
           color: ${isDark ? "white" : "black"};
-          z-index: 1;
+
           user-select: none;
         }
 
         p {
           font-size: 1.25rem;
           font-weight: 500;
-          z-index: 1;
+
           user-select: none;
         }
 
@@ -257,14 +261,34 @@ export default function EndPage() {
           gap: 8px;
         }
 
-        button {
+        .drawing > button {
           z-index: 1;
           width: 50px;
           height: 50px;
           border-radius: 100%;
-          border-width: 4px;
-          border-color: transparent;
           cursor: pointer;
+          border-width: 4px;
+          border-color: lightgrey;
+          border-style: solid;
+          background: conic-gradient(
+            rgb(255, 0, 0),
+            rgb(255, 0, 255),
+            rgb(0, 0, 255),
+            rgb(0, 255, 255),
+            rgb(0, 255, 0),
+            rgb(255, 255, 0),
+            rgb(255, 0, 0)
+          );
+        }
+
+        .drawing > img {
+          margin-left: 16px;
+          cursor: pointer;
+          display: ${erasing ? "none" : "flex"};
+        }
+
+        .drawing > input {
+          margin-left: 16px;
         }
       `}</style>
     </section>

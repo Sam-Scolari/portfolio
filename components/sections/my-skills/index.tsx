@@ -19,6 +19,40 @@ export default function MySkills() {
 
   let keys = [];
 
+  class Bullet {
+    x: number;
+    y: number;
+    velocityX: number;
+    velocityY: number;
+    direction: number;
+    speed: number;
+
+    constructor(ship) {
+      this.x = ship.x;
+      this.y = ship.y;
+
+      this.direction = ship.direction;
+
+      this.velocityX = ship.velocityX;
+      this.velocityY = ship.velocityY;
+
+      this.speed = 2;
+    }
+
+    draw(ctx) {
+      ctx.fillStyle = "black";
+      ctx.fillRect(this.x, this.y, 5, 5);
+    }
+
+    update() {
+      this.velocityX -= Math.sin(this.direction) * 0.1;
+      this.velocityY += Math.cos(this.direction) * 0.1;
+
+      this.x -= this.velocityX;
+      this.y -= this.velocityY;
+    }
+  }
+
   class Asteroid {
     x: number;
     y: number;
@@ -57,6 +91,8 @@ export default function MySkills() {
     velocityY: number;
     direction: number;
 
+    blinking: boolean;
+
     turningLeft: boolean;
     turningRight: boolean;
 
@@ -65,7 +101,7 @@ export default function MySkills() {
     constructor(ctx) {
       this.x = canvas.current.width / 2 - shipAsset.current.width / 2;
       this.y = canvas.current.height - 250;
-      this.direction = Math.PI / 2;
+      this.direction = 0;
 
       this.velocityX = 0;
       this.velocityY = 0;
@@ -73,8 +109,7 @@ export default function MySkills() {
       this.turningLeft = false;
       this.turningRight = false;
 
-      document.body.addEventListener("keydown", (e) => (keys[e.key] = true));
-      document.body.addEventListener("keyup", (e) => (keys[e.key] = false));
+      this.blinking = true;
 
       ctx.drawImage(shipAsset.current, this.x, this.y);
     }
@@ -93,8 +128,9 @@ export default function MySkills() {
 
       // Moving
       if (keys["w"]) {
-        this.velocityX += Math.cos(this.direction) * 0.1;
-        this.velocityY += Math.sin(this.direction) * 0.1;
+        if (this.blinking) this.blinking = false;
+        this.velocityX -= Math.sin(this.direction) * 0.1;
+        this.velocityY += Math.cos(this.direction) * 0.1;
       }
 
       // Turning
@@ -107,29 +143,19 @@ export default function MySkills() {
       this.x -= this.velocityX;
       this.y -= this.velocityY;
 
-      // ctx.save();
-      // ctx.translate(this.x, this.y);
-      // ctx.rotate(this.direction);
-      // ctx.drawImage(shipAsset.current, this.x, this.y);
-      // ctx.restore();
+      if (!this.blinking || Math.floor(Date.now() / 450) % 2) {
+        ctx.save();
 
-      // if (keys["a"]) {
-      //   ctx.save();
-      //   ctx.translate(this.x, this.y);
-      //   ctx.rotate(Math.PI / 100);
-      //   ctx.drawImage(shipAsset.current, this.x, this.y);
-      //   ctx.restore();
-      // }
-      // if (keys["d"]) {
-      //   ctx.rotate(-Math.PI / 100);
-      //   ctx.drawImage(shipAsset.current, this.x, this.y);
-      // } else {
-      ctx.drawImage(
-        keys["w"] ? shipFireAsset.current : shipAsset.current,
-        this.x,
-        this.y
-      );
-      // }
+        ctx.translate(this.x, this.y);
+        ctx.rotate(this.direction);
+
+        ctx.drawImage(
+          keys["w"] ? shipFireAsset.current : shipAsset.current,
+          -shipAsset.current.width / 2,
+          -shipAsset.current.height / 2
+        );
+        ctx.restore();
+      }
     }
   }
 
@@ -162,6 +188,15 @@ export default function MySkills() {
       asteroids.push(new Asteroid());
     }
 
+    let bullets = [];
+
+    // Key press listeners
+    document.body.addEventListener("keydown", (e) => (keys[e.key] = true));
+    document.body.addEventListener("keyup", (e) => {
+      keys[e.key] = false;
+      if (e.key === " ") bullets.push(new Bullet(ship));
+    });
+
     // Update width and height on window resize
     window.addEventListener("resize", resize);
 
@@ -178,6 +213,12 @@ export default function MySkills() {
         asteroid.update(canvas.current, astroidAssets[index].current);
       });
 
+      // Render bullets
+      bullets.forEach((bullet) => {
+        bullet.draw(ctx);
+        bullet.update();
+      });
+
       requestAnimationFrame(render);
     };
     render();
@@ -187,6 +228,14 @@ export default function MySkills() {
     <section>
       <h2>My Skills</h2>
       <p>The languages, frameworks, and tools I design and build with</p>
+      {/* <img src="presspace.svg" id="space" /> */}
+      <span>
+        [w] move
+        <br />
+        [a] & [d] turn
+        <br />
+        [space] shoot
+      </span>
       <canvas ref={canvas}></canvas>
 
       {/* Game Assets */}
@@ -206,9 +255,28 @@ export default function MySkills() {
       </div>
 
       <style jsx>{`
+        span {
+          position: absolute;
+          left: 80px;
+          bottom: 32px;
+          font-family: PressStartP2;
+          text-align: left;
+          line-height: 2rem;
+        }
+        #space {
+          position: absolute;
+          bottom: 75px;
+          cursor: pointer;
+          z-index: 1;
+        }
+
+        h2 {
+          font-family: PressStartP2;
+          font-size: 2.5rem;
+        }
         p {
-          font-size: 1.25rem;
-          font-weight: 500;
+          font-family: PressStartP2;
+          font-size: 1rem;
         }
 
         canvas {
