@@ -3,6 +3,7 @@ import { ThemeContext } from "../../../pages/_app";
 import data from "@emoji-mart/data";
 import { Picker } from "emoji-mart";
 import { SketchPicker } from "react-color";
+import BasicButton from "../../buttons/BasicButton";
 
 export default function EndPage() {
   const { isDark, setIsDark } = useContext(ThemeContext);
@@ -144,15 +145,61 @@ export default function EndPage() {
             <path d="M30 5H20V25H30V5Z" fill="white" />
           </svg>
         </div>
-        <div>
-          {/* <input type="text" placeholder="Leave a message..." />
-          <button>Sign</button> */}
+        <div id="message">
+          <div>
+            <span>👋</span>
+            <input type="text" placeholder="Leave a message..." />
+          </div>
+          <BasicButton>Sign</BasicButton>
         </div>
       </div>
-
+      <img id="cursor" src="/pencil.svg" />
       <style jsx>{`
+        #message {
+          position: absolute;
+          right: 0;
+          display: flex;
+          align-items: center;
+        }
+
+        #message > div {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          height: 50px;
+          border-radius: 8px;
+          border-style: none;
+
+          box-shadow: inset 0px 0px 0px 2px #e5e5e5;
+
+          padding-left: 16px;
+          max-width: 400px;
+          width: 400px;
+          background-color: white;
+        }
+
+        #message > div > input {
+          font-family: "Inter";
+          font-weight: 500;
+          width: 100%;
+          height: 100%;
+          outline: none;
+          border: none;
+          background-color: transparent;
+          color: grey;
+        }
+        #cursor {
+          width: 12px;
+          position: absolute;
+          top: calc(${position.y}px + -6px);
+          left: calc(${position.x}px + 6px);
+          pointer-events: none;
+          transform: rotate(-45deg);
+          display: ${picking ? "none" : "auto"};
+        }
         section {
           background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'  stroke-width='1' stroke='hsla(0, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+          cursor: ${picking ? "auto" : "none"};
         }
         h2 {
           font-size: 3rem;
@@ -172,7 +219,6 @@ export default function EndPage() {
           width: 100%;
           height: 100%;
           position: absolute;
-          cursor: url("data:image/x-icon;base64,PHN2ZyB3aWR0aD0iNzYiIGhlaWdodD0iMjIyIiB2aWV3Qm94PSIwIDAgNzYgMjIyIiBmaWxsPSJub25lIiB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciPgo8cGF0aCBkPSJNMzggMEw3MC45MDkgNjcuNUg1LjA5MTAzTDM4IDBaIiBmaWxsPSIjRkZFMkI2Ii8+CjxwYXRoIGQ9Ik0zOCAwTDQ5LjI1ODMgMjMuMjVIMjYuNzQxN0wzOCAwWiIgZmlsbD0iYmxhY2siLz4KPHJlY3QgeD0iNS4xNTAwMiIgeT0iNjcuNSIgd2lkdGg9IjY1Ljc1IiBoZWlnaHQ9IjEwMSIgZmlsbD0iI0VEQUYxMCIvPgo8cGF0aCBkPSJNNS4xNTAwMiAxNjguNUg3MC45VjIxMy41QzcwLjkgMjE3LjkxOCA2Ny4zMTgzIDIyMS41IDYyLjkgMjIxLjVIMTMuMTVDOC43MzE3NSAyMjEuNSA1LjE1MDAyIDIxNy45MTggNS4xNTAwMiAyMTMuNVYxNjguNVoiIGZpbGw9IiNGRkEzQkUiLz4KPC9zdmc+Cg==");
         }
 
         .tools {
@@ -211,6 +257,10 @@ export default function EndPage() {
 
         #color-picker:hover {
           transform: scale(1.25);
+        }
+
+        #color-picker:hover ~ #cursor {
+          display: none;
         }
 
         #eraser {

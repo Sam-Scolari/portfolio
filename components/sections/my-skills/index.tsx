@@ -1,10 +1,12 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Asteroid } from "./asteroids/asteroids";
 import { Bullet } from "./asteroids/bullet";
 import { Ship } from "./asteroids/ship";
 
 export default function MySkills() {
   const canvas = useRef<any | undefined>();
+
+  const [hideControls, setHideControls] = useState(false);
 
   let keys = [];
 
@@ -131,6 +133,7 @@ export default function MySkills() {
     // Key press listeners
     document.body.addEventListener("keydown", (e) => (keys[e.key] = true));
     document.body.addEventListener("keyup", (e) => {
+      if (!hideControls) setHideControls(true);
       keys[e.key] = false;
       if (e.key === " ") bullets.push(new Bullet(ship));
     });
@@ -170,7 +173,6 @@ export default function MySkills() {
     <section>
       <h2>My Skills</h2>
       <p>The languages, frameworks, and tools I design and build with</p>
-      {/* <img src="presspace.svg" id="space" /> */}
       <span id="controls">
         [w] <span className="control">move</span>
         <br />
@@ -178,9 +180,75 @@ export default function MySkills() {
         <br />
         [space] <span className="control">shoot</span>
       </span>
-      <canvas ref={canvas}></canvas>
+      <div id="round-data">
+        <span id="score">Score: 0</span>
+        <div id="lives">
+          <img src="/ship.svg" />
+          <img src="/ship.svg" />
+          <img src="/ship.svg" />
+        </div>
+      </div>
+      <div id="highscores">
+        <span id="highscore-title">Highscores</span>
+        <ol>
+          <li>sam: 64</li>
+          <li>x: 33</li>
+          <li>y: 2</li>
+        </ol>
+      </div>
 
+      <canvas ref={canvas}></canvas>
       <style jsx>{`
+        #highscore-title {
+          font-family: PressStartP2;
+          text-align: right;
+        }
+
+        ol {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        ol > li {
+          font-family: PressStartP2;
+          text-align: right;
+          color: #a9a9a9;
+        }
+
+        #highscores {
+          position: absolute;
+          right: 80px;
+          bottom: 32px;
+          display: flex;
+          flex-direction: column;
+          opacity: ${hideControls ? "1" : "0"};
+          transition: opacity 0.5s;
+        }
+        #round-data {
+          position: absolute;
+          left: 80px;
+          bottom: 32px;
+          display: flex;
+          flex-direction: column;
+          gap: 24px;
+          opacity: ${hideControls ? "1" : "0"};
+          transition: opacity 0.5s;
+        }
+
+        #lives {
+          display: flex;
+          gap: 8px;
+        }
+
+        #lives > img {
+          width: 24px;
+        }
+
+        #score {
+          font-family: PressStartP2;
+          text-align: left;
+        }
         #controls {
           position: absolute;
           left: 80px;
@@ -188,6 +256,8 @@ export default function MySkills() {
           font-family: PressStartP2;
           text-align: left;
           line-height: 2rem;
+          opacity: ${hideControls ? "0" : "1"};
+          transition: opacity 0.5s;
         }
 
         .control {

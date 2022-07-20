@@ -2,7 +2,7 @@ import Image from "next/image";
 import { useState } from "react";
 
 export default function ProfilePicture() {
-  const [meatspace, setMeatspace] = useState(false);
+  const [meatspace, setMeatspace] = useState(true);
   return (
     <div>
       <Image

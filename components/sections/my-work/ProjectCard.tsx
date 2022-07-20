@@ -18,6 +18,7 @@ export default function ProjectCard({ img, children }) {
 
         img {
           width: 300px;
+          height: 200px;
           border-radius: 16px;
         }
 
