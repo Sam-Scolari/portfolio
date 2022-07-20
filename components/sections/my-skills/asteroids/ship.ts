@@ -12,17 +12,8 @@ export class Ship {
 
     moving: boolean;
 
-    shipImage: HTMLImageElement;
-    shipFireImage: HTMLImageElement;
-
     constructor(ctx, canvas) {
-        this.shipImage = new Image();
-        this.shipImage.src = "/ship.svg";
-        this.shipFireImage = new Image();
-        this.shipFireImage.src = "/shipFire.svg";
-
-        
-        this.x = canvas.current.width / 2 - this.shipImage.width / 2;
+        this.x = canvas.current.width / 2 - 9.5;
         this.y = canvas.current.height - 250;
         this.direction = 0;
 
@@ -33,23 +24,19 @@ export class Ship {
         this.turningRight = false;
 
         this.blinking = true;
-
-        
-
-        ctx.drawImage(this.shipImage, this.x, this.y);
     }
 
-    update(canvas, ctx, keys) {
+    update(canvas, ctx, keys, shipImage, shipFireImage) {
       // If ship goes off screen
-      if (this.x > canvas.width + this.shipImage.width)
-        this.x = 0 - this.shipImage.width;
-      if (this.x < -this.shipImage.width)
-        this.x = canvas.width + this.shipImage.width;
+      if (this.x > canvas.width + shipImage.width)
+        this.x = 0 - shipImage.width;
+      if (this.x < -shipImage.width)
+        this.x = canvas.width + shipImage.width;
 
-      if (this.y > canvas.height + this.shipImage.height)
-        this.y = 0 - this.shipImage.height;
-      if (this.y < -this.shipImage.height)
-        this.y = canvas.height + this.shipImage.height;
+      if (this.y > canvas.height + shipImage.height)
+        this.y = 0 - shipImage.height;
+      if (this.y < -shipImage.height)
+        this.y = canvas.height + shipImage.height;
 
       // Moving
       if (keys["w"]) {
@@ -75,9 +62,9 @@ export class Ship {
         ctx.rotate(this.direction);
 
         ctx.drawImage(
-          keys["w"] ? this.shipFireImage : this.shipImage,
-          -this.shipImage.width / 2,
-          -this.shipImage.height / 2
+          keys["w"] ? shipFireImage : shipImage,
+          -shipImage.width / 2,
+          -shipImage.height / 2
         );
         ctx.restore();
       }
