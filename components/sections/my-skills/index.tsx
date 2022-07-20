@@ -6,17 +6,6 @@ import { Ship } from "./asteroids/ship";
 export default function MySkills() {
   const canvas = useRef<any | undefined>();
 
-  const next = useRef<any | undefined>();
-  const react = useRef<any | undefined>();
-  const typescript = useRef<any | undefined>();
-  const javascript = useRef<any | undefined>();
-  const html = useRef<any | undefined>();
-  const css = useRef<any | undefined>();
-  const figma = useRef<any | undefined>();
-  const solidity = useRef<any | undefined>();
-  const graphql = useRef<any | undefined>();
-  // const tailwind = useRef<any | undefined>();
-
   let keys = [];
 
   useEffect(() => {
@@ -29,7 +18,80 @@ export default function MySkills() {
     }
     resize();
 
+    let loaded = 0;
+
     let ship = new Ship(ctx, canvas);
+
+    let next = new Image();
+    next.src = "/asteroids/next.svg";
+
+    next.onload = function () {
+      ctx.drawImage(next, 0, 0);
+      loaded += 1;
+    };
+
+    let react = new Image();
+    react.src = "/asteroids/react.svg";
+    react.onload = function () {
+      ctx.drawImage(react, 0, 0);
+      loaded += 1;
+    };
+
+    let typescript = new Image();
+    typescript.src = "/asteroids/typescript.svg";
+    typescript.onload = function () {
+      ctx.drawImage(typescript, 0, 0);
+      loaded += 1;
+    };
+
+    let javascript = new Image();
+    javascript.src = "/asteroids/javascript.svg";
+    javascript.onload = function () {
+      ctx.drawImage(javascript, 0, 0);
+      loaded += 1;
+    };
+
+    let html = new Image();
+    html.src = "/asteroids/html.svg";
+    html.onload = function () {
+      ctx.drawImage(html, 0, 0);
+      loaded += 1;
+    };
+
+    let css = new Image();
+    css.src = "/asteroids/css.svg";
+    css.onload = function () {
+      ctx.drawImage(css, 0, 0);
+      loaded += 1;
+    };
+
+    let figma = new Image();
+    figma.src = "/asteroids/figma.svg";
+    figma.onload = function () {
+      ctx.drawImage(figma, 0, 0);
+      loaded += 1;
+    };
+
+    let solidity = new Image();
+    solidity.src = "/asteroids/solidity.svg";
+    solidity.onload = function () {
+      ctx.drawImage(solidity, 0, 0);
+      loaded += 1;
+    };
+
+    let graphql = new Image();
+    graphql.src = "/asteroids/graphql.svg";
+    graphql.onload = function () {
+      ctx.drawImage(graphql, 0, 0);
+      loaded += 1;
+    };
+
+    let tailwind = new Image();
+    tailwind.src = "/asteroids/tailwind.svg";
+    tailwind.onload = function () {
+      ctx.drawImage(tailwind, 0, 0);
+      loaded += 1;
+    };
 
     let astroidAssets = [
       next,
@@ -41,7 +103,7 @@ export default function MySkills() {
       figma,
       solidity,
       graphql,
-      // tailwind,
+      tailwind,
     ];
 
     let asteroids = [];
@@ -69,10 +131,12 @@ export default function MySkills() {
       ship.update(canvas.current, ctx, keys);
 
       // Render astroids
-      asteroids.forEach((asteroid, index) => {
-        asteroid.draw(ctx, astroidAssets[index].current);
-        asteroid.update(canvas.current, astroidAssets[index].current);
-      });
+      if (loaded >= astroidAssets.length) {
+        asteroids.forEach((asteroid, index) => {
+          asteroid.draw(ctx, astroidAssets[index]);
+          asteroid.update(canvas.current, astroidAssets[index]);
+        });
+      }
 
       // Render bullets
       bullets.forEach((bullet) => {
@@ -98,20 +162,6 @@ export default function MySkills() {
         [space] <span className="control">shoot</span>
       </span>
       <canvas ref={canvas}></canvas>
-
-      {/* Game Assets */}
-      <div style={{ display: "none" }}>
-        <img ref={javascript} src="/asteroids/javascript.svg" />
-        <img ref={typescript} src="/asteroids/typescript.svg" />
-        <img ref={html} src="/asteroids/html.svg" />
-        <img ref={css} src="/asteroids/css.svg" />
-        <img ref={figma} src="/asteroids/figma.svg" />
-        <img ref={solidity} src="/asteroids/solidity.svg" />
-        <img ref={react} src="/asteroids/react.svg" />
-        <img ref={next} src="/asteroids/next.svg" />
-        <img ref={graphql} src="/asteroids/graphql.svg" />
-        {/* <img ref={tailwind} src="/asteroids/tailwind.svg" /> */}
-      </div>
 
       <style jsx>{`
         #controls {
