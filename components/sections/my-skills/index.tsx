@@ -131,12 +131,12 @@ export default function MySkills() {
       ship.update(canvas.current, ctx, keys);
 
       // Render astroids
-      if (loaded >= astroidAssets.length) {
-        asteroids.forEach((asteroid, index) => {
-          asteroid.draw(ctx, astroidAssets[index]);
-          asteroid.update(canvas.current, astroidAssets[index]);
-        });
-      }
+      // if (loaded >= astroidAssets.length) {
+      //   asteroids.forEach((asteroid, index) => {
+      //     asteroid.draw(ctx, astroidAssets[index]);
+      //     asteroid.update(canvas.current, astroidAssets[index]);
+      //   });
+      // }
 
       // Render bullets
       bullets.forEach((bullet) => {
