@@ -21,6 +21,7 @@
     "node": "^v16.9.1",
     "nouns-react": "^1.0.0",
     "react": "^18.2.0",
+    "react-color": "^2.19.3",
     "react-dom": "18.2.0",
     "react-typewriter-hook": "^1.0.1",
     "three": "^0.141.0"

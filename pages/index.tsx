@@ -3,7 +3,6 @@ import { useContext, useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 import { useAccount } from "wagmi";
 import StartPage from "../components/sections/start";
-import MiniProjects from "../components/sections/interactive-projects";
 import { ThemeContext } from "../pages/_app";
 import EndPage from "../components/sections/end";
 import MyWork from "../components/sections/my-work";
@@ -51,7 +50,6 @@ const Home: NextPage = () => {
   return (
     <main>
       <StartPage setWasPressed={setWasPressed} />
-      {/* <MiniProjects /> */}
       <MySkills />
       <MyWork />
       <EndPage />

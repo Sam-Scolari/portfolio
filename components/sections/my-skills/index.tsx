@@ -1,5 +1,7 @@
 import { useEffect, useRef } from "react";
-import Asteroids from "./game/asteroids";
+import { Asteroid } from "./asteroids/asteroids";
+import { Bullet } from "./asteroids/bullet";
+import { Ship } from "./asteroids/ship";
 
 export default function MySkills() {
   const canvas = useRef<any | undefined>();
@@ -13,151 +15,9 @@ export default function MySkills() {
   const figma = useRef<any | undefined>();
   const solidity = useRef<any | undefined>();
   const graphql = useRef<any | undefined>();
-
-  const shipAsset = useRef<any | undefined>();
-  const shipFireAsset = useRef<any | undefined>();
+  // const tailwind = useRef<any | undefined>();
 
   let keys = [];
-
-  class Bullet {
-    x: number;
-    y: number;
-    velocityX: number;
-    velocityY: number;
-    direction: number;
-    speed: number;
-
-    constructor(ship) {
-      this.x = ship.x;
-      this.y = ship.y;
-
-      this.direction = ship.direction;
-
-      this.velocityX = ship.velocityX;
-      this.velocityY = ship.velocityY;
-
-      this.speed = 2;
-    }
-
-    draw(ctx) {
-      ctx.fillStyle = "black";
-      ctx.fillRect(this.x, this.y, 5, 5);
-    }
-
-    update() {
-      this.velocityX -= Math.sin(this.direction) * 0.1;
-      this.velocityY += Math.cos(this.direction) * 0.1;
-
-      this.x -= this.velocityX;
-      this.y -= this.velocityY;
-    }
-  }
-
-  class Asteroid {
-    x: number;
-    y: number;
-    velocityX: number;
-    velocityY: number;
-    direction: number;
-
-    constructor() {
-      this.x = Math.floor(Math.random() * canvas.current.width);
-      this.y = Math.floor(Math.random() * canvas.current.height);
-      this.direction = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
-      this.velocityX = 0.5 + Math.random() * 0.75;
-      this.velocityY = 0.5 + Math.random() * 0.75;
-    }
-
-    draw(ctx, image) {
-      ctx.drawImage(image, this.x, this.y);
-    }
-
-    update(canvas, image) {
-      // If asteroid goes off screen
-      if (this.x > canvas.width + image.width) this.x = 0 - image.width;
-      if (this.x < -image.width) this.x = canvas.width + image.width;
-      if (this.y > canvas.height + image.height) this.y = 0 - image.height;
-      if (this.y < -image.height) this.y = canvas.height + image.height;
-
-      this.x += this.velocityX * this.direction;
-      this.y += this.velocityY * this.direction;
-    }
-  }
-
-  class Ship {
-    x: number;
-    y: number;
-    velocityX: number;
-    velocityY: number;
-    direction: number;
-
-    blinking: boolean;
-
-    turningLeft: boolean;
-    turningRight: boolean;
-
-    moving: boolean;
-
-    constructor(ctx) {
-      this.x = canvas.current.width / 2 - shipAsset.current.width / 2;
-      this.y = canvas.current.height - 250;
-      this.direction = 0;
-
-      this.velocityX = 0;
-      this.velocityY = 0;
-
-      this.turningLeft = false;
-      this.turningRight = false;
-
-      this.blinking = true;
-
-      ctx.drawImage(shipAsset.current, this.x, this.y);
-    }
-
-    update(canvas, ctx) {
-      // If ship goes off screen
-      if (this.x > canvas.width + shipAsset.current.width)
-        this.x = 0 - shipAsset.current.width;
-      if (this.x < -shipAsset.current.width)
-        this.x = canvas.width + shipAsset.current.width;
-
-      if (this.y > canvas.height + shipAsset.current.height)
-        this.y = 0 - shipAsset.current.height;
-      if (this.y < -shipAsset.current.height)
-        this.y = canvas.height + shipAsset.current.height;
-
-      // Moving
-      if (keys["w"]) {
-        if (this.blinking) this.blinking = false;
-        this.velocityX -= Math.sin(this.direction) * 0.1;
-        this.velocityY += Math.cos(this.direction) * 0.1;
-      }
-
-      // Turning
-      if (keys["a"]) this.direction = this.direction - Math.PI / 100;
-      if (keys["d"]) this.direction = this.direction + Math.PI / 100;
-
-      this.velocityX *= 0.99;
-      this.velocityY *= 0.99;
-
-      this.x -= this.velocityX;
-      this.y -= this.velocityY;
-
-      if (!this.blinking || Math.floor(Date.now() / 450) % 2) {
-        ctx.save();
-
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.direction);
-
-        ctx.drawImage(
-          keys["w"] ? shipFireAsset.current : shipAsset.current,
-          -shipAsset.current.width / 2,
-          -shipAsset.current.height / 2
-        );
-        ctx.restore();
-      }
-    }
-  }
 
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
@@ -169,7 +29,7 @@ export default function MySkills() {
     }
     resize();
 
-    let ship = new Ship(ctx);
+    let ship = new Ship(ctx, canvas);
 
     let astroidAssets = [
       next,
@@ -181,11 +41,12 @@ export default function MySkills() {
       figma,
       solidity,
       graphql,
+      // tailwind,
     ];
 
     let asteroids = [];
     for (let i = 0; i < astroidAssets.length; i++) {
-      asteroids.push(new Asteroid());
+      asteroids.push(new Asteroid(canvas));
     }
 
     let bullets = [];
@@ -205,7 +66,7 @@ export default function MySkills() {
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
 
       // Render ship
-      ship.update(canvas.current, ctx);
+      ship.update(canvas.current, ctx, keys);
 
       // Render astroids
       asteroids.forEach((asteroid, index) => {
@@ -229,12 +90,12 @@ export default function MySkills() {
       <h2>My Skills</h2>
       <p>The languages, frameworks, and tools I design and build with</p>
       {/* <img src="presspace.svg" id="space" /> */}
-      <span>
-        [w] move
+      <span id="controls">
+        [w] <span className="control">move</span>
         <br />
-        [a] & [d] turn
+        [a] & [d] <span className="control">turn</span>
         <br />
-        [space] shoot
+        [space] <span className="control">shoot</span>
       </span>
       <canvas ref={canvas}></canvas>
 
@@ -249,19 +110,22 @@ export default function MySkills() {
         <img ref={react} src="/asteroids/react.svg" />
         <img ref={next} src="/asteroids/next.svg" />
         <img ref={graphql} src="/asteroids/graphql.svg" />
-
-        <img ref={shipAsset} src="/ship.svg" />
-        <img ref={shipFireAsset} src="/shipfire.svg" />
+        {/* <img ref={tailwind} src="/asteroids/tailwind.svg" /> */}
       </div>
 
       <style jsx>{`
-        span {
+        #controls {
           position: absolute;
           left: 80px;
           bottom: 32px;
           font-family: PressStartP2;
           text-align: left;
           line-height: 2rem;
+        }
+
+        .control {
+          font-family: PressStartP2;
+          color: #a9a9a9;
         }
         #space {
           position: absolute;

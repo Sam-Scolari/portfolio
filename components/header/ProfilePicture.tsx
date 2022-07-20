@@ -1,17 +1,10 @@
-import { animated, useSpring } from "react-spring";
 import Image from "next/image";
 import { useState } from "react";
 
 export default function ProfilePicture() {
-  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
   const [meatspace, setMeatspace] = useState(false);
   return (
-    <animated.div
-      style={{
-        scale,
-        userSelect: "none",
-      }}
-    >
+    <div>
       <Image
         src={meatspace ? "/meatspacepfp.jpg" : "/pfp.webp"}
         loading="eager"
@@ -21,10 +14,19 @@ export default function ProfilePicture() {
         objectFit="cover"
         draggable={false}
         onClick={() => setMeatspace(!meatspace)}
-        onMouseEnter={() => set({ scale: 1.25 })}
-        onMouseLeave={() => set({ scale: 1 })}
-        style={{ borderRadius: "100%", cursor: "pointer" }}
+        style={{
+          borderRadius: "100%",
+          cursor: "pointer",
+        }}
       ></Image>
-    </animated.div>
+      <style jsx>{`
+        div {
+          transition: transform 0.5s;
+        }
+        div:hover {
+          transform: scale(1.25);
+        }
+      `}</style>
+    </div>
   );
 }
