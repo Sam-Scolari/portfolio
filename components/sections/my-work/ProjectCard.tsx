@@ -1,6 +1,6 @@
-export default function ProjectCard({ img, children }) {
+export default function ProjectCard({ img, onClick, children }) {
   return (
-    <li>
+    <li onClick={onClick}>
       <img src={img} />
       <h3>{children}</h3>
       <style jsx>{`

@@ -1,7 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { ThemeContext } from "../../../pages/_app";
 import data from "@emoji-mart/data";
-import { Picker } from "emoji-mart";
+import { EmojiPicker } from "emoji-mart";
 import { SketchPicker } from "react-color";
 import BasicButton from "../../buttons/BasicButton";
 
@@ -147,6 +147,7 @@ export default function EndPage() {
         </div>
         <div id="message">
           <div>
+            {/* <EmojiPicker onEmojiSelect={console.log} /> */}
             <span>👋</span>
             <input type="text" placeholder="Leave a message..." />
           </div>

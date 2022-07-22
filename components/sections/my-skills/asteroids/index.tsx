@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Asteroid } from "./asteroids/asteroids";
-import { Bullet } from "./asteroids/bullet";
-import { Ship } from "./asteroids/ship";
+import { Asteroid } from "./asteroids";
+import { Bullet } from "./bullet";
+import { Ship } from "./ship";
 
-export default function MySkills() {
+export default function MySkillsDesktop() {
   const canvas = useRef<any | undefined>();
 
   const [hideControls, setHideControls] = useState(false);
@@ -41,7 +41,6 @@ export default function MySkills() {
 
     let next = new Image();
     next.src = "/asteroids/next.svg";
-
     next.onload = function () {
       ctx.drawImage(next, 0, 0);
       asteroidsLoaded += 1;

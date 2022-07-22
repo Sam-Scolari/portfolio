@@ -1,0 +1,59 @@
+<svg width="78" height="117" viewBox="0 0 78 117" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M0 78H39V117H0V78Z" fill="#FF792E"/>
+<rect y="78" width="39" height="3" fill="white" fill-opacity="0.15"/>
+<path d="M0 78L3 81L0 81L0 78Z" fill="#FF792E"/>
+<path d="M36 81L39 78L39 81L36 81Z" fill="#FF792E"/>
+<rect y="117" width="39" height="3" transform="rotate(-90 0 117)" fill="white" fill-opacity="0.1"/>
+<path d="M0 117L3 114L2.99998 117L0 117Z" fill="#FF792E"/>
+<path d="M3 81L-7.39105e-07 78L3 78L3 81Z" fill="#FF8D4D"/>
+<rect x="39" y="117" width="39" height="3" transform="rotate(180 39 117)" fill="black" fill-opacity="0.2"/>
+<path d="M39 117L36 114L39 114L39 117Z" fill="#FF792E"/>
+<path d="M3 114L8.7024e-07 117L2.0504e-05 114L3 114Z" fill="#FF8642"/>
+<rect x="39" y="78" width="39" height="3" transform="rotate(90 39 78)" fill="black" fill-opacity="0.15"/>
+<path d="M39 78L36 81L36 78L39 78Z" fill="#FF8D4D"/>
+<path d="M36 114L39 117L36 117L36 114Z" fill="#CC6125"/>
+<path d="M39 78H78V117H39V78Z" fill="#FF792E"/>
+<rect x="39" y="78" width="39" height="3" fill="white" fill-opacity="0.15"/>
+<path d="M39 78L42 81L39 81L39 78Z" fill="#FF792E"/>
+<path d="M75 81L78 78L78 81L75 81Z" fill="#FF792E"/>
+<rect x="39" y="117" width="39" height="3" transform="rotate(-90 39 117)" fill="white" fill-opacity="0.1"/>
+<path d="M39 117L42 114L42 117L39 117Z" fill="#FF792E"/>
+<path d="M42 81L39 78L42 78L42 81Z" fill="#FF8D4D"/>
+<rect x="78" y="117" width="39" height="3" transform="rotate(180 78 117)" fill="black" fill-opacity="0.2"/>
+<path d="M78 117L75 114L78 114L78 117Z" fill="#FF792E"/>
+<path d="M42 114L39 117L39 114L42 114Z" fill="#FF8642"/>
+<rect x="78" y="78" width="39" height="3" transform="rotate(90 78 78)" fill="black" fill-opacity="0.15"/>
+<path d="M78 78L75 81L75 78L78 78Z" fill="#FF8D4D"/>
+<path d="M75 114L78 117L75 117L75 114Z" fill="#CC6125"/>
+<path d="M51.6504 85H52.7734V86.1133H53.8086V85H54.9317V88.3692H53.8086V87.2461H52.7832V88.3692H51.6504M56.416 86.1231H55.4248V85H58.5352V86.1231H57.5391V88.3692H56.416M59.0283 85H60.2051L60.9278 86.1865L61.6504 85H62.8272V88.3692H61.7041V86.6992L60.918 87.9102L60.1319 86.6992V88.3692H59.0283M63.3838 85H64.5069V87.2559H66.0987V88.3692H63.3838" fill="black"/>
+<path d="M51.6113 107.998L50 89.9121H67.7149L66.1036 107.988L58.8428 110" fill="#E44D26"/>
+<path d="M58.8575 108.462V91.3965H66.0988L64.7169 106.826" fill="#F16529"/>
+<path d="M53.2911 93.6084H58.8576V95.8252H55.7228L55.9279 98.0957H58.8576V100.308H53.8966M53.9943 101.421H56.2208L56.3771 103.193L58.8576 103.857V106.172L54.3068 104.902" fill="#EBEBEB"/>
+<path d="M64.4044 93.6084H58.8478V95.8252H64.1994M63.9992 98.0957H58.8478V100.313H61.5822L61.3234 103.193L58.8478 103.857V106.162L63.3888 104.902" fill="white"/>
+<path d="M39 39H78V78H39V39Z" fill="#FF792E"/>
+<rect x="39" y="39" width="39" height="3" fill="white" fill-opacity="0.15"/>
+<path d="M39 39L42 42L39 42L39 39Z" fill="#FF792E"/>
+<path d="M75 42L78 39L78 42L75 42Z" fill="#FF792E"/>
+<rect x="39" y="78" width="39" height="3" transform="rotate(-90 39 78)" fill="white" fill-opacity="0.1"/>
+<path d="M39 78L42 75L42 78L39 78Z" fill="#FF792E"/>
+<path d="M42 42L39 39L42 39L42 42Z" fill="#FF8D4D"/>
+<rect x="78" y="78" width="39" height="3" transform="rotate(180 78 78)" fill="black" fill-opacity="0.2"/>
+<path d="M78 78L75 75L78 75L78 78Z" fill="#FF792E"/>
+<path d="M42 75L39 78L39 75L42 75Z" fill="#FF8642"/>
+<rect x="78" y="39" width="39" height="3" transform="rotate(90 78 39)" fill="black" fill-opacity="0.15"/>
+<path d="M78 39L75 42L75 39L78 39Z" fill="#FF8D4D"/>
+<path d="M75 75L78 78L75 78L75 75Z" fill="#CC6125"/>
+<path d="M39 0H78V39H39V0Z" fill="#FF792E"/>
+<rect x="39" width="39" height="3" fill="white" fill-opacity="0.15"/>
+<path d="M39 0L42 3L39 2.99998L39 0Z" fill="#FF792E"/>
+<path d="M75 3L78 -6.07971e-07L78 3L75 3Z" fill="#FF792E"/>
+<rect x="39" y="39" width="39" height="3" transform="rotate(-90 39 39)" fill="white" fill-opacity="0.1"/>
+<path d="M39 39L42 36L42 39L39 39Z" fill="#FF792E"/>
+<path d="M42 3L39 7.39106e-07L42 2.0504e-05L42 3Z" fill="#FF8D4D"/>
+<rect x="78" y="39" width="39" height="3" transform="rotate(180 78 39)" fill="black" fill-opacity="0.2"/>
+<path d="M78 39L75 36L78 36L78 39Z" fill="#FF792E"/>
+<path d="M42 36L39 39L39 36L42 36Z" fill="#FF8642"/>
+<rect x="78" width="39" height="3" transform="rotate(90 78 0)" fill="black" fill-opacity="0.15"/>
+<path d="M78 0L75 3L75 -1.31133e-07L78 0Z" fill="#FF8D4D"/>
+<path d="M75 36L78 39L75 39L75 36Z" fill="#CC6125"/>
+</svg>

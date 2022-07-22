@@ -6,7 +6,10 @@ import StartPage from "../components/sections/start";
 import { ThemeContext } from "../pages/_app";
 import EndPage from "../components/sections/end";
 import MyWork from "../components/sections/my-work";
-import MySkills from "../components/sections/my-skills";
+import MySkillsDesktop from "../components/sections/my-skills/asteroids";
+import { useMediaQuery } from "usehooks-ts";
+import MySkillsMobile from "../components/sections/my-skills/tetris";
+import useLayout from "../components/hooks/useLayout";
 
 const Home: NextPage = () => {
   const { data } = useAccount();
@@ -15,6 +18,8 @@ const Home: NextPage = () => {
 
   const [wasPressed, setWasPressed] = useState(false);
   const [wasUsed, setWasUsed] = useState(true);
+
+  const { desktop } = useLayout();
 
   // Confetti
   useEffect(() => {
@@ -50,7 +55,7 @@ const Home: NextPage = () => {
   return (
     <main>
       <StartPage setWasPressed={setWasPressed} />
-      <MySkills />
+      {desktop ? <MySkillsDesktop /> : <MySkillsMobile />}
       <MyWork />
       <EndPage />
       <style jsx>{`
