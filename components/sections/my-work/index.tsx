@@ -1,8 +1,12 @@
 import { useEffect, useState } from "react";
+import ProjectLinkButton from "../../buttons/ProjectLinkButton";
 import ProjectCard from "./ProjectCard";
+import ProjectView from "./ProjectView";
 
-export default function MyWork() {
+export default function MyWork({ projects }) {
   const [showProject, setShowProject] = useState(false);
+
+  const [currentProject, setCurrentProject] = useState(0);
 
   useEffect(() => {
     console.log(showProject);
@@ -15,71 +19,24 @@ export default function MyWork() {
           <p>Check out some of my professional work</p>
         </div>
         <ul>
-          <ProjectCard
-            onClick={() => {
-              setShowProject(true);
-            }}
-            img="portfolio.png"
-          >
-            Portfolio
-          </ProjectCard>
-          <ProjectCard
-            onClick={() => {
-              setShowProject(true);
-            }}
-            img="web3assets.png"
-          >
-            Web3 Assets
-          </ProjectCard>
-          <ProjectCard
-            onClick={() => {
-              setShowProject(true);
-            }}
-            img="velodrome.png"
-          >
-            Velodrome
-          </ProjectCard>
-          <ProjectCard
-            onClick={() => {
-              setShowProject(true);
-            }}
-            img="pocket.png"
-          >
-            Pocket
-          </ProjectCard>
-          <ProjectCard
-            onClick={() => {
-              setShowProject(true);
-            }}
-            img="portfolio.png"
-          >
-            Portfolio
-          </ProjectCard>
+          {projects.map((project, index) => (
+            <ProjectCard
+              key={index}
+              index={index}
+              setCurrentProject={setCurrentProject}
+              setShowProject={setShowProject}
+              project={project}
+            />
+          ))}
         </ul>
       </div>
-      <div id="project-view">
-        <div>
-          <h3>Project Name</h3>
-          <span>samscolari.me</span>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
-        </div>
-
-        <div>
-          <img src="/portfolio.png" width="300" alt="" />
-        </div>
-      </div>
+      <ProjectView
+        currentProject={currentProject}
+        projects={projects}
+        showProject={showProject}
+        setShowProject={setShowProject}
+      />
       <style jsx>{`
-        #project-view {
-          position: absolute;
-          display: flex;
-          pointer-events: ${showProject ? "auto" : "none"};
-        }
-
         #my-work {
           position: absolute;
           display: flex;
@@ -87,6 +44,8 @@ export default function MyWork() {
           align-items: flex-start;
           left: 80px;
           pointer-events: ${showProject ? "none" : "auto"};
+          opacity: ${showProject ? "0" : "1"};
+          transition: opacity 0.5s;
         }
 
         #heading {
@@ -104,8 +63,6 @@ export default function MyWork() {
           display: flex;
           gap: 64px;
           margin-left: -40px;
-          opacity: ${showProject ? "0" : "1"};
-          transition: opacity 1s;
         }
       `}</style>
     </section>

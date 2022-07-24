@@ -22,6 +22,7 @@ export default function ProfilePicture() {
       <style jsx>{`
         div {
           transition: transform 0.5s;
+          pointer-events: auto;
         }
         div:hover {
           transform: scale(1.25);

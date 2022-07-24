@@ -10,8 +10,16 @@ import MySkillsDesktop from "../components/sections/my-skills/asteroids";
 import { useMediaQuery } from "usehooks-ts";
 import MySkillsMobile from "../components/sections/my-skills/tetris";
 import useLayout from "../components/hooks/useLayout";
+import getConfig from "next/config";
+import {
+  ApolloClient,
+  gql,
+  InMemoryCache,
+  NormalizedCacheObject,
+} from "@apollo/client";
+import { Project } from "../interfaces";
 
-const Home: NextPage = () => {
+const Home: NextPage = (props: { projects: string }) => {
   const { data } = useAccount();
 
   const { isDark, setIsDark } = useContext(ThemeContext);
@@ -56,7 +64,7 @@ const Home: NextPage = () => {
     <main>
       <StartPage setWasPressed={setWasPressed} />
       {desktop ? <MySkillsDesktop /> : <MySkillsMobile />}
-      <MyWork />
+      <MyWork projects={props.projects} />
       <EndPage />
       <style jsx>{`
         main {
@@ -78,3 +86,40 @@ const Home: NextPage = () => {
 };
 
 export default Home;
+
+export const getServerSideProps = async (ctx) => {
+  const { id } = ctx.query;
+
+  const { publicRuntimeConfig } = getConfig();
+
+  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
+    uri: publicRuntimeConfig.API,
+    cache: new InMemoryCache(),
+  });
+
+  const query = gql`
+    query Query {
+      getProjects {
+        id
+        name
+        image
+        description
+        links {
+          figma
+          github
+          caseStudy
+        }
+      }
+    }
+  `;
+
+  const { data } = await client.query({ query: query });
+
+  const projects = data.getProjects as Project[];
+
+  return data.getProjects
+    ? {
+        props: { projects: projects },
+      }
+    : { notFound: true };
+};

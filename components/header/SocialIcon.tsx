@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { CSSProperties, useContext } from "react";
-import { animated, useSpring } from "react-spring";
 import Image from "next/image";
 import { ThemeContext } from "../../pages/_app";
 
@@ -15,24 +14,12 @@ export default function Icon({
   alt: string;
   style?: CSSProperties;
 }) {
-  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
   const { isDark, setIsDark } = useContext(ThemeContext);
 
   return (
-    <animated.div
-      style={{
-        scale,
-        userSelect: "none",
-      }}
-    >
+    <div>
       <Link href={href}>
-        <a
-          target="_blank"
-          rel="noreferrer"
-          onMouseEnter={() => set({ scale: 1.25 })}
-          onMouseLeave={() => set({ scale: 1 })}
-          style={style}
-        >
+        <a target="_blank" rel="noreferrer" style={style}>
           <Image
             style={{
               borderRadius:
@@ -51,11 +38,18 @@ export default function Icon({
         </a>
       </Link>
       <style jsx>{`
+        div {
+          transition: transform 0.5s;
+        }
+        div:hover {
+          transform: scale(1.25);
+        }
         a {
           margin-left: 12px;
           margin-right: 12px;
+          pointer-events: auto;
         }
       `}</style>
-    </animated.div>
+    </div>
   );
 }

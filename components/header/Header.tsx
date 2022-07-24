@@ -1,8 +1,4 @@
-import { useContext, useState, useTransition } from "react";
-import { animated, config, useSpring } from "react-spring";
-import Image from "next/image";
 import SocialIcon from "./SocialIcon";
-import { ThemeContext } from "../../pages/_app";
 import ProfilePicture from "./ProfilePicture";
 
 export default function Header() {
@@ -49,7 +45,7 @@ export default function Header() {
           display: flex;
           justify-content: space-between;
           align-items: center;
-
+          pointer-events: none;
           position: fixed;
           min-width: 100%;
 

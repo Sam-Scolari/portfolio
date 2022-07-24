@@ -9,6 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@apollo/client": "^3.6.9",
     "@emoji-mart/data": "^1.0.2",
     "@rainbow-me/rainbowkit": "^0.3.1",
     "@react-three/cannon": "^6.3.0",
@@ -18,7 +19,6 @@
     "canvas-confetti": "^1.5.1",
     "emoji-mart": "^5.1.0",
     "fs": "^0.0.1-security",
-    "graphql": "^16.5.0",
     "micro-cors": "^0.1.1",
     "next": "^12.1.6",
     "node": "^v16.9.1",
@@ -40,7 +40,6 @@
     "babel-eslint": "^10.1.0",
     "eslint": "8.18.0",
     "eslint-config-next": "12.1.6",
-    "react-spring": "^9.4.5",
     "typescript": "4.7.4"
   }
 }

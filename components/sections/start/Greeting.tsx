@@ -1,36 +1,26 @@
 import { useContext } from "react";
-import { animated, useSpring } from "react-spring";
 import { ThemeContext } from "../../../pages/_app";
 import useTyper, { TypePhase } from "../../hooks/useTyper";
 
 const extensions = [".eth", ".lens", ".me", ".wallet", ".⌐◨-◨"];
 
 export default function Greeting() {
-  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
-
   const { currentText, selectedText, phase } = useTyper(extensions);
   const { isDark, setIsDark } = useContext(ThemeContext);
   return (
     <div id="greeting">
       <span id="gm">GM, my name is</span>
-      <animated.div
-        style={{
-          scale,
-        }}
+      <h1
+        onClick={(e) =>
+          navigator.clipboard.writeText(`samscolari${selectedText}`)
+        }
       >
-        <h1
-          onMouseEnter={() => set({ scale: 1.1 })}
-          onMouseLeave={() => set({ scale: 1 })}
-          onClick={(e) =>
-            navigator.clipboard.writeText(`samscolari${selectedText}`)
-          }
-        >
-          samscolari
-          <span id="extension" aria-label={selectedText}>
-            {currentText}
-          </span>
-        </h1>
-      </animated.div>
+        samscolari
+        <span id="extension" aria-label={selectedText}>
+          {currentText}
+        </span>
+      </h1>
+
       <p id="tagline">I design and build fun web3 experiences!</p>
       <style jsx>{`
         h1 {
@@ -38,6 +28,11 @@ export default function Greeting() {
           font-weight: bold;
           line-height: 1rem;
           cursor: pointer;
+          transition: transform 0.5s;
+        }
+
+        h1:hover {
+          transform: scale(1.25);
         }
 
         h1::before {

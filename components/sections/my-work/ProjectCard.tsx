@@ -1,8 +1,18 @@
-export default function ProjectCard({ img, onClick, children }) {
+export default function ProjectCard({
+  index,
+  setCurrentProject,
+  setShowProject,
+  project,
+}) {
   return (
-    <li onClick={onClick}>
-      <img src={img} />
-      <h3>{children}</h3>
+    <li
+      onClick={() => {
+        setCurrentProject(index);
+        setShowProject(true);
+      }}
+    >
+      <img src={project.image} />
+      <h3>{project.name}</h3>
       <style jsx>{`
         li {
           cursor: pointer;

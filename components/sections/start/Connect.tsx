@@ -1,12 +1,10 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useContext } from "react";
-import { animated, useSpring } from "react-spring";
 import { ThemeContext } from "../../../pages/_app";
 import { useAccount } from "wagmi";
 
 export default function Connect({ setWasPressed }) {
   const { data } = useAccount();
-  const [{ scale }, set] = useSpring(() => ({ scale: 1 }));
 
   const { isDark, setIsDark } = useContext(ThemeContext);
   return (
