@@ -18,6 +18,8 @@ export default function CanvasDrawing({ picking, setPicking }) {
   const [clicking, setClicking] = useState(false);
   const [position, setPosition] = useState({ x: 0, y: 0 });
 
+  const [hideCursor, setHideCursor] = useState(false);
+
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -83,13 +85,57 @@ export default function CanvasDrawing({ picking, setPicking }) {
           setClicking(e.button === 0);
           const ctx = canvas.current.getContext("2d");
           if (currentTool === Tools.Stamp) {
-            let stamp = new Image();
-            stamp.src = "/nounglasses.svg";
-            ctx.drawImage(
-              stamp,
-              position.x - stamp.width / 2,
-              position.y - stamp.height / 2
-            );
+            // let stamp = new Image();
+            // stamp.src = "/nounglasses.svg";
+            // ctx.drawImage(
+            //   stamp,
+            //   position.x - stamp.width / 2,
+            //   position.y - stamp.height / 2
+            // );
+
+            ctx.strokeStyle = currentColor;
+            ctx.fillStyle = currentColor;
+
+            ctx.translate(position.x, position.y);
+            let p1 = new Path2D("M55 9L1 9L1 14L55 14V9Z");
+            let p2 = new Path2D("M5 9H0L0 25H5L5 9Z");
+            let p3 = new Path2D("M80 0L50 0V30H80V0Z");
+            let p4 = new Path2D("M45 0L15 0V30H45V0Z");
+            let p5 = new Path2D("M75 5H65V25H75V5Z");
+            let p6 = new Path2D("M40 5H30V25H40V5Z");
+            let p7 = new Path2D("M65 5H55V25H65V5Z");
+            let p8 = new Path2D("M30 5H20V25H30V5Z");
+            ctx.stroke(p1);
+            ctx.fill(p1);
+            ctx.stroke(p2);
+            ctx.fill(p2);
+            ctx.stroke(p3);
+            ctx.fill(p3);
+            ctx.stroke(p4);
+            ctx.fill(p4);
+            ctx.strokeStyle = "black";
+            ctx.fillStyle = "black";
+            ctx.stroke(p5);
+            ctx.fill(p5);
+            ctx.stroke(p6);
+            ctx.fill(p6);
+            ctx.strokeStyle = "white";
+            ctx.fillStyle = "white";
+            ctx.stroke(p7);
+            ctx.fill(p7);
+            ctx.stroke(p8);
+            ctx.fill(p8);
+            ctx.translate(-position.x, -position.y);
+          }
+
+          if (currentTool === Tools.Pencil) {
+            ctx.lineWidth = 5;
+            ctx.lineCap = "round";
+            ctx.strokeStyle = currentColor;
+            ctx.beginPath();
+            ctx.moveTo(position.x, position.y);
+            ctx.lineTo(position.x, position.y);
+            ctx.stroke();
           }
         }}
       ></canvas>
@@ -101,22 +147,33 @@ export default function CanvasDrawing({ picking, setPicking }) {
               onChangeComplete={(color) => setCurrentColor(color.hex)}
             />
           </div>
-          <button id="color-picker" onClick={() => setPicking(!picking)} />
+          <button
+            id="color-picker"
+            onClick={() => setPicking(!picking)}
+            onMouseEnter={() => setHideCursor(true)}
+            onMouseLeave={() => setHideCursor(false)}
+          />
         </div>
 
         <img
           id="eraser"
           src="eraser.svg"
           onClick={() => setCurrentTool(Tools.Eraser)}
+          onMouseEnter={() => setHideCursor(true)}
+          onMouseLeave={() => setHideCursor(false)}
         />
         <img
           id="pencil"
           src="pencil.svg"
           onClick={() => setCurrentTool(Tools.Pencil)}
+          onMouseEnter={() => setHideCursor(true)}
+          onMouseLeave={() => setHideCursor(false)}
         />
         <svg
           id="glasses"
           onClick={() => setCurrentTool(Tools.Stamp)}
+          onMouseEnter={() => setHideCursor(true)}
+          onMouseLeave={() => setHideCursor(false)}
           width="80"
           height="50"
           viewBox="0 0 80 30"
@@ -133,16 +190,30 @@ export default function CanvasDrawing({ picking, setPicking }) {
           <path d="M30 5H20V25H30V5Z" fill="white" />
         </svg>
       </div>
-      <img
-        id="cursor"
-        src={
-          currentTool === Tools.Pencil
-            ? "/pencil.svg"
-            : currentTool === Tools.Eraser
-            ? "/eraser.svg"
-            : "/nounglasses.svg"
-        }
-      />
+      {currentTool === Tools.Stamp ? (
+        <svg
+          id="cursor"
+          width="80"
+          height="50"
+          viewBox="0 0 80 30"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path d="M55 9L1 9L1 14L55 14V9Z" fill={currentColor} />
+          <path d="M5 9H0L0 25H5L5 9Z" fill={currentColor} />
+          <path d="M80 0L50 0V30H80V0Z" fill={currentColor} />
+          <path d="M45 0L15 0V30H45V0Z" fill={currentColor} />
+          <path d="M75 5H65V25H75V5Z" fill="black" />
+          <path d="M40 5H30V25H40V5Z" fill="black" />
+          <path d="M65 5H55V25H65V5Z" fill="white" />
+          <path d="M30 5H20V25H30V5Z" fill="white" />
+        </svg>
+      ) : (
+        <img
+          id="cursor"
+          src={currentTool === Tools.Pencil ? "/pencil.svg" : "/eraser.svg"}
+        />
+      )}
       <style jsx>{`
         #tools {
           position: absolute;
@@ -192,6 +263,7 @@ export default function CanvasDrawing({ picking, setPicking }) {
         #glasses:hover {
           transform: scale(1.25);
           user-select: none;
+          cursor: pointer;
         }
 
         #pencil {
@@ -236,7 +308,7 @@ export default function CanvasDrawing({ picking, setPicking }) {
               ? "45deg"
               : "0deg"}
           );
-          display: ${picking ? "none" : "auto"};
+          display: ${picking || hideCursor ? "none" : "auto"};
         }
       `}</style>
     </>
