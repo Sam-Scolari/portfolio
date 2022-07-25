@@ -87,17 +87,8 @@ export default function CanvasDrawing({ picking, setPicking }) {
           setClicking(e.button === 0);
           const ctx = canvas.current.getContext("2d");
           if (currentTool === Tools.Stamp) {
-            // let stamp = new Image();
-            // stamp.src = "/nounglasses.svg";
-            // ctx.drawImage(
-            //   stamp,
-            //   position.x - stamp.width / 2,
-            //   position.y - stamp.height / 2
-            // );
-
             ctx.strokeStyle = currentColor;
             ctx.fillStyle = currentColor;
-
             ctx.translate(position.x, position.y);
             let p1 = new Path2D("M55 9L1 9L1 14L55 14V9Z");
             let p2 = new Path2D("M5 9H0L0 25H5L5 9Z");
@@ -107,25 +98,17 @@ export default function CanvasDrawing({ picking, setPicking }) {
             let p6 = new Path2D("M40 5H30V25H40V5Z");
             let p7 = new Path2D("M65 5H55V25H65V5Z");
             let p8 = new Path2D("M30 5H20V25H30V5Z");
-            ctx.stroke(p1);
             ctx.fill(p1);
-            ctx.stroke(p2);
             ctx.fill(p2);
-            ctx.stroke(p3);
             ctx.fill(p3);
-            ctx.stroke(p4);
             ctx.fill(p4);
             ctx.strokeStyle = "black";
             ctx.fillStyle = "black";
-            ctx.stroke(p5);
             ctx.fill(p5);
-            ctx.stroke(p6);
             ctx.fill(p6);
             ctx.strokeStyle = "white";
             ctx.fillStyle = "white";
-            ctx.stroke(p7);
             ctx.fill(p7);
-            ctx.stroke(p8);
             ctx.fill(p8);
             ctx.translate(-position.x, -position.y);
           }
