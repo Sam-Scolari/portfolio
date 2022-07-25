@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Asteroid } from "./asteroids";
 import { Bullet } from "./bullet";
 import { Ship } from "./ship";
+import { ethers } from "ethers";
 
 export default function MySkillsDesktop() {
   const canvas = useRef<any | undefined>();
@@ -15,8 +16,10 @@ export default function MySkillsDesktop() {
 
     // Resize canvas with window
     function resize() {
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
+      if (ctx.canvas) {
+        ctx.canvas.width = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+      }
     }
     resize();
 
@@ -168,6 +171,60 @@ export default function MySkillsDesktop() {
     render();
   }, []);
 
+  const [leaderboard, setLeaderboard] = useState([]);
+
+  const optimismProvider = new ethers.providers.JsonRpcProvider(
+    "https://optimism-mainnet.infura.io/v3/df242983004b4def9344238f6589c187"
+  );
+
+  const mainnetProvider = new ethers.providers.JsonRpcProvider(
+    "https://mainnet.infura.io/v3/df242983004b4def9344238f6589c187"
+  );
+
+  const ABI = [
+    "function getLeaderboard() public view returns (address[10], uint256[10], uint256[10])",
+  ];
+
+  const address = "0x8bDC49Dc956c0c0C3B6f29B9374d2fbb3D3BFeDe";
+  const contract = new ethers.Contract(address, ABI, optimismProvider);
+
+  async function getLeaderboard() {
+    const data = await contract.getLeaderboard();
+    let formattedLeaderboard = [];
+    for (let i = 0; i < (await data[0].length); i++) {
+      formattedLeaderboard.push({
+        player: data[0][i].toString(),
+        score: data[1][i].toString(),
+        timestamp: data[2][i].toString(),
+      });
+    }
+    setLeaderboard(formattedLeaderboard);
+    return formattedLeaderboard;
+  }
+
+  async function reverseResolvePlayers(formattedLeaderboard) {
+    let temp = formattedLeaderboard;
+    console.log(temp);
+    for (let i = 0; i < formattedLeaderboard.length; i++) {
+      console.log(temp[i].player);
+      let ens = await mainnetProvider.lookupAddress(temp[i].player);
+      if (ens) temp[i].player = ens;
+      console.log(temp[i].player);
+    }
+    setLeaderboard([...temp]);
+    console.log(leaderboard);
+  }
+
+  useEffect(() => {
+    getLeaderboard().then((formattedLeaderboard) =>
+      reverseResolvePlayers(formattedLeaderboard)
+    );
+  }, []);
+
+  // useEffect(() => {
+  //   console.log(leaderboard);
+  // }, [leaderboard]);
+
   return (
     <section>
       <h2>My Skills</h2>
@@ -189,11 +246,21 @@ export default function MySkillsDesktop() {
       </div>
       <div id="highscores">
         <span id="highscore-title">Highscores</span>
-        <ol>
-          <li>sam: 64</li>
-          <li>x: 33</li>
-          <li>y: 2</li>
-        </ol>
+        {leaderboard.length > 0 && (
+          <ol>
+            {leaderboard.map(
+              (highscore, index) =>
+                index < 3 && (
+                  <li key={index}>
+                    {highscore.player.includes("0x")
+                      ? highscore.player.substring(0, 7)
+                      : highscore.player}
+                    : {highscore.score}
+                  </li>
+                )
+            )}
+          </ol>
+        )}
       </div>
 
       <canvas ref={canvas}></canvas>
@@ -213,6 +280,7 @@ export default function MySkillsDesktop() {
           font-family: PressStartP2;
           text-align: right;
           color: #a9a9a9;
+          list-style-type: none;
         }
 
         #highscores {
@@ -223,11 +291,12 @@ export default function MySkillsDesktop() {
           flex-direction: column;
           opacity: ${hideControls ? "1" : "0"};
           transition: opacity 0.5s;
+          gap: 8px;
         }
         #round-data {
           position: absolute;
           left: 80px;
-          bottom: 32px;
+          bottom: 44px;
           display: flex;
           flex-direction: column;
           gap: 24px;
@@ -241,7 +310,7 @@ export default function MySkillsDesktop() {
         }
 
         #lives > img {
-          width: 24px;
+          width: 32px;
         }
 
         #score {

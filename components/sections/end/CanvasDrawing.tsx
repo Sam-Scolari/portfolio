@@ -25,8 +25,10 @@ export default function CanvasDrawing({ picking, setPicking }) {
 
     // Resize canvas with window
     function resize(ctx) {
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
+      if (ctx.canvas) {
+        ctx.canvas.width = window.innerWidth;
+        ctx.canvas.height = window.innerHeight;
+      }
     }
     resize(ctx);
 
