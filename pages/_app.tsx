@@ -69,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 100vw;
           height: 100vh;
           margin: 0;
-
+          cursor: url("/blackcur.png") auto;
           transition: background-color 0.25s;
           background-color: ${isDark ? "#131313" : "white"};
         }

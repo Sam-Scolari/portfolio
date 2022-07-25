@@ -6,9 +6,9 @@ import StartPage from "../components/sections/start";
 import { ThemeContext } from "../pages/_app";
 import EndPage from "../components/sections/end";
 import MyWork from "../components/sections/my-work";
-import MySkillsDesktop from "../components/sections/my-skills/asteroids";
+import MySkillsDesktop from "../components/sections/skills/asteroids";
 import { useMediaQuery } from "usehooks-ts";
-import MySkillsMobile from "../components/sections/my-skills/tetris";
+import MySkillsMobile from "../components/sections/skills/tetris";
 import useLayout from "../components/hooks/useLayout";
 import getConfig from "next/config";
 import {

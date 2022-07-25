@@ -15,8 +15,8 @@ export default function MyWork({ projects }) {
     <section>
       <div id="my-work">
         <div id="heading">
-          <h2>My Work</h2>
-          <p>Check out some of my professional work</p>
+          <h2>Projects</h2>
+          <p>Check out some of my completed work</p>
         </div>
         <ul>
           {projects.map((project, index) => (

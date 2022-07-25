@@ -227,7 +227,7 @@ export default function MySkillsDesktop() {
 
   return (
     <section>
-      <h2>My Skills</h2>
+      <h2>Skills</h2>
       <p>The languages, frameworks, and tools I design and build with</p>
       <span id="controls">
         [w] <span className="control">move</span>

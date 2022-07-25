@@ -102,11 +102,9 @@ export default function CanvasDrawing({ picking, setPicking }) {
             ctx.fill(p2);
             ctx.fill(p3);
             ctx.fill(p4);
-            ctx.strokeStyle = "black";
             ctx.fillStyle = "black";
             ctx.fill(p5);
             ctx.fill(p6);
-            ctx.strokeStyle = "white";
             ctx.fillStyle = "white";
             ctx.fill(p7);
             ctx.fill(p8);
@@ -240,6 +238,7 @@ export default function CanvasDrawing({ picking, setPicking }) {
           cursor: none;
           transition: transform 0.5s;
           pointer-events: auto;
+          user-select: none;
         }
 
         #pencil:hover,
@@ -247,7 +246,7 @@ export default function CanvasDrawing({ picking, setPicking }) {
         #color-picker:hover,
         #glasses:hover {
           transform: scale(1.25);
-          user-select: none;
+
           cursor: pointer;
         }
 
