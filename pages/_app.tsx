@@ -119,22 +119,3 @@ function MyApp({ Component, pageProps }: AppProps) {
 }
 
 export default MyApp;
-
-// const videoRef = useRef();
-
-// useEffect(() => {
-//   videoRef.current.playbackRate = 0.5;
-// }, []);
-
-/* <video autoPlay muted loop ref={videoRef}>
-      <source src="/wave.mp4" type="video/mp4" />
-    </video> */
-
-/* video {
-          position: fixed;
-          z-index: -1;
-          min-height: 100%;
-          min-width: 100%;
-          filter: blur(100px);
-          opacity: 0.8;
-        }*/
