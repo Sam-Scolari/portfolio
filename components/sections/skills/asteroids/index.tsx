@@ -204,15 +204,11 @@ export default function MySkillsDesktop() {
 
   async function reverseResolvePlayers(formattedLeaderboard) {
     let temp = formattedLeaderboard;
-    console.log(temp);
     for (let i = 0; i < formattedLeaderboard.length; i++) {
-      console.log(temp[i].player);
       let ens = await mainnetProvider.lookupAddress(temp[i].player);
       if (ens) temp[i].player = ens;
-      console.log(temp[i].player);
     }
     setLeaderboard([...temp]);
-    console.log(leaderboard);
   }
 
   useEffect(() => {
@@ -220,10 +216,6 @@ export default function MySkillsDesktop() {
       reverseResolvePlayers(formattedLeaderboard)
     );
   }, []);
-
-  // useEffect(() => {
-  //   console.log(leaderboard);
-  // }, [leaderboard]);
 
   return (
     <section>
