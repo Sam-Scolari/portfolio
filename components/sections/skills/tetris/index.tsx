@@ -9,8 +9,10 @@ export default function MySkillsMobile() {
 
     // Resize canvas with window
     function resize() {
-      ctx.canvas.width = window.innerWidth;
-      ctx.canvas.height = window.innerHeight;
+      ctx.canvas.height = document.body.clientHeight;
+      ctx.canvas.width = document.body.clientWidth;
+      // ctx.canvas.width = window.innerWidth;
+      // ctx.canvas.height = window.innerHeight;
     }
     resize();
 
@@ -36,7 +38,7 @@ export default function MySkillsMobile() {
       });
     } catch (error) {
       console.log(error);
-      alert(error);
+      // alert(error);
     }
 
     function handle(e) {
