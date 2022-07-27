@@ -56,6 +56,9 @@ export default function MySkillsMobile() {
       </p>
       <canvas ref={canvas}></canvas>
       <style jsx>{`
+        section {
+          background-color: blue;
+        }
         h2 {
           font-family: PressStartP2;
           font-size: 2rem;
