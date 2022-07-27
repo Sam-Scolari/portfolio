@@ -4,7 +4,7 @@ import { useMediaQuery } from "usehooks-ts";
 export default function useLayout() {
   const desktop = useMediaQuery("(min-width: 700px)");
 
-  const [height, setHeight] = useState(100);
+  const [height, setHeight] = useState(0);
 
   useEffect(() => {
     function resize() {
@@ -16,6 +16,10 @@ export default function useLayout() {
 
     window.addEventListener("resize", resize);
   }, []);
+
+  useEffect(() => {
+    console.log(height);
+  }, [height]);
 
   return { desktop, height };
 }
