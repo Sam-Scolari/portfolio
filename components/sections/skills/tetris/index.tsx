@@ -36,6 +36,7 @@ export default function MySkillsMobile() {
       });
     } catch (error) {
       console.log(error);
+      alert(error);
     }
 
     function handle(e) {
