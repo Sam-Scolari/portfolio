@@ -70,7 +70,7 @@ const Home: NextPage = (props: { projects: string }) => {
       <style jsx>{`
         main {
           width: 100vw;
-          height: 100vh;
+          height: calc(var(--vh, 1vh) * 100);
           scroll-snap-type: y mandatory;
           overflow-x: hidden;
           overflow-y: ${/*data?.address*/ true ? "scroll" : "hidden"};
