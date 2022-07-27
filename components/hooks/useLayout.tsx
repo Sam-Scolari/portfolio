@@ -11,15 +11,23 @@ export default function useLayout() {
       setHeight(() => {
         return window.innerHeight;
       });
+
+      console.log("--------------------------");
+      console.log(window.innerHeight, "Inner");
+      console.log(window.screen.height, "Screen");
+      console.log(window.screen.availHeight, "Avail");
+      console.log(document.body.clientHeight, "Client");
+      console.log(document.body.scrollHeight, "Scroll");
+      console.log(document.body.offsetHeight, "Offset");
     }
     resize();
 
     window.addEventListener("resize", resize);
   }, []);
 
-  useEffect(() => {
-    console.log(height);
-  }, [height]);
+  // useEffect(() => {
+  //   console.log(height);
+  // }, [height]);
 
   return { desktop, height };
 }

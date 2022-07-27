@@ -50,9 +50,9 @@ export default function MySkillsMobile() {
     window.addEventListener("deviceorientation", handle, true);
   }, []);
 
-  useEffect(() => {
-    console.log(height);
-  }, [height]);
+  // useEffect(() => {
+  //   console.log(height);
+  // }, [height]);
 
   return (
     <section>
