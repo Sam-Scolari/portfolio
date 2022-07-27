@@ -1,5 +1,4 @@
 import { useEffect, useRef, useState } from "react";
-import { Block } from "./block";
 import { Matrix } from "./matrix";
 
 export default function MySkillsMobile() {
@@ -15,104 +14,8 @@ export default function MySkillsMobile() {
     }
     resize();
 
-    let blocksLoaded = 0;
-
-    let next = new Image();
-    next.src = "/tetris/next.svg";
-    next.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let react = new Image();
-    react.src = "/tetris/react.svg";
-    react.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let typescript = new Image();
-    typescript.src = "/tetris/typescript.svg";
-    typescript.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let javascript = new Image();
-    javascript.src = "/tetris/javascript.svg";
-    javascript.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let html = new Image();
-    html.src = "/tetris/html.svg";
-    html.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let css = new Image();
-    css.src = "/tetris/css.svg";
-    css.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let figma = new Image();
-    figma.src = "/tetris/figma.svg";
-    figma.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let solidity = new Image();
-    solidity.src = "/tetris/solidity.svg";
-    solidity.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let graphql = new Image();
-    graphql.src = "/tetris/graphql.svg";
-    graphql.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let tailwind = new Image();
-    tailwind.src = "/tetris/tailwind.svg";
-    tailwind.onload = function () {
-      blocksLoaded += 1;
-    };
-
-    let blockAssets = [
-      next,
-      react,
-      typescript,
-      javascript,
-      html,
-      css,
-      figma,
-      solidity,
-      graphql,
-      tailwind,
-    ];
-
-    // console.log(matrix);
-
-    // let blocks = [];
-    // let randomBlock =
-    //   blockAssets[Math.floor(Math.random() * blockAssets.length)];
-    // blocks.push(
-    //   new Block(
-    //     ctx,
-    //     ctx.canvas.width / 2 - randomBlock.width / 2,
-    //     -randomBlock.height,
-
-    //     randomBlock
-    //   )
-    // );
-
     let matrix = new Matrix(ctx);
-    matrix.addPiece();
-
-    let image = new Image();
-    image.src = "/tetris/orange.svg";
-    image.onload = function () {
-      ctx.drawImage(image, 20, 10);
-    };
+    matrix.buildPiece();
 
     const render = () => {
       // Clear canvas each frame
@@ -123,6 +26,13 @@ export default function MySkillsMobile() {
       requestAnimationFrame(render);
     };
     render();
+
+    (DeviceMotionEvent as any).requestPermission().then((response) => {
+      if (response == "granted") {
+        console.log("accelerometer permission granted");
+        // Do stuff here
+      }
+    });
 
     function handle(e) {
       if (e.gamma) setTest(e.gamma.toString());
