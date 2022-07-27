@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { Block } from "./block";
+import { Matrix } from "./matrix";
 
 export default function MySkillsMobile() {
   const canvas = useRef<any | undefined>();
@@ -89,27 +90,35 @@ export default function MySkillsMobile() {
       tailwind,
     ];
 
-    let blocks = [];
-    let randomBlock =
-      blockAssets[Math.floor(Math.random() * blockAssets.length)];
-    blocks.push(
-      new Block(
-        ctx,
-        ctx.canvas.width / 2 - randomBlock.width / 2,
-        -randomBlock.height,
-        randomBlock
-      )
-    );
+    // console.log(matrix);
+
+    // let blocks = [];
+    // let randomBlock =
+    //   blockAssets[Math.floor(Math.random() * blockAssets.length)];
+    // blocks.push(
+    //   new Block(
+    //     ctx,
+    //     ctx.canvas.width / 2 - randomBlock.width / 2,
+    //     -randomBlock.height,
+
+    //     randomBlock
+    //   )
+    // );
+
+    let matrix = new Matrix(ctx);
+    matrix.addPiece();
+
+    let image = new Image();
+    image.src = "/tetris/orange.svg";
+    image.onload = function () {
+      ctx.drawImage(image, 20, 10);
+    };
 
     const render = () => {
       // Clear canvas each frame
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
 
-      // Render blocks
-      blocks.forEach((block) => {
-        block.draw(ctx);
-        block.update();
-      });
+      matrix.draw();
 
       requestAnimationFrame(render);
     };

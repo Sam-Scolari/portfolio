@@ -1,0 +1,15 @@
+<svg width="39" height="39" viewBox="0 0 39 39" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M2.49155e-06 7.86805e-07H39V39H2.49155e-06V7.86805e-07Z" fill="#479CEA"/>
+<path d="M2.49155e-06 7.86805e-07H39V3H3.01609e-06L2.49155e-06 7.86805e-07Z" fill="white" fill-opacity="0.15"/>
+<path d="M2.49155e-06 7.86805e-07L3 3H3.01609e-06L2.49155e-06 7.86805e-07Z" fill="#479CEA"/>
+<path d="M36 3L39 7.86805e-07V3L36 3Z" fill="#479CEA"/>
+<path d="M2.49155e-06 39V7.86805e-07L3 0L3 39H2.49155e-06Z" fill="white" fill-opacity="0.1"/>
+<path d="M2.49155e-06 39L3 36L3 39H2.49155e-06Z" fill="#479CEA"/>
+<path d="M3 3L2.49155e-06 7.86805e-07L3 0L3 3Z" fill="#62ABED"/>
+<path d="M39 39H2.49155e-06L0 36L39 36L39 39Z" fill="black" fill-opacity="0.2"/>
+<path d="M39 39L36 36H39L39 39Z" fill="#479CEA"/>
+<path d="M3 36L2.49155e-06 39L0 36L3 36Z" fill="#59A6EC"/>
+<path d="M39 7.86805e-07V39H36V1.18021e-06L39 7.86805e-07Z" fill="black" fill-opacity="0.15"/>
+<path d="M39 7.86805e-07L36 3L36 1.18021e-06L39 7.86805e-07Z" fill="#62ABED"/>
+<path d="M36 36L39 39H36V36Z" fill="#397DBB"/>
+</svg>
