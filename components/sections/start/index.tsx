@@ -46,9 +46,6 @@ export default function StartPage({ setWasPressed }) {
       </div>
       <Connect setWasPressed={setWasPressed} />
       <style jsx>{`
-        section {
-          background-color: red;
-        }
         .social-icons {
           display: none;
           margin-top: 64px;

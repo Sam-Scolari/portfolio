@@ -4,7 +4,6 @@ import { Matrix } from "./matrix";
 
 export default function MySkillsMobile() {
   const canvas = useRef<any | undefined>();
-  const { height } = useLayout();
   const [test, setTest] = useState("null");
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
@@ -50,10 +49,6 @@ export default function MySkillsMobile() {
     window.addEventListener("deviceorientation", handle, true);
   }, []);
 
-  // useEffect(() => {
-  //   console.log(height);
-  // }, [height]);
-
   return (
     <section>
       <h2>My Skills</h2>
@@ -62,9 +57,6 @@ export default function MySkillsMobile() {
       </p>
       <canvas ref={canvas}></canvas>
       <style jsx>{`
-        section {
-          background-color: blue;
-        }
         h2 {
           font-family: PressStartP2;
           font-size: 2rem;
