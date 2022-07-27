@@ -19,6 +19,10 @@ export default function useLayout() {
       console.log(document.body.clientHeight, "Client");
       console.log(document.body.scrollHeight, "Scroll");
       console.log(document.body.offsetHeight, "Offset");
+      console.log(
+        document.getElementsByTagName("section")[0].clientHeight,
+        "Section"
+      );
     }
     resize();
 
