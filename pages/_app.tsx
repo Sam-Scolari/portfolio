@@ -68,7 +68,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         body {
           position: fixed;
           width: 100%;
-          height: 100%;
+          height: calc(100vh - calc(100vh - 100%));
 
           margin: 0;
           cursor: url("/blackcur.png") auto;
