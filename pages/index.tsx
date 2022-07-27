@@ -62,6 +62,7 @@ const Home: NextPage = (props: { projects: string }) => {
 
   return (
     <main>
+      {/* <div style={{position: "fixed", width: 20, height: }}></div> */}
       <StartPage setWasPressed={setWasPressed} />
       {desktop ? <MySkillsDesktop /> : <MySkillsMobile />}
       <MyWork projects={props.projects} />
