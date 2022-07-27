@@ -1,18 +1,20 @@
 import { useEffect, useRef, useState } from "react";
+import useLayout from "../../../hooks/useLayout";
 import { Matrix } from "./matrix";
 
 export default function MySkillsMobile() {
   const canvas = useRef<any | undefined>();
+  const { height } = useLayout();
   const [test, setTest] = useState("null");
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
     // Resize canvas with window
     function resize() {
-      ctx.canvas.height = document.body.clientHeight;
-      ctx.canvas.width = document.body.clientWidth;
-      // ctx.canvas.width = window.innerWidth;
-      // ctx.canvas.height = window.innerHeight;
+      // ctx.canvas.height = document.body.clientHeight;
+      // ctx.canvas.width = document.body.clientWidth;
+      ctx.canvas.width = window.innerWidth;
+      ctx.canvas.height = window.innerHeight;
     }
     resize();
 
@@ -47,6 +49,10 @@ export default function MySkillsMobile() {
 
     window.addEventListener("deviceorientation", handle, true);
   }, []);
+
+  useEffect(() => {
+    console.log(height);
+  }, [height]);
 
   return (
     <section>

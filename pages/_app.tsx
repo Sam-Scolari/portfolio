@@ -23,7 +23,7 @@ import useLayout from "../components/hooks/useLayout";
 export const ThemeContext = createContext(null);
 function MyApp({ Component, pageProps }: AppProps) {
   const [isDark, setIsDark] = useState<boolean | undefined>(false);
-  const { height } = useLayout();
+  // const { height } = useLayout();
   const { chains, provider } = configureChains(
     [chain.optimism],
     [publicProvider()]
@@ -43,6 +43,11 @@ function MyApp({ Component, pageProps }: AppProps) {
     window.addEventListener("keydown", (e) => {
       if (e.key === " ") e.preventDefault();
     });
+
+    // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
+    let vh = window.innerHeight * 0.01;
+    // Then we set the value in the --vh custom property to the root of the document
+    document.documentElement.style.setProperty("--vh", `${vh}px`);
   });
 
   return (
@@ -69,7 +74,8 @@ function MyApp({ Component, pageProps }: AppProps) {
         body {
           position: fixed;
           width: 100%;
-          height: ${height > 0 ? `${height}px` : "100%"};
+          height: 100vh;
+          height: calc(var(--vh, 1vh) * 100);
 
           margin: 0;
           cursor: url("/blackcur.png") auto;
