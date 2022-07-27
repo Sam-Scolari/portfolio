@@ -18,11 +18,12 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
+import useLayout from "../components/hooks/useLayout";
 
 export const ThemeContext = createContext(null);
 function MyApp({ Component, pageProps }: AppProps) {
   const [isDark, setIsDark] = useState<boolean | undefined>(false);
-
+  const { height } = useLayout();
   const { chains, provider } = configureChains(
     [chain.optimism],
     [publicProvider()]
@@ -68,7 +69,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         body {
           position: fixed;
           width: 100%;
-          height: 100%;
+          height: ${height > 0 ? `${height}px` : "100%"};
 
           margin: 0;
           cursor: url("/blackcur.png") auto;
