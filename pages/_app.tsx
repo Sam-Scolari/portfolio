@@ -66,8 +66,10 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
 
         body {
-          width: 100vw;
-          height: 100vh;
+          position: fixed;
+          width: 100%;
+          height: 100%;
+
           margin: 0;
           cursor: url("/blackcur.png") auto;
           transition: background-color 0.25s;
