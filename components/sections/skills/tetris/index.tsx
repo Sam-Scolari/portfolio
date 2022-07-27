@@ -27,12 +27,16 @@ export default function MySkillsMobile() {
     };
     render();
 
-    (DeviceMotionEvent as any).requestPermission().then((response) => {
-      if (response == "granted") {
-        console.log("accelerometer permission granted");
-        // Do stuff here
-      }
-    });
+    try {
+      (DeviceMotionEvent as any).requestPermission().then((response) => {
+        if (response == "granted") {
+          console.log("accelerometer permission granted");
+          // Do stuff here
+        }
+      });
+    } catch (error) {
+      console.log(error);
+    }
 
     function handle(e) {
       if (e.gamma) setTest(e.gamma.toString());
