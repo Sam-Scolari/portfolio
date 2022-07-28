@@ -66,8 +66,8 @@ export class Matrix {
                     for (let j = 0; j < this.cols; j++) {
                         // If the block is the current active piece
                         if (this.matrix[i][j] && this.matrix[i][j].active) {
-                            this.matrix[i][this.gamma + 5] = this.matrix[i][j];
-                            this.matrix[i][j] = null;
+                            // this.matrix[i][this.gamma + 5] = this.matrix[i][j];
+                            // this.matrix[i][j] = null;
                         }
                     }
                    
