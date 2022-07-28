@@ -4,7 +4,6 @@ import { Matrix } from "./matrix";
 
 export default function MySkillsMobile() {
   const canvas = useRef<any | undefined>();
-  const [test, setTest] = useState("null");
 
   function getPermission() {
     try {
@@ -16,7 +15,6 @@ export default function MySkillsMobile() {
       });
     } catch (error) {
       console.log(error);
-      // alert(error);
     }
   }
 
@@ -25,8 +23,6 @@ export default function MySkillsMobile() {
 
     // Resize canvas with window
     function resize() {
-      // ctx.canvas.height = document.body.clientHeight;
-      // ctx.canvas.width = document.body.clientWidth;
       ctx.canvas.width = window.innerWidth;
       ctx.canvas.height = window.innerHeight;
     }
@@ -44,29 +40,15 @@ export default function MySkillsMobile() {
       requestAnimationFrame(render);
     };
     render();
-
-    // document.getElementById("perm").click();
-
-    function handle(e) {
-      if (e.gamma) setTest(e.gamma.toString());
-    }
-
-    window.addEventListener("deviceorientation", handle, true);
   }, []);
 
   return (
     <section>
-      <button
-        // id="perm"
-        style={{ userSelect: "auto", zIndex: 1000 }}
-        onClick={getPermission}
-      >
-        Request
-      </button>
       <h2>My Skills</h2>
-      <p>
-        The languages, frameworks, and tools I design and build with: {test}
-      </p>
+      <p>The languages, frameworks, and tools I design and build with</p>
+      <button id="start-game" style={{ zIndex: 1 }} onClick={getPermission}>
+        Start Game
+      </button>
       <canvas ref={canvas}></canvas>
       <style jsx>{`
         h2 {

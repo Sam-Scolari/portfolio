@@ -6,7 +6,7 @@ export class Matrix {
     cols: number;
     blockSize: number;
     matrix: Array<Array<null | Block>>;
-
+    gamma: number;
 
     constructor(_ctx) {
         this.ctx = _ctx;
@@ -31,6 +31,11 @@ export class Matrix {
             this.matrix.push(row);
         }
 
+        this.gamma = 0;
+        window.addEventListener("deviceorientation", (e)=> {
+            if (e.gamma) this.gamma = e.gamma;
+        }, true);
+
         this.update();
 
         console.log(this.matrix);
@@ -51,6 +56,7 @@ export class Matrix {
     }
 
     update() {
+        console.log(this.gamma);
         let verified = [];
 
         // Verify if the active blocks can move down
