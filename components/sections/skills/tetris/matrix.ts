@@ -37,7 +37,6 @@ export class Matrix {
         }, true);
 
         this.drop();
-        this.move();
 
         console.log(this.matrix);
     }
@@ -67,9 +66,12 @@ export class Matrix {
                     for (let j = 0; j < this.cols; j++) {
                         // If the block is the current active piece
                         if (this.matrix[i][j] && this.matrix[i][j].active) {
-                            // console.log(this.matrix[i][this.gamma + 5])
-                            this.matrix[i][this.gamma + 5] = this.matrix[i][j];
-                            // this.matrix[i][j] = null;
+                            // Don't move unless gamma moved by at least 1 in either direction
+                            if (this.gamma + 5 !== j) {
+                                this.matrix[i][this.gamma + 5] = this.matrix[i][j];
+                                // this.matrix[i][j] = null;
+                            }
+                          
                         }
                     }
                    
@@ -89,8 +91,6 @@ export class Matrix {
             }
             
         }
-
-        setTimeout(() => this.move(), 200);
     }
 
     // Handles pieces falling
