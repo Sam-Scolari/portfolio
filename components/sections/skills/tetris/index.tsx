@@ -5,6 +5,21 @@ import { Matrix } from "./matrix";
 export default function MySkillsMobile() {
   const canvas = useRef<any | undefined>();
   const [test, setTest] = useState("null");
+
+  function getPermission() {
+    try {
+      (DeviceMotionEvent as any).requestPermission().then((response) => {
+        if (response == "granted") {
+          console.log("accelerometer permission granted");
+          // Do stuff here
+        }
+      });
+    } catch (error) {
+      console.log(error);
+      // alert(error);
+    }
+  }
+
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -30,17 +45,7 @@ export default function MySkillsMobile() {
     };
     render();
 
-    try {
-      (DeviceMotionEvent as any).requestPermission().then((response) => {
-        if (response == "granted") {
-          console.log("accelerometer permission granted");
-          // Do stuff here
-        }
-      });
-    } catch (error) {
-      console.log(error);
-      // alert(error);
-    }
+    document.getElementById("perm").click();
 
     function handle(e) {
       if (e.gamma) setTest(e.gamma.toString());
@@ -51,6 +56,11 @@ export default function MySkillsMobile() {
 
   return (
     <section>
+      <button
+        id="perm"
+        style={{ display: "none" }}
+        onClick={getPermission}
+      ></button>
       <h2>My Skills</h2>
       <p>
         The languages, frameworks, and tools I design and build with: {test}
