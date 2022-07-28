@@ -77,17 +77,21 @@ export class Matrix {
                    
                 } 
                 // If the piece is on the right side
-                // else {
-                //     // Iterate backwards over each block in the row because we are shifting left to right
-                //     for (let j = this.cols - 1; j >= 0; j--) {
-                //         // If the block is the current active piece
-                //         if (this.matrix[i][j] && this.matrix[i][j].active) {
-                //             this.matrix[i][this.gamma + 4] = this.matrix[i][j];
-                //             this.matrix[i][j] = null;
-                //         }
-                //     }
+                else {
+                    // Iterate backwards over each block in the row because we are shifting left to right
+                    for (let j = this.cols - 1; j >= 0; j--) {
+                        // If the block is the current active piece
+                        if (this.matrix[i][j] && this.matrix[i][j].active) {
+                            // Don't move unless gamma moved by at least 1 in either direction
+                            if (this.gamma + 4 !== j) {
+                                this.matrix[i][this.gamma + 4] = this.matrix[i][j];
+                                this.matrix[i][j] = null;
+                            }
+                            
+                        }
+                    }
                     
-                // }
+                }
             }
             
         }
