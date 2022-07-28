@@ -56,6 +56,7 @@ export class Matrix {
     }
 
     move() {
+        console.log(this.gamma)
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
                 // If the block is the current active piece
