@@ -33,7 +33,13 @@ export class Matrix {
 
         this.gamma = 0;
         window.addEventListener("deviceorientation", (e)=> {
-            if (e.gamma) this.gamma = Math.round(e.gamma);
+            if (e.gamma) {
+                this.gamma = Math.round(e.gamma);
+
+                // min and max bounds for left and right movement
+                if (this.gamma < -5) this.gamma = -5;
+                if (this.gamma > 5) this.gamma = 5;
+            }
         }, true);
 
         this.drop();
@@ -58,41 +64,45 @@ export class Matrix {
     move() {
         // console.log(this.matrix);
         for (let i = 0; i < this.rows; i++) {
-            // The min and max degrees to handle movement
-            if (this.gamma >= -5 && this.gamma <= 5) {
-                // If the piece is on the left side
-                if (this.gamma < 0) {
-                    // Iterate forwards over each block in the row because we are shifting right to left
-                    for (let j = 0; j < this.cols; j++) {
-                        // If the block is the current active piece
-                        if (this.matrix[i][j] && this.matrix[i][j].active) {
-                            // Don't move unless gamma moved by at least 1 in either direction
-                            if (this.gamma + 5 !== j) {
-                                this.matrix[i][this.gamma + 5] = this.matrix[i][j];
-                                this.matrix[i][j] = null;
-                            }
-                          
+            // If the piece is on the left side
+            if (this.gamma < 0) {
+
+                // VERIFY THERE IS ROOM TO MOVE
+
+                // Iterate forwards over each block in the row because we are shifting right to left
+                for (let j = 0; j < this.cols; j++) {
+                    // If the block is the current active piece
+                    if (this.matrix[i][j] && this.matrix[i][j].active) {
+                        // Don't move unless gamma moved by at least 1 in either direction
+                        if (this.gamma + 5 !== j) {
+                            this.matrix[i][this.gamma + 5] = this.matrix[i][j];
+                            this.matrix[i][j] = null;
                         }
+                        
                     }
-                   
-                } 
-                // If the piece is on the right side
-                else {
-                    // Iterate backwards over each block in the row because we are shifting left to right
-                    for (let j = this.cols - 1; j >= 0; j--) {
-                        // If the block is the current active piece
-                        if (this.matrix[i][j] && this.matrix[i][j].active) {
-                            // Don't move unless gamma moved by at least 1 in either direction
-                            if (this.gamma + 4 !== j) {
-                                this.matrix[i][this.gamma + 4] = this.matrix[i][j];
-                                this.matrix[i][j] = null;
-                            }
-                            
-                        }
-                    }
-                    
                 }
+                
+            } 
+            // If the piece is on the right side
+            else {
+
+                // VERIFY THERE IS ROOM TO MOVE
+
+                // Iterate backwards over each block in the row because we are shifting left to right
+                for (let j = this.cols - 1; j >= 0; j--) {
+                    // If the block is the current active piece
+                    if (this.matrix[i][j] && this.matrix[i][j].active) {
+                        // Don't move unless gamma moved by at least 1 in either direction
+                        if (this.gamma + 4 !== j) {
+                            this.matrix[i][this.gamma + 4] = this.matrix[i][j];
+                            this.matrix[i][j] = null;
+                        }
+                        
+                    }
+                }
+                
             }
+            
             
         }
     }
