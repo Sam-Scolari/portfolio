@@ -33,10 +33,10 @@ export class Matrix {
 
         this.gamma = 0;
         window.addEventListener("deviceorientation", (e)=> {
-            if (e.gamma) this.gamma = e.gamma;
+            if (e.gamma) this.gamma = Math.round(e.gamma);
         }, true);
 
-        this.update();
+        this.drop();
 
         console.log(this.matrix);
     }
@@ -55,8 +55,23 @@ export class Matrix {
 
     }
 
-    update() {
-        console.log(this.gamma);
+    move() {
+        for (let i = 0; i < this.rows; i++) {
+            for (let j = 0; j < this.cols; j++) {
+                // If the block is the current active piece
+                if (this.matrix[i][j] && this.matrix[i][j].active) {
+                    if (this.gamma < 0) {
+                        this.matrix[i][this.gamma + 5];
+                    } else {
+                        this.matrix[i][this.gamma + 4];
+                    }
+                }
+            }
+        }
+    }
+
+    // Handles pieces falling
+    drop() {
         let verified = [];
 
         // Verify if the active blocks can move down
@@ -104,7 +119,7 @@ export class Matrix {
             this.buildPiece();
         }
 
-        setTimeout(() => this.update(), 500);
+        setTimeout(() => this.drop(), 500);
     }
 
 
