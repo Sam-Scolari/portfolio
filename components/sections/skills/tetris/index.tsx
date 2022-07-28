@@ -58,9 +58,11 @@ export default function MySkillsMobile() {
     <section>
       <button
         // id="perm"
-        // style={{ display: "none" }}
+        style={{ userSelect: "auto", zIndex: 1000 }}
         onClick={getPermission}
-      ></button>
+      >
+        Request
+      </button>
       <h2>My Skills</h2>
       <p>
         The languages, frameworks, and tools I design and build with: {test}
