@@ -56,16 +56,20 @@ export class Matrix {
     }
 
     move() {
-        console.log(this.gamma)
         for (let i = 0; i < this.rows; i++) {
             for (let j = 0; j < this.cols; j++) {
                 // If the block is the current active piece
                 if (this.matrix[i][j] && this.matrix[i][j].active) {
-                    if (this.gamma < 0) {
-                        this.matrix[i][this.gamma + 5];
-                    } else {
-                        this.matrix[i][this.gamma + 4];
+                    if (this.gamma >= -5 && this.gamma <= 5) {
+                        if (this.gamma < 0) {
+                            console.log(this.gamma+5);
+                            this.matrix[i][this.gamma + 5];
+                        } else {
+                            console.log(this.gamma+4);
+                            this.matrix[i][this.gamma + 4];
+                        }
                     }
+                    
                 }
             }
         }
