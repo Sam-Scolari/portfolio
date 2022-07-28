@@ -56,9 +56,11 @@ export class Matrix {
     }
 
     move() {
+        console.log(this.matrix);
         for (let i = 0; i < this.rows; i++) {
             // The min and max degrees to handle movement
             if (this.gamma >= -5 && this.gamma <= 5) {
+                // If the piece is on the left side
                 if (this.gamma < 0) {
                     // Iterate forwards over each block in the row because we are shifting right to left
                     for (let j = 0; j < this.cols; j++) {
@@ -69,17 +71,19 @@ export class Matrix {
                         }
                     }
                    
-                } else {
-                    // Iterate backwards over each block in the row because we are shifting left to right
-                    for (let j = this.cols - 1; j >= 0; j--) {
-                        // If the block is the current active piece
-                        if (this.matrix[i][j] && this.matrix[i][j].active) {
-                            this.matrix[i][this.gamma + 4] = this.matrix[i][j];
-                            this.matrix[i][j] = null;
-                        }
-                    }
+                } 
+                // If the piece is on the right side
+                // else {
+                //     // Iterate backwards over each block in the row because we are shifting left to right
+                //     for (let j = this.cols - 1; j >= 0; j--) {
+                //         // If the block is the current active piece
+                //         if (this.matrix[i][j] && this.matrix[i][j].active) {
+                //             this.matrix[i][this.gamma + 4] = this.matrix[i][j];
+                //             this.matrix[i][j] = null;
+                //         }
+                //     }
                     
-                }
+                // }
             }
             
         }
