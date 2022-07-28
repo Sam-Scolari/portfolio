@@ -69,7 +69,7 @@ export class Matrix {
                             // Don't move unless gamma moved by at least 1 in either direction
                             if (this.gamma + 5 !== j) {
                                 this.matrix[i][this.gamma + 5] = this.matrix[i][j];
-                                // this.matrix[i][j] = null;
+                                this.matrix[i][j] = null;
                             }
                           
                         }
