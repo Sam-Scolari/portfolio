@@ -36,7 +36,6 @@ export default function MySkillsMobile() {
       ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
 
       matrix.draw();
-      matrix.move();
 
       requestAnimationFrame(render);
     };

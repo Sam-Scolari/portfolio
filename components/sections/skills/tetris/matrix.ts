@@ -37,6 +37,7 @@ export class Matrix {
         }, true);
 
         this.drop();
+        this.move();
 
         console.log(this.matrix);
     }
@@ -88,6 +89,8 @@ export class Matrix {
             }
             
         }
+
+        setTimeout(() => this.move(), 200);
     }
 
     // Handles pieces falling
