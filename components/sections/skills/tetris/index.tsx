@@ -45,7 +45,7 @@ export default function MySkillsMobile() {
     };
     render();
 
-    document.getElementById("perm").click();
+    // document.getElementById("perm").click();
 
     function handle(e) {
       if (e.gamma) setTest(e.gamma.toString());
@@ -57,8 +57,8 @@ export default function MySkillsMobile() {
   return (
     <section>
       <button
-        id="perm"
-        style={{ display: "none" }}
+        // id="perm"
+        // style={{ display: "none" }}
         onClick={getPermission}
       ></button>
       <h2>My Skills</h2>
