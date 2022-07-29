@@ -66,7 +66,7 @@ export class Matrix {
         this.baseOffset = 0;
         window.addEventListener("deviceorientation", (e)=> {
             if (e.gamma) {
-                this.gamma = Math.round(e.gamma) + this.baseOffset;
+                this.gamma = Math.round(e.gamma);
 
                 // min and max bounds for left and right movement
                 if (this.gamma < this.gammaBounds.min) this.gamma = this.gammaBounds.min;
@@ -109,20 +109,16 @@ export class Matrix {
         return (_index - 4) * this.gammaMultiplier;
     }
 
-    getDelta(_newGamma) {
+    getDelta(_newIndex) {
         // Iterate over every row
         for (let i = 0; i < this.rows; i++) {
             // Iterate over every column
             for (let j = 0; j < this.cols; j++) {
                 // The block is the current active piece
                 if (this.matrix[i][j] && this.matrix[i][j].base) {
-
-                    let currentGamma = this.getGammaFromIndex(j);
-              
-                    if (_newGamma !== currentGamma) {
-                    
-                        if (_newGamma > currentGamma) return _newGamma - currentGamma;
-                        else return currentGamma - _newGamma;
+                    if (_newIndex !== j) {
+                        if (_newIndex > j) return _newIndex - j;
+                        else return j - _newIndex;
                     } 
                     return 0;
                   
@@ -214,8 +210,8 @@ export class Matrix {
 
     move() {
         let newGamma = this.gamma;
-        let delta = this.getDelta(newGamma);
-        console.log(delta);
+        let delta = this.getDelta(this.getIndexFromGamma(newGamma));
+        // console.log(this.getDelta(this.getIndexFromGamma(newGamma)));
         if (newGamma !== 0) {
             // Move left
             if (newGamma < 0) {
@@ -227,7 +223,7 @@ export class Matrix {
                         for (let j = 0; j < this.cols; j++) {
                             // If the block is the current active piece
                             if (this.matrix[i][j] && this.matrix[i][j].active) {
-                                this.matrix[i][j - 1] = this.matrix[i][j];
+                                this.matrix[i][j - delta] = this.matrix[i][j];
                                 this.matrix[i][j] = null;
                             }
                         } 
@@ -311,7 +307,7 @@ export class Matrix {
             case "OrangeRicky": 
                 this.matrix[0][5] = new Block(image);
                 this.matrix[1][5] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(5);
+                // this.baseOffset = 5;
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][3] = new Block(image);
                 
@@ -322,7 +318,7 @@ export class Matrix {
                 this.matrix[1][3] = new Block(image);
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][5] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(5);
+                // this.baseOffset = 5;
                 break;
 
             case "ClevelandZ":
@@ -330,14 +326,14 @@ export class Matrix {
                 this.matrix[0][4] = new Block(image);
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][5] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(5);
+                // this.baseOffset = 5;
                 break;
 
             case "RhodeIslandZ":
                 this.matrix[0][5] = new Block(image);
                 this.matrix[0][4] = new Block(image);
                 this.matrix[1][4] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(4);
+                // this.baseOffset = 4;
                 this.matrix[1][3] = new Block(image);
                 break;
 
@@ -346,13 +342,13 @@ export class Matrix {
                 this.matrix[0][4] = new Block(image);
                 this.matrix[0][5] = new Block(image);
                 this.matrix[0][6] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(6);
+                // this.baseOffset = 6;
                 break;
 
             case "Teewee":
                 this.matrix[0][4] = new Block(image);
                 this.matrix[1][4] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(4);
+                // this.baseOffset = 4;
                 this.matrix[1][3] = new Block(image);
                 this.matrix[1][5] = new Block(image);
                 break;
@@ -360,7 +356,7 @@ export class Matrix {
             case "Smashboy": 
                 this.matrix[0][4] = new Block(image);
                 this.matrix[0][5] = new Block(image, true);
-                this.baseOffset = this.getGammaFromIndex(5);
+                // this.baseOffset = 5;
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][5] = new Block(image);
                 break;
