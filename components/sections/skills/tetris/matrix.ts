@@ -203,12 +203,13 @@ export class Matrix {
 
     move() {
         if (this.gamma !== 0) {
-            // Iterate over every row
-            for (let i = 0; i < this.rows; i++) { 
-                // Move left
-                if (this.gamma < 0) {
-                    // All active blocks can move left
-                    if (this.verify("left")) {
+            
+            // Move left
+            if (this.gamma < 0) {
+                // All active blocks can move left
+                if (this.verify("left")) {
+                    // Iterate over every row
+                    for (let i = 0; i < this.rows; i++) { 
                         // Iterate forwards over each column because we are moving left
                         for (let j = 0; j < this.cols; j++) {
                             // If the block is the current active piece
@@ -216,13 +217,16 @@ export class Matrix {
                                 this.matrix[i][j - 1] = this.matrix[i][j];
                                 this.matrix[i][j] = null;
                             }
-                        }
+                        } 
                     }
-                } 
-                // Move right
-                else {
-                    // All active blocks can move right
-                    if (this.verify("right")) {
+                }
+            } 
+            // Move right
+            else {
+                // All active blocks can move right
+                if (this.verify("right")) {
+                    // Iterate over every row
+                    for (let i = 0; i < this.rows; i++) { 
                         // Iterate backwards over each column because we are moving right
                         for (let j = this.cols - 1; j >= 0; j--) {
                             // If the block is the current active piece
@@ -235,6 +239,7 @@ export class Matrix {
                 }
             }
         }
+        
     }
 
     // Handles pieces falling
