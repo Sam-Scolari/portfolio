@@ -209,14 +209,14 @@ export class Matrix {
     }
 
     move() {
-        let newGamma = this.gamma;
-        let delta = this.getDelta(this.getIndexFromGamma(newGamma));
+        // let newGamma = this.gamma;
+        let delta = this.getDelta(this.getIndexFromGamma(this.gamma));
         // console.log(this.getDelta(this.getIndexFromGamma(newGamma)));
-        if (newGamma !== 0) {
+
             // Move left
-            if (newGamma < 0) {
+            if (this.gamma < 0) {
                 // All active blocks can move left
-                if (this.verify("left", 1)) {
+                // if (this.verify("left", 1)) {
                     // Iterate over every row
                     for (let i = 0; i < this.rows; i++) { 
                         // Iterate forwards over each column because we are moving left
@@ -228,7 +228,7 @@ export class Matrix {
                             }
                         } 
                     }
-                }
+                // }
             } 
             // Move right
             // else {
@@ -247,7 +247,7 @@ export class Matrix {
             //         }
             //     }
             // }
-        }
+        
         
     }
 
