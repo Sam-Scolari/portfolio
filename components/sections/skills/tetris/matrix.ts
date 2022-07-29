@@ -168,6 +168,7 @@ export class Matrix {
                                     continue;
                                 }
                             }
+                            verified.push(false);
                             break;
                         }
 
@@ -188,6 +189,7 @@ export class Matrix {
                                     continue;
                                 }
                             }
+                            verified.push(false);
                             break;
                         }
 
