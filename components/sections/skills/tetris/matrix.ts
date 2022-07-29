@@ -162,18 +162,20 @@ export class Matrix {
                             // If the block is not on the left most column
                             if (j > 0) {
                                 // There is a piece at the new position
-                                if (this.matrix[i][j-_delta]) {
-                                    // The new position is inside of another active piece
-                                    if (this.matrix[i][j-_delta].active) {
-                                        verified.push(true);
-                                        continue;
-                                    }
-                                } 
-                                // There is no piece at the new position
-                                else {
-                                    verified.push(true);
-                                    continue;
-                                }
+                                verified.push(true);
+                                break;
+                                // if (this.matrix[i][j-_delta]) {
+                                //     // The new position is inside of another active piece
+                                //     if (this.matrix[i][j-_delta].active) {
+                                //         verified.push(true);
+                                //         continue;
+                                //     }
+                                // } 
+                                // // There is no piece at the new position
+                                // else {
+                                //     verified.push(true);
+                                //     continue;
+                                // }
                             }
                             verified.push(false);
                             break;
