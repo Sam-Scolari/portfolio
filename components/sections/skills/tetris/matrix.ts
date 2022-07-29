@@ -224,7 +224,7 @@ export class Matrix {
                             // If the block is the current active piece
                             if (this.matrix[i][j] && this.matrix[i][j].active) {
                                 this.matrix[i][j - delta] = this.matrix[i][j];
-                                // this.matrix[i][j] = null;
+                                this.matrix[i][j] = null;
                             }
                         } 
                     }
