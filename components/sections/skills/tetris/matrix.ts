@@ -216,7 +216,7 @@ export class Matrix {
             // Move left
             if (this.gamma < 0) {
                 // All active blocks can move left
-                // if (this.verify("left", 1)) {
+                if (this.verify("left", delta)) {
                     // Iterate over every row
                     for (let i = 0; i < this.rows; i++) { 
                         // Iterate forwards over each column because we are moving left
@@ -228,7 +228,7 @@ export class Matrix {
                             }
                         } 
                     }
-                // }
+                }
             } 
             // Move right
             // else {
