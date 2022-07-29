@@ -19,18 +19,6 @@ export default function EndPage() {
         section {
           cursor: ${!desktop || picking ? "auto" : "none"};
         }
-        h2 {
-          font-size: 3rem;
-          color: ${isDark ? "white" : "black"};
-
-          user-select: none;
-        }
-        p {
-          font-size: 1.25rem;
-          font-weight: 500;
-
-          user-select: none;
-        }
       `}</style>
     </section>
   );

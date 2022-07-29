@@ -8,6 +8,7 @@ export class Matrix {
     matrix: Array<Array<null | Block>>;
 
     gamma: number;
+    baseOffset: number;
     gammaMultiplier: number;
     gammaBounds: {min: number, max: number};
     gammaMap: Map<number, number>;
@@ -61,9 +62,11 @@ export class Matrix {
 
         // Set gamma
         this.gamma = 0;
+        // The position of the base block from 0
+        this.baseOffset = 0;
         window.addEventListener("deviceorientation", (e)=> {
             if (e.gamma) {
-                this.gamma = Math.round(e.gamma);
+                this.gamma = Math.round(e.gamma) + this.baseOffset;
 
                 // min and max bounds for left and right movement
                 if (this.gamma < this.gammaBounds.min) this.gamma = this.gammaBounds.min;
@@ -74,6 +77,8 @@ export class Matrix {
         // this.keys = [];
         // document.body.addEventListener("keydown", (e) => this.keys[e.key] = true);
         // document.body.addEventListener("keyup", (e) => this.keys[e.key] = false);
+
+
 
         this.drop();
 
@@ -104,23 +109,29 @@ export class Matrix {
         return (_index - 4) * this.gammaMultiplier;
     }
 
-    // getDelta() {
-    //     // Iterate over every row
-    //     for (let i = 0; i < this.rows; i++) {
-    //         // Iterate over every column
-    //         for (let j = 0; j < this.cols; j++) {
-    //             // The block is the current active piece
-    //             if (this.matrix[i][j] && this.matrix[i][j].active) {
-    //                 // 2
-    //                 let currentGamma = this.getGammaFromIndex(this.matrix[i][j]);
+    getDelta(_newGamma) {
+        // Iterate over every row
+        for (let i = 0; i < this.rows; i++) {
+            // Iterate over every column
+            for (let j = 0; j < this.cols; j++) {
+                // The block is the current active piece
+                if (this.matrix[i][j] && this.matrix[i][j].base) {
 
-    //                 // -2
-    //             }
-    //         }
-    //     }
-    // }
+                    let currentGamma = this.getGammaFromIndex(j);
+              
+                    if (_newGamma !== currentGamma) {
+                    
+                        if (_newGamma > currentGamma) return _newGamma - currentGamma;
+                        else return currentGamma - _newGamma;
+                    } 
+                    return 0;
+                  
+                }
+            }
+        }
+    }
 
-    verify(_direction) {
+    verify(_direction, _delta) {
         let verified = [];
 
         // Iterate over every row
@@ -134,9 +145,9 @@ export class Matrix {
                             // The block is not on the bottom row
                             if (i < this.rows - 1) {
                                 // There is a piece at the new position
-                                if (this.matrix[i+1][j]) {
+                                if (this.matrix[i+_delta][j]) {
                                     // The new position is inside of another active piece
-                                    if (this.matrix[i+1][j].active) {
+                                    if (this.matrix[i+_delta][j].active) {
                                         verified.push(true);
                                         continue;
                                     }
@@ -155,9 +166,9 @@ export class Matrix {
                             // If the block is not on the left most column
                             if (j > 0) {
                                 // There is a piece at the new position
-                                if (this.matrix[i][j-1]) {
+                                if (this.matrix[i][j-_delta]) {
                                     // The new position is inside of another active piece
-                                    if (this.matrix[i][j-1].active) {
+                                    if (this.matrix[i][j-_delta].active) {
                                         verified.push(true);
                                         continue;
                                     }
@@ -172,26 +183,26 @@ export class Matrix {
                             break;
                         }
 
-                        case "right": {
-                            // If the block is not on the right most column
-                            if (j < this.cols - 1) {
-                                // There is a piece at the new position
-                                if (this.matrix[i][j+1]) {
-                                    // The new position is inside of another active piece
-                                    if (this.matrix[i][j+1].active) {
-                                        verified.push(true);
-                                        continue;
-                                    }
-                                } 
-                                // There is no piece at the new position
-                                else {
-                                    verified.push(true);
-                                    continue;
-                                }
-                            }
-                            verified.push(false);
-                            break;
-                        }
+                        // case "right": {
+                        //     // If the block is not on the right most column
+                        //     if (j < this.cols - 1) {
+                        //         // There is a piece at the new position
+                        //         if (this.matrix[i][j+_delta]) {
+                        //             // The new position is inside of another active piece
+                        //             if (this.matrix[i][j+_delta].active) {
+                        //                 verified.push(true);
+                        //                 continue;
+                        //             }
+                        //         } 
+                        //         // There is no piece at the new position
+                        //         else {
+                        //             verified.push(true);
+                        //             continue;
+                        //         }
+                        //     }
+                        //     verified.push(false);
+                        //     break;
+                        // }
 
                     }
                     
@@ -202,12 +213,14 @@ export class Matrix {
     }
 
     move() {
-        if (this.gamma !== 0) {
-            
+        let newGamma = this.gamma;
+        let delta = this.getDelta(newGamma);
+        console.log(delta);
+        if (newGamma !== 0) {
             // Move left
-            if (this.gamma < 0) {
+            if (newGamma < 0) {
                 // All active blocks can move left
-                if (this.verify("left")) {
+                if (this.verify("left", 1)) {
                     // Iterate over every row
                     for (let i = 0; i < this.rows; i++) { 
                         // Iterate forwards over each column because we are moving left
@@ -222,22 +235,22 @@ export class Matrix {
                 }
             } 
             // Move right
-            else {
-                // All active blocks can move right
-                if (this.verify("right")) {
-                    // Iterate over every row
-                    for (let i = 0; i < this.rows; i++) { 
-                        // Iterate backwards over each column because we are moving right
-                        for (let j = this.cols - 1; j >= 0; j--) {
-                            // If the block is the current active piece
-                            if (this.matrix[i][j] && this.matrix[i][j].active) {
-                                this.matrix[i][j + 1] = this.matrix[i][j];
-                                this.matrix[i][j] = null;
-                            }
-                        }
-                    }
-                }
-            }
+            // else {
+            //     // All active blocks can move right
+            //     if (this.verify("right", 1)) {
+            //         // Iterate over every row
+            //         for (let i = 0; i < this.rows; i++) { 
+            //             // Iterate backwards over each column because we are moving right
+            //             for (let j = this.cols - 1; j >= 0; j--) {
+            //                 // If the block is the current active piece
+            //                 if (this.matrix[i][j] && this.matrix[i][j].active) {
+            //                     this.matrix[i][j + 1] = this.matrix[i][j];
+            //                     this.matrix[i][j] = null;
+            //                 }
+            //             }
+            //         }
+            //     }
+            // }
         }
         
     }
@@ -245,7 +258,7 @@ export class Matrix {
     // Handles pieces falling
     drop() {
         // If all active blocks can move down then move down
-        if (this.verify("down")) {
+        if (this.verify("down", 1)) {
             for (let i = this.rows - 1; i >= 0; i--) {
                 for (let j = this.cols - 1; j >= 0; j--) {
                     if (this.matrix[i][j] && this.matrix[i][j].active) {
@@ -298,8 +311,10 @@ export class Matrix {
             case "OrangeRicky": 
                 this.matrix[0][5] = new Block(image);
                 this.matrix[1][5] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(5);
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][3] = new Block(image);
+                
                 break;
 
             case "BlueRicky": 
@@ -307,6 +322,7 @@ export class Matrix {
                 this.matrix[1][3] = new Block(image);
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][5] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(5);
                 break;
 
             case "ClevelandZ":
@@ -314,12 +330,14 @@ export class Matrix {
                 this.matrix[0][4] = new Block(image);
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][5] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(5);
                 break;
 
             case "RhodeIslandZ":
                 this.matrix[0][5] = new Block(image);
                 this.matrix[0][4] = new Block(image);
                 this.matrix[1][4] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(4);
                 this.matrix[1][3] = new Block(image);
                 break;
 
@@ -328,11 +346,13 @@ export class Matrix {
                 this.matrix[0][4] = new Block(image);
                 this.matrix[0][5] = new Block(image);
                 this.matrix[0][6] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(6);
                 break;
 
             case "Teewee":
                 this.matrix[0][4] = new Block(image);
                 this.matrix[1][4] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(4);
                 this.matrix[1][3] = new Block(image);
                 this.matrix[1][5] = new Block(image);
                 break;
@@ -340,6 +360,7 @@ export class Matrix {
             case "Smashboy": 
                 this.matrix[0][4] = new Block(image);
                 this.matrix[0][5] = new Block(image, true);
+                this.baseOffset = this.getGammaFromIndex(5);
                 this.matrix[1][4] = new Block(image);
                 this.matrix[1][5] = new Block(image);
                 break;

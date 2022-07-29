@@ -338,6 +338,7 @@ export default function MySkillsDesktop() {
         p {
           font-family: PressStartP2;
           font-size: 1rem;
+          max-width: 80vw;
         }
 
         canvas {
@@ -345,6 +346,16 @@ export default function MySkillsDesktop() {
           height: 100%;
 
           position: absolute;
+        }
+
+        @media only screen and (max-width: 1000px) {
+          h2 {
+            font-size: 2.25rem;
+          }
+
+          p {
+            font-size: 0.85rem;
+          }
         }
       `}</style>
     </section>

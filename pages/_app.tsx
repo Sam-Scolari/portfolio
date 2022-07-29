@@ -117,7 +117,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 
         p {
           color: #a9a9a9;
-          font-size: 1rem;
+          font-size: 1.25rem;
         }
 
         small {
@@ -131,6 +131,16 @@ function MyApp({ Component, pageProps }: AppProps) {
         small,
         span {
           user-select: none;
+        }
+
+        @media only screen and (max-width: 1000px) {
+          h2 {
+            font-size: 2.5rem;
+          }
+
+          p {
+            font-size: 1rem;
+          }
         }
       `}</style>
     </ThemeContext.Provider>

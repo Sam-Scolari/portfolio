@@ -52,17 +52,25 @@ export default function MyWork({ projects }) {
           text-align: left;
         }
 
-        p {
-          font-size: 1.25rem;
-          font-weight: 500;
-        }
-
         ul {
           list-style: none;
           margin-top: 64px;
           display: flex;
+
           gap: 64px;
-          margin-left: -40px;
+          background-color: red;
+        }
+
+        @media only screen and (max-width: 700px) {
+          #my-work {
+            left: 32px;
+          }
+        }
+
+        @media only screen and (max-width: 450px) {
+          #my-work {
+            left: 20px;
+          }
         }
       `}</style>
     </section>

@@ -58,9 +58,8 @@ export default function MySkillsMobile() {
         }
         p {
           font-family: PressStartP2;
-          font-size: 0.75rem;
-          padding-left: 32px;
-          padding-right: 32px;
+          font-size: 0.85rem;
+          max-width: 80vw;
         }
 
         canvas {
@@ -68,6 +67,16 @@ export default function MySkillsMobile() {
           height: 100%;
 
           position: absolute;
+        }
+
+        @media only screen and (max-width: 400px) {
+          h2 {
+            font-size: 1.85rem;
+          }
+
+          p {
+            font-size: 0.75rem;
+          }
         }
       `}</style>
     </section>
