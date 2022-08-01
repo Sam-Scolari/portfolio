@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import ProjectLinkButton from "../../buttons/ProjectLinkButton";
 import ProjectCard from "./ProjectCard";
 import ProjectView from "./ProjectView";
@@ -11,13 +11,33 @@ export default function MyWork({ projects }) {
   useEffect(() => {
     console.log(showProject);
   }, [showProject]);
+
+  const list = useRef<any>();
+
+  useEffect(() => {
+    console.log(list.current.scrollWidth);
+    list.current.scrollTo(
+      (list.current.scrollWidth - window.innerWidth) / 2,
+      0
+    );
+  }, []);
   return (
     <section>
-      <div id="my-work">
-        <div id="heading">
-          <h2>Projects</h2>
-          <p>Check out some of my completed work</p>
-        </div>
+      <h2>Projects</h2>
+      <p>Check out some of my completed work</p>
+      <div id="wrapper">
+        <div id="mask-top"></div>
+        <ul ref={list}>
+          {projects.map((project, index) => (
+            <li key={index}>
+              <img src={project.image} alt="" />
+            </li>
+          ))}
+        </ul>
+        <div id="mask-bottom"></div>
+      </div>
+
+      {/* <div id="my-work">s
         <ul>
           {projects.map((project, index) => (
             <ProjectCard
@@ -28,49 +48,76 @@ export default function MyWork({ projects }) {
               project={project}
             />
           ))}
-        </ul>
+        </ul> 
       </div>
       <ProjectView
         currentProject={currentProject}
         projects={projects}
         showProject={showProject}
         setShowProject={setShowProject}
-      />
+      /> */}
       <style jsx>{`
-        #my-work {
-          position: absolute;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-start;
-          left: 80px;
-          pointer-events: ${showProject ? "none" : "auto"};
-          opacity: ${showProject ? "0" : "1"};
-          transition: opacity 0.5s;
+        h2 {
+          font-size: 3.5rem;
+          margin-bottom: 16px;
         }
-
-        #heading {
-          text-align: left;
+        #wrapper {
+          position: relative;
+          margin-top: 64px;
         }
 
         ul {
           list-style: none;
-          margin-top: 64px;
+
           display: flex;
-
           gap: 64px;
-          background-color: red;
+          width: 100vw;
+          height: 300px;
+          overflow-x: scroll;
+          scroll-snap-type: x mandatory;
         }
 
-        @media only screen and (max-width: 700px) {
-          #my-work {
-            left: 32px;
-          }
+        #mask-top {
+          position: absolute;
+          background-size: 100vw 100vh;
+          background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'  stroke-width='1' stroke='hsla(0, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+          background-repeat: no-repeat;
+          width: 100vw;
+          height: 80px;
+          border-radius: 100%;
+          top: -24px;
         }
 
-        @media only screen and (max-width: 450px) {
-          #my-work {
-            left: 20px;
-          }
+        #mask-bottom {
+          position: absolute;
+          background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'  stroke-width='1' stroke='hsla(0, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+
+          background-color: white;
+          width: 100vw;
+          height: 80px;
+          border-radius: 100%;
+          bottom: -24px;
+        }
+
+        li:first-child {
+          padding-left: 100vw;
+        }
+
+        li:last-child {
+          padding-right: 100vw;
+        }
+
+        img {
+          object-fit: cover;
+          width: 400px;
+          height: 300px;
+          scroll-snap-align: center;
+          cursor: pointer;
+        }
+
+        ul::-webkit-scrollbar {
+          width: 0;
+          height: 0;
         }
       `}</style>
     </section>

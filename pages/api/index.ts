@@ -21,6 +21,49 @@ const projects: Project[] = [
     },
   },
   {
+    id: "redesign-challenge",
+    name: "Redesign Challenge",
+    image: "/redesign-challenge.png",
+    description: "",
+    links: {
+      figma: "https://www.figma.com/file/6QJpNHO0okfredjd6XoOdd/Redesign-Challenge?node-id=0%3A1",
+      github: null,
+      caseStudy: null,
+    },
+  },
+  {
+    id: "web3assets",
+    name: "Web3 Assets",
+    image: "/web3assets.png",
+    description: "",
+    links: {
+      figma: "https://www.figma.com/file/55mRZluubESkaLNJjfGnQS/Web3-Assets?node-id=209%3A5",
+      github: null,
+      caseStudy: null,
+    },
+  }, {
+    id: "portfolio",
+    name: "Portfolio",
+    image: "/portfolio.png",
+    description: "",
+    links: {
+      figma: "https://www.figma.com/file/19Cd4rrFEK9NgqPPU6APEP/samscolari.me?node-id=0%3A1",
+      github: "https://github.com/Sam-Scolari/portfolio",
+      caseStudy: null,
+    },
+  },
+  {
+    id: "redesign-challenge",
+    name: "Redesign Challenge",
+    image: "/redesign-challenge.png",
+    description: "",
+    links: {
+      figma: "https://www.figma.com/file/6QJpNHO0okfredjd6XoOdd/Redesign-Challenge?node-id=0%3A1",
+      github: null,
+      caseStudy: null,
+    },
+  },
+  {
     id: "web3assets",
     name: "Web3 Assets",
     image: "/web3assets.png",

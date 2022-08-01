@@ -32,7 +32,7 @@ export default function Greeting() {
         }
 
         h1:hover {
-          transform: scale(1.25);
+          transform: scale(1.15);
         }
 
         h1::before {

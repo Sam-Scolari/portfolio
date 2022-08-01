@@ -1,15 +1,18 @@
 import { useEffect, useRef, useState } from "react";
-import { Asteroid } from "./asteroids";
+import { Asteroid } from "./asteroid";
 import { Bullet } from "./bullet";
 import { Ship } from "./ship";
 import { ethers } from "ethers";
 
+export enum State {
+  start,
+  play,
+  end,
+}
+
 export default function MySkillsDesktop() {
   const canvas = useRef<any | undefined>();
-
-  const [hideControls, setHideControls] = useState(false);
-
-  let keys = [];
+  const [state, setState] = useState(State.start);
 
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
@@ -22,149 +25,70 @@ export default function MySkillsDesktop() {
       }
     }
     resize();
+    window.addEventListener("resize", resize);
 
-    let asteroidsLoaded = 0;
-    let shipLoaded = 0;
-
-    let shipImage = new Image();
-    shipImage.src = "/ship.svg";
-    shipImage.onload = function () {
-      ctx.drawImage(shipImage, 0, 0);
-      shipLoaded += 1;
-    };
-
-    let shipFireImage = new Image();
-    shipFireImage.src = "/shipFire.svg";
-    shipFireImage.onload = function () {
-      ctx.drawImage(shipFireImage, 0, 0);
-      shipLoaded += 1;
-    };
-
-    let ship = new Ship(ctx, canvas);
-
-    let next = new Image();
-    next.src = "/asteroids/next.svg";
-    next.onload = function () {
-      ctx.drawImage(next, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let react = new Image();
-    react.src = "/asteroids/react.svg";
-    react.onload = function () {
-      ctx.drawImage(react, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let typescript = new Image();
-    typescript.src = "/asteroids/typescript.svg";
-    typescript.onload = function () {
-      ctx.drawImage(typescript, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let javascript = new Image();
-    javascript.src = "/asteroids/javascript.svg";
-    javascript.onload = function () {
-      ctx.drawImage(javascript, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let html = new Image();
-    html.src = "/asteroids/html.svg";
-    html.onload = function () {
-      ctx.drawImage(html, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let css = new Image();
-    css.src = "/asteroids/css.svg";
-    css.onload = function () {
-      ctx.drawImage(css, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let figma = new Image();
-    figma.src = "/asteroids/figma.svg";
-    figma.onload = function () {
-      ctx.drawImage(figma, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let solidity = new Image();
-    solidity.src = "/asteroids/solidity.svg";
-    solidity.onload = function () {
-      ctx.drawImage(solidity, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let graphql = new Image();
-    graphql.src = "/asteroids/graphql.svg";
-    graphql.onload = function () {
-      ctx.drawImage(graphql, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let tailwind = new Image();
-    tailwind.src = "/asteroids/tailwind.svg";
-    tailwind.onload = function () {
-      ctx.drawImage(tailwind, 0, 0);
-      asteroidsLoaded += 1;
-    };
-
-    let astroidAssets = [
-      next,
-      react,
-      typescript,
-      javascript,
-      html,
-      css,
-      figma,
-      solidity,
-      graphql,
-      tailwind,
-    ];
-
+    // Initialize game objects
+    let ship = new Ship(ctx);
     let asteroids = [];
-    for (let i = 0; i < astroidAssets.length; i++) {
-      asteroids.push(new Asteroid(canvas));
-    }
-
     let bullets = [];
 
     // Key press listeners
+    let keys = [];
     document.body.addEventListener("keydown", (e) => (keys[e.key] = true));
     document.body.addEventListener("keyup", (e) => {
-      if (!hideControls) setHideControls(true);
       keys[e.key] = false;
-      if (e.key === " ") bullets.push(new Bullet(ship));
+      if (e.key === " ")
+        bullets.push(
+          new Bullet(ctx, ship.x, ship.y, ship.image.height, ship.direction)
+        );
     });
 
-    // Update width and height on window resize
-    window.addEventListener("resize", resize);
+    const SRCs = [
+      "/asteroids/next.svg",
+      "/asteroids/react.svg",
+      "/asteroids/typescript.svg",
+      "/asteroids/javascript.svg",
+      "/asteroids/html.svg",
+      "/asteroids/css.svg",
+      "/asteroids/tailwind.svg",
+      "/asteroids/figma.svg",
+      "/asteroids/solidity.svg",
+      "/asteroids/graphql.svg",
+    ];
+
+    for (let src of SRCs) {
+      let image = new Image();
+      image.src = src;
+      // image.onload = function () {
+      //   ctx.drawImage(image, -1000, -1000);
+      // };
+      asteroids.push(new Asteroid(ctx, image));
+    }
 
     const render = () => {
       // Clear canvas each frame
-      ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
-      // Render ship
-      if (shipLoaded >= 2) {
-        ship.update(canvas.current, ctx, keys, shipImage, shipFireImage);
+      // Update and draw ship
+      if (keys["w"]) {
+        setState(State.play);
+        ship.move();
+      }
+      if (keys["a"]) ship.turnLeft();
+      if (keys["d"]) ship.turnRight();
+      ship.update();
+      ship.draw(keys["w"]);
+
+      // Update and draw asteroids
+      for (let asteroid of asteroids) {
+        asteroid.update();
+        asteroid.draw();
       }
 
-      // Render astroids
-      if (asteroidsLoaded >= astroidAssets.length) {
-        asteroids.forEach((asteroid, index) => {
-          asteroid.draw(ctx, astroidAssets[index]);
-          asteroid.update(canvas.current, astroidAssets[index]);
-        });
-      }
-
-      // Render bullets
-      bullets.forEach((bullet) => {
-        bullet.draw(ctx);
+      for (let bullet of bullets) {
         bullet.update();
-      });
+        bullet.draw();
+      }
 
       requestAnimationFrame(render);
     };
@@ -281,7 +205,7 @@ export default function MySkillsDesktop() {
           bottom: 32px;
           display: flex;
           flex-direction: column;
-          opacity: ${hideControls ? "1" : "0"};
+          opacity: ${state === State.play ? "1" : "0"};
           transition: opacity 0.5s;
           gap: 8px;
         }
@@ -292,7 +216,7 @@ export default function MySkillsDesktop() {
           display: flex;
           flex-direction: column;
           gap: 24px;
-          opacity: ${hideControls ? "1" : "0"};
+          opacity: ${state === State.play ? "1" : "0"};
           transition: opacity 0.5s;
         }
 
@@ -316,7 +240,7 @@ export default function MySkillsDesktop() {
           font-family: PressStartP2;
           text-align: left;
           line-height: 2rem;
-          opacity: ${hideControls ? "0" : "1"};
+          opacity: ${state === State.start ? "1" : "0"};
           transition: opacity 0.5s;
         }
 

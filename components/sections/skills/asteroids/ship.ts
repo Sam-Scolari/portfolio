@@ -1,9 +1,12 @@
 export class Ship {
+    ctx: any;
     x: number;
     y: number;
     velocityX: number;
     velocityY: number;
     direction: number;
+    image: any;
+    fireImage: any;
 
     blinking: boolean;
 
@@ -12,9 +15,9 @@ export class Ship {
 
     moving: boolean;
 
-    constructor(ctx, canvas) {
-        this.x = canvas.current.width / 2 - 9.5;
-        this.y = canvas.current.height - 250;
+    constructor(_ctx) {
+        this.x = _ctx.canvas.width / 2 - 9.5;
+        this.y = _ctx.canvas.height - 250;
         this.direction = 0;
 
         this.velocityX = 0;
@@ -24,49 +27,69 @@ export class Ship {
         this.turningRight = false;
 
         this.blinking = true;
+
+        this.ctx = _ctx;
+
+        this.image = new Image();
+        this.image.src = "/ship.svg";
+
+        this.fireImage = new Image();
+        this.fireImage.src = "/shipFire.svg";
     }
 
-    update(canvas, ctx, keys, shipImage, shipFireImage) {
-      // If ship goes off screen
-      if (this.x > canvas.width + shipImage.width)
-        this.x = 0 - shipImage.width;
-      if (this.x < -shipImage.width)
-        this.x = canvas.width + shipImage.width;
+    move() {
+      if (this.blinking) this.blinking = false;
+      this.velocityX -= Math.sin(this.direction) * 0.1;
+      this.velocityY += Math.cos(this.direction) * 0.1;
+    }
 
-      if (this.y > canvas.height + shipImage.height)
-        this.y = 0 - shipImage.height;
-      if (this.y < -shipImage.height)
-        this.y = canvas.height + shipImage.height;
+    turnLeft() {
+      this.direction = this.direction - Math.PI / 100;
+    }
 
-      // Moving
-      if (keys["w"]) {
-        if (this.blinking) this.blinking = false;
-        this.velocityX -= Math.sin(this.direction) * 0.1;
-        this.velocityY += Math.cos(this.direction) * 0.1;
+    turnRight() {
+      this.direction = this.direction + Math.PI / 100;
+    }
+
+    draw(_fire) {
+      // Blink the ship if this.blinking
+      if (!this.blinking || Math.floor(Date.now() / 450) % 2) {
+        this.ctx.save();
+
+        this.ctx.translate(this.x, this.y);
+        this.ctx.rotate(this.direction);
+
+        this.ctx.drawImage(
+          _fire ? this.fireImage : this.image,
+          -this.image.width / 2,
+          -this.image.height / 2
+        );
+
+        this.ctx.restore();
       }
+    }
 
-      // Turning
-      if (keys["a"]) this.direction = this.direction - Math.PI / 100;
-      if (keys["d"]) this.direction = this.direction + Math.PI / 100;
+    update() {
+      // If ship goes off the right of the screen
+      if (this.x > this.ctx.canvas.width + this.image.width)
+        this.x = 0 - this.image.width;
 
+      // If ship goes off the left of the screen
+      if (this.x < -this.image.width)
+        this.x = this.ctx.canvas.width + this.image.width;
+
+      // If ship goes off the bottom of the screen
+      if (this.y > this.ctx.canvas.height + this.image.height)
+        this.y = 0 - this.image.height;
+
+        // If ship goes off the top of the screen
+      if (this.y < -this.image.height)
+        this.y = this.ctx.canvas.height + this.image.height;
+
+      // Gradually slow the ship down  
       this.velocityX *= 0.99;
       this.velocityY *= 0.99;
-
       this.x -= this.velocityX;
       this.y -= this.velocityY;
-
-      if (!this.blinking || Math.floor(Date.now() / 450) % 2) {
-        ctx.save();
-
-        ctx.translate(this.x, this.y);
-        ctx.rotate(this.direction);
-
-        ctx.drawImage(
-          keys["w"] ? shipFireImage : shipImage,
-          -shipImage.width / 2,
-          -shipImage.height / 2
-        );
-        ctx.restore();
-      }
     }
 }

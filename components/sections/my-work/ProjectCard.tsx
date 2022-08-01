@@ -30,6 +30,7 @@ export default function ProjectCard({
           width: 300px;
           height: 200px;
           border-radius: 16px;
+          object-fit: cover;
         }
 
         h3:hover {

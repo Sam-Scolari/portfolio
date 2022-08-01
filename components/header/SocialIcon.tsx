@@ -42,7 +42,7 @@ export default function Icon({
           transition: transform 0.5s;
         }
         div:hover {
-          transform: scale(1.25);
+          transform: scale(1.2);
         }
         a {
           margin-left: 12px;
