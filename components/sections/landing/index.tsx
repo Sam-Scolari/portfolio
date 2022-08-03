@@ -34,11 +34,6 @@ export default function Landing({ setWasPressed }) {
         </div>
         <div id="bottom">
           <SocialIcon
-            href="https://discordapp.com/users/174640628456620032/"
-            src="/icons/discord.svg"
-            alt="Discord"
-          />
-          <SocialIcon
             href="https://www.linkedin.com/in/sam-scolari/"
             src="/icons/linkedin.svg"
             alt="LinkedIn"
