@@ -14,7 +14,6 @@ export enum State {
 export default function Asteroids() {
   const canvas = useRef<any | undefined>();
   const [state, setState] = useState(State.start);
-  const { show } = useLayout();
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
