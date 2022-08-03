@@ -140,14 +140,14 @@ export default function CanvasDrawing({ picking, setPicking }) {
 
         <img
           id="eraser"
-          src="eraser.svg"
+          src="/icons/eraser.svg"
           onClick={() => setCurrentTool(Tools.Eraser)}
           onMouseEnter={() => setHideCursor(true)}
           onMouseLeave={() => setHideCursor(false)}
         />
         <img
           id="pencil"
-          src="pencil.svg"
+          src="/icons/pencil.svg"
           onClick={() => setCurrentTool(Tools.Pencil)}
           onMouseEnter={() => setHideCursor(true)}
           onMouseLeave={() => setHideCursor(false)}
@@ -194,7 +194,11 @@ export default function CanvasDrawing({ picking, setPicking }) {
       ) : (
         <img
           id="cursor"
-          src={currentTool === Tools.Pencil ? "/pencil.svg" : "/eraser.svg"}
+          src={
+            currentTool === Tools.Pencil
+              ? "/icons/pencil.svg"
+              : "/icons/eraser.svg"
+          }
         />
       )}
       <style jsx>{`

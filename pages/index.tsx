@@ -1,62 +1,23 @@
 import type { NextPage } from "next";
-import { useContext, useEffect, useRef, useState } from "react";
-import confetti from "canvas-confetti";
+import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import Landing from "../components/sections/landing";
-import { ThemeContext } from "../pages/_app";
 import Thanks from "../components/sections/thanks";
 import Projects from "../components/sections/projects";
-import MySkillsDesktop from "../components/sections/skills/asteroids";
-import { useMediaQuery } from "usehooks-ts";
-import MySkillsMobile from "../components/sections/skills/tetris";
-import useLayout from "../components/hooks/useLayout";
-import getConfig from "next/config";
-import {
-  ApolloClient,
-  gql,
-  InMemoryCache,
-  NormalizedCacheObject,
-} from "@apollo/client";
-import { Project } from "../interfaces";
 import Skills from "../components/sections/skills";
+import useConfetti from "../components/hooks/useConfetti";
 
-const Home: NextPage = (props: { projects: string }) => {
+const Home: NextPage = () => {
   const { data } = useAccount();
-
-  const { isDark, setIsDark } = useContext(ThemeContext);
 
   const [wasPressed, setWasPressed] = useState(false);
   const [wasUsed, setWasUsed] = useState(true);
 
-  const { desktop } = useLayout();
+  const { fire } = useConfetti();
 
-  // Confetti
   useEffect(() => {
     if (wasUsed && wasPressed && data?.address) {
-      var end = Date.now() + 15 * 100;
-
-      const colors = ["#8247e5", "#e52268", "#ff00e5"];
-
-      (function frame() {
-        confetti({
-          particleCount: 3,
-          angle: 60,
-          spread: 55,
-          origin: { x: 0, y: 0.6 },
-          colors: colors,
-        });
-        confetti({
-          particleCount: 3,
-          angle: 120,
-          spread: 55,
-          origin: { x: 1, y: 0.6 },
-          colors: colors,
-        });
-
-        if (Date.now() < end) {
-          requestAnimationFrame(frame);
-        }
-      })();
+      fire();
       setWasUsed(false);
     }
   }, [data, wasPressed, wasUsed]);
@@ -64,13 +25,9 @@ const Home: NextPage = (props: { projects: string }) => {
   return (
     <main>
       <Landing setWasPressed={setWasPressed} />
-
       <Skills />
-
-      <Projects projects={props.projects} />
-
+      <Projects />
       <Thanks />
-
       <style jsx>{`
         main {
           width: 100vw;
@@ -92,40 +49,3 @@ const Home: NextPage = (props: { projects: string }) => {
 };
 
 export default Home;
-
-export const getServerSideProps = async (ctx) => {
-  const { id } = ctx.query;
-
-  const { publicRuntimeConfig } = getConfig();
-
-  const client: ApolloClient<NormalizedCacheObject> = new ApolloClient({
-    uri: publicRuntimeConfig.API,
-    cache: new InMemoryCache(),
-  });
-
-  const query = gql`
-    query Query {
-      getProjects {
-        id
-        name
-        image
-        description
-        links {
-          figma
-          github
-          caseStudy
-        }
-      }
-    }
-  `;
-
-  const { data } = await client.query({ query: query });
-
-  const projects = data.getProjects as Project[];
-
-  return data.getProjects
-    ? {
-        props: { projects: projects },
-      }
-    : { notFound: true };
-};

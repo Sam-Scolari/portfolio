@@ -13,5 +13,10 @@ module.exports = {
     ENDPOINT: process.env.ENDPOINT,
     API: process.env.API
   },
+
+  compiler: {
+    // Enables the styled-components SWC transform
+    styledComponents: true
+  }
 };
 

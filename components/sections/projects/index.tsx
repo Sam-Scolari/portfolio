@@ -4,29 +4,33 @@ import useLayout from "../../hooks/useLayout";
 import ProjectCard from "./ProjectCard";
 import ProjectView from "./ProjectView";
 
-export default function Projects({ projects }) {
-  console.log(projects);
+export default function Projects() {
+  const [projects, setProjects] = useState([]);
+
   const [showProject, setShowProject] = useState(false);
 
-  const [currentProject, setCurrentProject] = useState(
-    Math.floor(projects.length / 2)
-  );
+  const [currentProject, setCurrentProject] = useState(0);
 
-  const { desktop, animate } = useLayout();
-
-  // useEffect(() => {
-  //   console.log(showProject);
-  // }, [showProject]);
+  const { desktop } = useLayout();
 
   const list = useRef<any>();
 
   useEffect(() => {
-    // console.log(list.current.scrollWidth);
+    // Scroll to the middle of the list of projects
     list.current.scrollTo(
       (list.current.scrollWidth - window.innerWidth) / 2,
       0
     );
+
+    // Set the current project to the middle one
+    setCurrentProject(Math.floor(projects.length / 2));
+  }, [projects]);
+
+  useEffect(() => {
+    // Fetch projects on mount
+    fetch("/api/projects").then(async (data) => setProjects(await data.json()));
   }, []);
+
   return (
     <section>
       <h2>Projects</h2>
@@ -44,7 +48,7 @@ export default function Projects({ projects }) {
       </div>
       <div id="controls">
         <img
-          src="/arrow-left-box.svg"
+          src="/icons/arrow-left-box.svg"
           style={{
             cursor: currentProject > 0 ? "pointer" : "auto",
             opacity: currentProject > 0 ? 1 : 0.15,
@@ -54,9 +58,9 @@ export default function Projects({ projects }) {
             list.current.scrollBy({ left: -1, behavior: "smooth" });
           }}
         />
-        <span>{projects[currentProject].name}</span>
+        <span>{projects[currentProject]?.name}</span>
         <img
-          src="/arrow-right-box.svg"
+          src="/icons/arrow-right-box.svg"
           style={{
             cursor: currentProject < projects.length - 1 ? "pointer" : "auto",
             opacity: currentProject < projects.length - 1 ? 1 : 0.15,

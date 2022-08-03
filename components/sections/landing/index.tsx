@@ -1,10 +1,9 @@
 import Greeting from "./Greeting";
 import Connect from "./Connect";
-import SocialIcon from "../../header/SocialIcon";
 import useLayout from "../../hooks/useLayout";
+import { SocialIcon } from "../../Header";
 
 export default function Landing({ setWasPressed }) {
-  const { animate } = useLayout();
   return (
     <section>
       <div>
@@ -14,34 +13,34 @@ export default function Landing({ setWasPressed }) {
         <div>
           <SocialIcon
             href="https://rainbow.me/samscolari.eth"
-            src="/rainbow.svg"
+            src="/icons/rainbow.svg"
             alt="Rainbow Wallet"
           />
           <SocialIcon
             href="https://lenster.xyz/u/samscolari.lens"
-            src="/lens.svg"
+            src="/icons/lens.svg"
             alt="Lens Protocol"
           />
           <SocialIcon
             href="https://github.com/Sam-Scolari"
-            src="/github.svg"
+            src="/icons/github.svg"
             alt="Github"
           />
           <SocialIcon
             href="https://twitter.com/SamScolari"
-            src="/twitter.svg"
+            src="/icons/twitter.svg"
             alt="Twitter"
           />
         </div>
         <div id="bottom">
           <SocialIcon
             href="https://discordapp.com/users/174640628456620032/"
-            src="/discord.svg"
+            src="/icons/discord.svg"
             alt="Discord"
           />
           <SocialIcon
             href="https://www.linkedin.com/in/sam-scolari/"
-            src="/linkedin.svg"
+            src="/icons/linkedin.svg"
             alt="LinkedIn"
           />
         </div>

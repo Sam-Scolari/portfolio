@@ -10,14 +10,8 @@ import {
 import { chain, configureChains, createClient, WagmiConfig } from "wagmi";
 import { publicProvider } from "wagmi/providers/public";
 import Head from "next/head";
-import Header from "../components/header/Header";
-import {
-  createContext,
-  useContext,
-  useEffect,
-  useLayoutEffect,
-  useState,
-} from "react";
+import Header from "../components/Header";
+import { createContext, useEffect, useState } from "react";
 import Cursor from "../public/cursor.svg";
 
 export const ThemeContext = createContext(null);
@@ -90,7 +84,6 @@ function MyApp({ Component, pageProps }: AppProps) {
         }
 
         section {
-          cursor: url(${Cursor}), auto;
           position: relative;
           display: flex;
           flex-direction: column;
