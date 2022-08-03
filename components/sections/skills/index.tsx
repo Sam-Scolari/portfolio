@@ -7,7 +7,11 @@ export default function Skills() {
   return (
     <section>
       {mobile ? <Tetris /> : <Asteroids />}
-      <style jsx>{``}</style>
+      <style jsx>{`
+        section {
+          cursor: none;
+        }
+      `}</style>
     </section>
   );
 }
