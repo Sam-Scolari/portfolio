@@ -3,7 +3,7 @@ import useLayout from "../../hooks/useLayout";
 import CanvasDrawing from "./CanvasDrawing";
 
 export default function Thanks() {
-  const { desktop, animate } = useLayout();
+  const { mobile, desktop } = useLayout();
   const [picking, setPicking] = useState(false);
 
   return (
@@ -15,7 +15,7 @@ export default function Thanks() {
 
       <style jsx>{`
         section {
-          cursor: ${!desktop || picking ? "auto" : "none"};
+          cursor: ${mobile || picking ? "auto" : "none"};
         }
       `}</style>
     </section>
