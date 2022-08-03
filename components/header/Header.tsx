@@ -27,11 +27,7 @@ export default function Header() {
             src="/twitter.svg"
             alt="Twitter"
           />
-          <SocialIcon
-            href="https://discordapp.com/users/174640628456620032/"
-            src="/discord.svg"
-            alt="Discord"
-          />
+          <SocialIcon href="" src="/orb.png" alt="Orb" />
           <SocialIcon
             href="https://www.linkedin.com/in/sam-scolari/"
             src="/linkedin.svg"

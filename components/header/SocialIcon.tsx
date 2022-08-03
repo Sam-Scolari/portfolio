@@ -23,7 +23,11 @@ export default function Icon({
           <Image
             style={{
               borderRadius:
-                src === "/rainbow.svg" ? 6 : src === "/linkedin.svg" ? 5 : 0,
+                src === "/rainbow.svg" || src === "/orb.png"
+                  ? 6
+                  : src === "/linkedin.svg"
+                  ? 5
+                  : 0,
               filter: src === "/github.svg" && isDark ? "invert(1)" : "none",
               transition: "filter 0.5s",
               backgroundColor:

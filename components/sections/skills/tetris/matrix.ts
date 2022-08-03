@@ -58,7 +58,7 @@ export class Matrix {
         }
         delete this.gammaMap["0"];
 
-        console.log(this.gammaMap)
+        // console.log(this.gammaMap)
 
         // Set gamma
         this.gamma = 0;
@@ -82,7 +82,7 @@ export class Matrix {
 
         this.drop();
 
-        console.log(this.matrix);
+        // console.log(this.matrix);
     }
 
     draw() {

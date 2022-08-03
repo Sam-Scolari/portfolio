@@ -1,8 +1,10 @@
 import Greeting from "./Greeting";
 import Connect from "./Connect";
 import SocialIcon from "../../header/SocialIcon";
+import useLayout from "../../hooks/useLayout";
 
-export default function StartPage({ setWasPressed }) {
+export default function Landing({ setWasPressed }) {
+  const { animate } = useLayout();
   return (
     <section>
       <div>

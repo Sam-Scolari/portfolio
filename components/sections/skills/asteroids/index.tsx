@@ -3,6 +3,7 @@ import { Asteroid } from "./asteroid";
 import { Bullet } from "./bullet";
 import { Ship } from "./ship";
 import { ethers } from "ethers";
+import useLayout from "../../../hooks/useLayout";
 
 export enum State {
   start,
@@ -10,10 +11,10 @@ export enum State {
   end,
 }
 
-export default function MySkillsDesktop() {
+export default function Asteroids() {
   const canvas = useRef<any | undefined>();
   const [state, setState] = useState(State.start);
-
+  const { show } = useLayout();
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -142,7 +143,7 @@ export default function MySkillsDesktop() {
   }, []);
 
   return (
-    <section>
+    <>
       <h2>Skills</h2>
       <p>The languages, frameworks, and tools I design and build with</p>
       <span id="controls">
@@ -282,6 +283,6 @@ export default function MySkillsDesktop() {
           }
         }
       `}</style>
-    </section>
+    </>
   );
 }

@@ -18,6 +18,7 @@ import {
   useLayoutEffect,
   useState,
 } from "react";
+import Cursor from "../public/cursor.svg";
 
 export const ThemeContext = createContext(null);
 function MyApp({ Component, pageProps }: AppProps) {
@@ -39,7 +40,8 @@ function MyApp({ Component, pageProps }: AppProps) {
   useEffect(() => {
     window.addEventListener("unload", () => window.scrollTo(0, 0));
     window.addEventListener("keydown", (e) => {
-      if (e.key === " ") e.preventDefault();
+      if (e.key === " " || e.key === "ArrowLeft" || e.key === "ArrowRight")
+        e.preventDefault();
     });
 
     // First we get the viewport height and we multiple it by 1% to get a value for a vh unit
@@ -85,13 +87,10 @@ function MyApp({ Component, pageProps }: AppProps) {
           height: calc(var(--vh, 1vh) * 100);
 
           margin: 0;
-          cursor: url("/blackcur.png") auto;
-          transition: background-color 0.25s;
-          background-color: ${isDark ? "#131313" : "white"};
         }
 
         section {
-          background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'  stroke-width='1' stroke='hsla(0, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
+          cursor: url(${Cursor}), auto;
           position: relative;
           display: flex;
           flex-direction: column;
@@ -100,6 +99,12 @@ function MyApp({ Component, pageProps }: AppProps) {
           width: 100%;
           height: 100%;
           scroll-snap-align: start;
+          opacity: 0;
+          transition: opacity 0.5s;
+        }
+
+        section.show {
+          opacity: 1;
         }
 
         h2 {

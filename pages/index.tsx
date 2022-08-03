@@ -2,10 +2,10 @@ import type { NextPage } from "next";
 import { useContext, useEffect, useRef, useState } from "react";
 import confetti from "canvas-confetti";
 import { useAccount } from "wagmi";
-import StartPage from "../components/sections/start";
+import Landing from "../components/sections/landing";
 import { ThemeContext } from "../pages/_app";
-import EndPage from "../components/sections/end";
-import MyWork from "../components/sections/my-work";
+import Thanks from "../components/sections/thanks";
+import Projects from "../components/sections/projects";
 import MySkillsDesktop from "../components/sections/skills/asteroids";
 import { useMediaQuery } from "usehooks-ts";
 import MySkillsMobile from "../components/sections/skills/tetris";
@@ -18,6 +18,7 @@ import {
   NormalizedCacheObject,
 } from "@apollo/client";
 import { Project } from "../interfaces";
+import Skills from "../components/sections/skills";
 
 const Home: NextPage = (props: { projects: string }) => {
   const { data } = useAccount();
@@ -62,11 +63,14 @@ const Home: NextPage = (props: { projects: string }) => {
 
   return (
     <main>
-      {/* <div style={{position: "fixed", top: 0, left: 0,}}>}</div> */}
-      <StartPage setWasPressed={setWasPressed} />
-      {desktop ? <MySkillsDesktop /> : <MySkillsMobile />}
-      <MyWork projects={props.projects} />
-      <EndPage />
+      <Landing setWasPressed={setWasPressed} />
+
+      <Skills />
+
+      <Projects projects={props.projects} />
+
+      <Thanks />
+
       <style jsx>{`
         main {
           width: 100vw;
@@ -75,6 +79,7 @@ const Home: NextPage = (props: { projects: string }) => {
           overflow-x: hidden;
           overflow-y: ${data?.address ? "scroll" : "hidden"};
           text-align: center;
+          background-image: url("data:image/svg+xml,<svg id='patternId' width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'><defs><pattern id='a' patternUnits='userSpaceOnUse' width='20' height='20' patternTransform='scale(1) rotate(0)'><rect x='0' y='0' width='100%' height='100%' fill='hsla(0,0%,100%,1)'/><path d='M 10,-2.55e-7 V 20 Z M -1.1677362e-8,10 H 20 Z'  stroke-width='1' stroke='hsla(0, 0%, 96%, 1)' fill='none'/></pattern></defs><rect width='800%' height='800%' transform='translate(0,0)' fill='url(%23a)'/></svg>");
         }
 
         main::-webkit-scrollbar {

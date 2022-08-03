@@ -2,9 +2,8 @@ import { useEffect, useRef, useState } from "react";
 import useLayout from "../../../hooks/useLayout";
 import { Matrix } from "./matrix";
 
-export default function MySkillsMobile() {
+export default function Tetris() {
   const canvas = useRef<any | undefined>();
-
   function getPermission() {
     try {
       (DeviceMotionEvent as any).requestPermission().then((response) => {
@@ -33,7 +32,7 @@ export default function MySkillsMobile() {
 
     const render = () => {
       // Clear canvas each frame
-      ctx.clearRect(0, 0, canvas.current.width, canvas.current.height);
+      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 
       matrix.draw();
       matrix.move();
@@ -44,7 +43,7 @@ export default function MySkillsMobile() {
   }, []);
 
   return (
-    <section>
+    <>
       <h2>My Skills</h2>
       <p>The languages, frameworks, and tools I design and build with</p>
       <button id="start-game" style={{ zIndex: 1 }} onClick={getPermission}>
@@ -79,6 +78,6 @@ export default function MySkillsMobile() {
           }
         }
       `}</style>
-    </section>
+    </>
   );
 }
