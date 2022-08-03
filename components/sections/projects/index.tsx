@@ -5,9 +5,12 @@ import ProjectCard from "./ProjectCard";
 import ProjectView from "./ProjectView";
 
 export default function Projects({ projects }) {
+  console.log(projects);
   const [showProject, setShowProject] = useState(false);
 
-  const [currentProject, setCurrentProject] = useState(projects.length / 2 - 1);
+  const [currentProject, setCurrentProject] = useState(
+    Math.floor(projects.length / 2)
+  );
 
   const { desktop, animate } = useLayout();
 
