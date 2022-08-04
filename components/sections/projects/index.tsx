@@ -22,7 +22,6 @@ export default function Projects() {
       0
     );
 
-    // Set the current project to the middle one
     setCurrentProject(Math.floor(projects.length / 2));
   }, [projects]);
 
@@ -37,15 +36,36 @@ export default function Projects() {
       <p>Check out some of my completed work</p>
       <div id="wrapper">
         <div id="mask-top"></div>
-        <ul ref={list}>
+        <ul
+          ref={list}
+          onScroll={() => {
+            document
+              .elementsFromPoint(window.innerWidth / 2, window.innerHeight / 2)
+              .forEach((element) => {
+                if (element.tagName === "IMG") {
+                  setCurrentProject(
+                    projects.indexOf(
+                      projects.find((project) => project.id === element.id)
+                    )
+                  );
+                }
+              });
+          }}
+        >
           {projects.map((project, index) => (
             <li key={index}>
-              <img className="project-image" src={project.image} alt="" />
+              <img
+                id={project.id}
+                className="project-image"
+                src={project.image}
+                alt=""
+              />
             </li>
           ))}
         </ul>
         <div id="mask-bottom"></div>
       </div>
+
       <div id="controls">
         <img
           src="/icons/arrow-left-box.svg"
@@ -53,10 +73,9 @@ export default function Projects() {
             cursor: currentProject > 0 ? "pointer" : "auto",
             opacity: currentProject > 0 ? 1 : 0.15,
           }}
-          onClick={() => {
-            if (currentProject > 0) setCurrentProject(currentProject - 1);
-            list.current.scrollBy({ left: -1, behavior: "smooth" });
-          }}
+          onClick={() =>
+            list.current.scrollBy({ left: -1, behavior: "smooth" })
+          }
         />
         <span>{projects[currentProject]?.name}</span>
         <img
@@ -65,11 +84,7 @@ export default function Projects() {
             cursor: currentProject < projects.length - 1 ? "pointer" : "auto",
             opacity: currentProject < projects.length - 1 ? 1 : 0.15,
           }}
-          onClick={() => {
-            if (currentProject < projects.length - 1)
-              setCurrentProject(currentProject + 1);
-            list.current.scrollBy({ left: 1, behavior: "smooth" });
-          }}
+          onClick={() => list.current.scrollBy({ left: 1, behavior: "smooth" })}
         />
       </div>
 
@@ -130,7 +145,7 @@ export default function Projects() {
           width: 100vw;
           /*height: ${desktop ? 300 : 250}px;*/
 
-          overflow: hidden;
+          overflow: ${desktop ? "hidden" : "auto"};
           scroll-snap-type: x mandatory;
         }
 
