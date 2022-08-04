@@ -1,7 +1,10 @@
+import { BoxCollider } from "./colliders";
+
 export class Ship {
     ctx: any;
     x: number;
     y: number;
+    collider: BoxCollider;
     velocityX: number;
     velocityY: number;
     direction: number;
@@ -35,6 +38,8 @@ export class Ship {
 
         this.fireImage = new Image();
         this.fireImage.src = "/shipFire.svg";
+
+        this.collider = new BoxCollider(this.ctx, this.x, this.y, this.image.width, this.image.height);
     }
 
     move() {
@@ -91,5 +96,8 @@ export class Ship {
       this.velocityY *= 0.99;
       this.x -= this.velocityX;
       this.y -= this.velocityY;
+
+      // Update collider
+      this.collider.update(this.x - this.image.width / 2, this.y - this.image.height / 2);
     }
 }

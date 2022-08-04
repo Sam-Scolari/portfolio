@@ -1,4 +1,6 @@
-enum Size {
+import { BoxCollider } from "./colliders";
+
+export enum Size {
   small,
   medium,
   large,
@@ -8,25 +10,41 @@ export class Asteroid {
     ctx: any;
     x: number;
     y: number;
+    collider: BoxCollider;
     image: any;
     velocityX: number;
     velocityY: number;
     direction: number;
     size: Size;
 
-    constructor(_ctx, _image) {
+    constructor(_ctx, _x, _y, _image, _size) {
       this.ctx = _ctx;
-      this.size = Size.large;
+      this.size = _size;
       this.image = _image;
-      this.x = Math.floor(Math.random() * _ctx.canvas.width);
-      this.y = Math.floor(Math.random() * _ctx.canvas.height);
+      this.x = _x;
+      this.y = _y;
       this.direction = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
       this.velocityX = 0.5 + Math.random() * 0.75;
       this.velocityY = 0.5 + Math.random() * 0.75;
+
+      this.collider = new BoxCollider(this.ctx, this.x, this.y, this.image.width, this.image.height);
     }
 
     draw() {
-      this.ctx.drawImage(this.image, this.x, this.y);
+      switch(this.size) {
+        case Size.large:
+          this.ctx.drawImage(this.image, this.x, this.y);
+          break;
+
+        case Size.medium:
+          this.ctx.drawImage(this.image, this.x, this.y, this.image.width / 1.5, this.image.height / 1.5);
+          break;
+
+        case Size.small:
+          this.ctx.drawImage(this.image, this.x, this.y, this.image.width / 2, this.image.height / 2);
+          break;
+      }
+      
     }
 
     update() {
@@ -39,5 +57,23 @@ export class Asteroid {
       
       this.x += this.velocityX * this.direction;
       this.y += this.velocityY * this.direction;
+
+      // Update collider
+      this.collider.update(this.x, this.y);
+    }
+
+    break(asteroids) {
+      switch(this.size) {
+        case Size.large:
+          asteroids.push(new Asteroid(this.ctx, this.x, this.y, this.image, Size.medium));
+          asteroids.push(new Asteroid(this.ctx, this.x, this.y, this.image, Size.medium));
+          asteroids.push(new Asteroid(this.ctx, this.x, this.y, this.image, Size.medium));
+          break;
+        case Size.medium:
+          asteroids.push(new Asteroid(this.ctx, this.x, this.y, this.image, Size.small));
+          asteroids.push(new Asteroid(this.ctx, this.x, this.y, this.image, Size.small));
+          asteroids.push(new Asteroid(this.ctx, this.x, this.y, this.image, Size.small));
+          break;
+      }
     }
   }

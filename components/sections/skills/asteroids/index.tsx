@@ -1,9 +1,9 @@
 import { useEffect, useRef, useState } from "react";
-import { Asteroid } from "./asteroid";
+import { Asteroid, Size } from "./asteroid";
 import { Bullet } from "./bullet";
 import { Ship } from "./ship";
 import { ethers } from "ethers";
-import useLayout from "../../../hooks/useLayout";
+import { BoxCollision } from "./colliders";
 
 export enum State {
   start,
@@ -14,6 +14,8 @@ export enum State {
 export default function Asteroids() {
   const canvas = useRef<any | undefined>();
   const [state, setState] = useState(State.start);
+  const [score, setScore] = useState(0);
+
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
@@ -44,16 +46,16 @@ export default function Asteroids() {
     });
 
     const SRCs = [
-      "/asteroids/next.svg",
-      "/asteroids/react.svg",
-      "/asteroids/typescript.svg",
-      "/asteroids/javascript.svg",
-      "/asteroids/html.svg",
-      "/asteroids/css.svg",
-      "/asteroids/tailwind.svg",
-      "/asteroids/figma.svg",
-      "/asteroids/solidity.svg",
-      "/asteroids/graphql.svg",
+      "/asteroids/next.png",
+      "/asteroids/react.png",
+      "/asteroids/typescript.png",
+      "/asteroids/javascript.png",
+      "/asteroids/html.png",
+      "/asteroids/css.png",
+      "/asteroids/tailwind.png",
+      "/asteroids/figma.png",
+      "/asteroids/solidity.png",
+      "/asteroids/graphql.png",
     ];
 
     for (let src of SRCs) {
@@ -62,7 +64,15 @@ export default function Asteroids() {
       // image.onload = function () {
       //   ctx.drawImage(image, -1000, -1000);
       // };
-      asteroids.push(new Asteroid(ctx, image));
+      asteroids.push(
+        new Asteroid(
+          ctx,
+          Math.floor(Math.random() * ctx.canvas.width),
+          Math.floor(Math.random() * ctx.canvas.height),
+          image,
+          Size.large
+        )
+      );
     }
 
     const render = () => {
@@ -83,11 +93,38 @@ export default function Asteroids() {
       for (let asteroid of asteroids) {
         asteroid.update();
         asteroid.draw();
+
+        // Ship -> asteroid collision
+        if (BoxCollision(ship.collider, asteroid.collider)) {
+          console.log("ship go boom!");
+        }
       }
 
       for (let bullet of bullets) {
         bullet.update();
         bullet.draw();
+      }
+
+      // Bullet -> asteroid collision
+      for (let i = 0; i < bullets.length; i++) {
+        for (let j = 0; j < asteroids.length; j++) {
+          if (
+            bullets[i] &&
+            asteroids[j] &&
+            BoxCollision(bullets[i].collider, asteroids[j].collider)
+          ) {
+            // Destroy bullet
+            delete bullets[i];
+            bullets = [...bullets.slice(0, i), ...bullets.slice(i + 1)];
+
+            // Destroy asteroid
+            asteroids[j].break(asteroids);
+            delete asteroids[j];
+            asteroids = [...asteroids.slice(0, j), ...asteroids.slice(j + 1)];
+
+            setScore(score + 1);
+          }
+        }
       }
 
       requestAnimationFrame(render);
@@ -153,7 +190,7 @@ export default function Asteroids() {
         [space] <span className="control">shoot</span>
       </span>
       <div id="round-data">
-        <span id="score">Score: 0</span>
+        <span id="score">Score: {score}</span>
         <div id="lives">
           <img src="/ship.svg" />
           <img src="/ship.svg" />
