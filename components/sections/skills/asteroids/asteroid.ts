@@ -37,7 +37,7 @@ export class Asteroid {
           break;
 
         case Size.medium:
-          this.ctx.drawImage(this.image, this.x, this.y, this.image.width / 1.5, this.image.height / 1.5);
+          this.ctx.drawImage(this.image, this.x, this.y, this.image.width / 1.25, this.image.height / 1.25);
           break;
 
         case Size.small:

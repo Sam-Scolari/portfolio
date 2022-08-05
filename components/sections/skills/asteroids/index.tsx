@@ -122,7 +122,8 @@ export default function Asteroids() {
             delete asteroids[j];
             asteroids = [...asteroids.slice(0, j), ...asteroids.slice(j + 1)];
 
-            setScore(score + 1);
+            // setScore does not subscribe to the changes of score in render
+            setScore((score) => score + 1);
           }
         }
       }
