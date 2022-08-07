@@ -109,8 +109,8 @@ export default function Asteroids() {
       for (let i = 0; i < bullets.length; i++) {
         for (let j = 0; j < asteroids.length; j++) {
           if (
-            bullets[i] &&
-            asteroids[j] &&
+            bullets[i]?.collider &&
+            asteroids[j]?.collider &&
             BoxCollision(bullets[i].collider, asteroids[j].collider)
           ) {
             // Destroy bullet
