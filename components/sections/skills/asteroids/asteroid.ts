@@ -27,7 +27,17 @@ export class Asteroid {
       this.velocityX = 0.5 + Math.random() * 0.75;
       this.velocityY = 0.5 + Math.random() * 0.75;
 
-      this.collider = new BoxCollider(this.ctx, this.x, this.y, this.image.width, this.image.height);
+      switch(this.size) {
+        case Size.large:
+          this.collider = new BoxCollider(this.ctx, this.x, this.y, this.image.width, this.image.height);
+          break;
+        case Size.medium:
+          this.collider = new BoxCollider(this.ctx, this.x, this.y, this.image.width / 1.25, this.image.height /1.25);
+          break;
+        case Size.small:
+          this.collider = new BoxCollider(this.ctx, this.x, this.y, this.image.width / 2, this.image.height /2 );
+          break;
+      }
     }
 
     draw() {

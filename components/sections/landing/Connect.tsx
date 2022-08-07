@@ -2,8 +2,13 @@ import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { useContext } from "react";
 import { ThemeContext } from "../../../pages/_app";
 import { useAccount } from "wagmi";
+import useLayout from "../../hooks/useLayout";
 
-export default function Connect({ setWasPressed }) {
+export default function Connect({
+  setWasPressed,
+  connectByPass,
+  setConnectByPass,
+}) {
   const { data } = useAccount();
 
   const { isDark, setIsDark } = useContext(ThemeContext);
@@ -11,7 +16,7 @@ export default function Connect({ setWasPressed }) {
     <div id="connect">
       <ConnectButton.Custom>
         {({ account, openConnectModal, mounted }) => {
-          if (!mounted || !account)
+          if (!connectByPass && (!mounted || !account))
             return (
               <>
                 <button
@@ -22,7 +27,9 @@ export default function Connect({ setWasPressed }) {
                 >
                   Connect
                 </button>
-                <small>I won{`'`}t make you sign any transactions</small>
+                <small onClick={() => setConnectByPass(true)}>
+                  I don{`'`}t have an Ethereum wallet
+                </small>
               </>
             );
           return (
@@ -71,11 +78,16 @@ export default function Connect({ setWasPressed }) {
       <style jsx>{`
         small {
           margin-top: 16px;
+          cursor: pointer;
+        }
+
+        small:hover {
+          text-decoration: underline;
         }
 
         #scrollWheel {
           animation-timing-function: ease-out;
-          animation: ${data?.address ? "slide 2.25s infinite" : "none"};
+          animation: slide 2.25s infinite;
         }
 
         @keyframes slide {
