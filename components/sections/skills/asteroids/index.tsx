@@ -128,10 +128,12 @@ export default function Asteroids() {
   // Handle collisions
   function handleCollisions() {
     // Ship -> Asteroid
-    for (let asteroid of asteroids) {
-      if (!ship.blinking && BoxCollision(ship.collider, asteroid.collider)) {
-        ship.break();
-        setLives(lives - 1);
+    if (ship) {
+      for (let asteroid of asteroids) {
+        if (!ship.blinking && BoxCollision(ship.collider, asteroid.collider)) {
+          ship.break();
+          setLives(lives - 1);
+        }
       }
     }
 
