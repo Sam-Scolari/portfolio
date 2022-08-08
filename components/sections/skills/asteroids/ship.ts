@@ -100,4 +100,15 @@ export class Ship {
       // Update collider
       this.collider.update(this.x - this.image.width / 2, this.y - this.image.height / 2);
     }
+
+    break() {
+      this.x = this.ctx.canvas.width / 2 - 9.5;
+      this.y = this.ctx.canvas.height - 250;
+      this.direction = 0;
+
+      this.velocityX = 0;
+      this.velocityY = 0;
+
+      this.blinking = true;
+    }
 }

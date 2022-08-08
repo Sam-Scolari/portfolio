@@ -34,7 +34,5 @@ export class Bullet {
 
       // Update collider
       this.collider.update(this.x, this.y);
-
-
     }
   }

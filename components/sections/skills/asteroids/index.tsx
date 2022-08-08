@@ -4,6 +4,8 @@ import { Bullet } from "./bullet";
 import { Ship } from "./ship";
 import { ethers } from "ethers";
 import { BoxCollision } from "./colliders";
+import useGameLoop from "../../../hooks/useGameLoop";
+import { getEventListeners } from "events";
 
 export enum State {
   start,
@@ -13,13 +15,41 @@ export enum State {
 
 export default function Asteroids() {
   const canvas = useRef<any | undefined>();
+
+  // Game assets
+  const SRCs = [
+    "/asteroids/next.png",
+    "/asteroids/react.png",
+    "/asteroids/typescript.png",
+    "/asteroids/javascript.png",
+    "/asteroids/html.png",
+    "/asteroids/css.png",
+    "/asteroids/tailwind.png",
+    "/asteroids/figma.png",
+    "/asteroids/solidity.png",
+    "/asteroids/graphql.png",
+  ];
+
+  // Game data
   const [state, setState] = useState(State.start);
   const [score, setScore] = useState(0);
+  const [lives, setLives] = useState(3);
+  const [fps, setFps] = useState(0);
 
+  // Game Objects
+  const [initialized, setInitialized] = useState(false);
+  const [asteroids, setAsteroids] = useState([]);
+  const [ship, setShip] = useState(null);
+  const [bullets, setBullets] = useState([]);
+
+  // Controls
+  const [keys, setKeys] = useState([]);
+  const [attached, setAttached] = useState(false);
+
+  // Resize canvas with window
   useEffect(() => {
     const ctx = canvas.current.getContext("2d");
 
-    // Resize canvas with window
     function resize() {
       if (ctx.canvas) {
         ctx.canvas.width = window.innerWidth;
@@ -28,129 +58,198 @@ export default function Asteroids() {
     }
     resize();
     window.addEventListener("resize", resize);
+  }, []);
 
-    // Initialize game objects
-    let ship = new Ship(ctx);
-    let asteroids = [];
-    let bullets = [];
+  // Initialize Game Objects
+  useEffect(() => {
+    if (!initialized) {
+      const ctx = canvas.current.getContext("2d");
 
-    // Key press listeners
-    let keys = [];
-    document.body.addEventListener("keydown", (e) => (keys[e.key] = true));
-    document.body.addEventListener("keyup", (e) => {
-      keys[e.key] = false;
-      if (e.key === " ")
-        bullets.push(
-          new Bullet(ctx, ship.x, ship.y, ship.image.height, ship.direction)
+      // Ship
+      setShip(new Ship(ctx));
+
+      // Asteroids
+      for (let src of SRCs) {
+        let image = new Image();
+        image.src = src;
+        // image.onload = function () {
+        //   ctx.drawImage(image, -1000, -1000);
+        // };
+        asteroids.push(
+          new Asteroid(
+            ctx,
+            Math.floor(Math.random() * ctx.canvas.width),
+            Math.floor(Math.random() * ctx.canvas.height),
+            image,
+            Size.large
+          )
         );
-    });
-
-    const SRCs = [
-      "/asteroids/next.png",
-      "/asteroids/react.png",
-      "/asteroids/typescript.png",
-      "/asteroids/javascript.png",
-      "/asteroids/html.png",
-      "/asteroids/css.png",
-      "/asteroids/tailwind.png",
-      "/asteroids/figma.png",
-      "/asteroids/solidity.png",
-      "/asteroids/graphql.png",
-    ];
-
-    for (let src of SRCs) {
-      let image = new Image();
-      image.src = src;
-      // image.onload = function () {
-      //   ctx.drawImage(image, -1000, -1000);
-      // };
-      asteroids.push(
-        new Asteroid(
-          ctx,
-          Math.floor(Math.random() * ctx.canvas.width),
-          Math.floor(Math.random() * ctx.canvas.height),
-          image,
-          Size.large
-        )
-      );
+      }
     }
 
-    const render = () => {
-      // Clear canvas each frame
-      ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+    setInitialized(true);
+  }, []);
 
-      // Update and draw ship
-      if (keys["w"]) {
-        setState(State.play);
-        ship.move();
+  // Attach control event listeners
+  function keyDown(e) {
+    keys[e.key] = true;
+    if (state === State.start && e.key === "w") {
+      setState(State.play);
+    }
+  }
+
+  function keyUp(e) {
+    const ctx = canvas.current.getContext("2d");
+
+    keys[e.key] = false;
+    if (e.key === " ") {
+      setBullets((bullets) => [
+        ...bullets,
+        new Bullet(ctx, ship.x, ship.y, ship.image.height, ship.direction),
+      ]);
+    }
+
+    setAttached(true);
+  }
+
+  useEffect(() => {
+    if (!attached) {
+      // On key down
+      document.body.addEventListener("keydown", keyDown);
+
+      // Wait until ship is initialized to attach listener
+      if (ship) {
+        // On key up
+        document.body.addEventListener("keyup", keyUp);
       }
+    }
+  }, [ship]);
+
+  // Handle collisions
+  function handleCollisions() {
+    // Ship -> Asteroid
+    for (let asteroid of asteroids) {
+      if (!ship.blinking && BoxCollision(ship.collider, asteroid.collider)) {
+        ship.break();
+        setLives(lives - 1);
+      }
+    }
+
+    // Bullet -> Asteroid
+    for (let i = 0; i < bullets.length; i++) {
+      for (let j = 0; j < asteroids.length; j++) {
+        if (
+          bullets[i]?.collider &&
+          asteroids[j]?.collider &&
+          BoxCollision(bullets[i].collider, asteroids[j].collider)
+        ) {
+          // Destroy bullet
+          delete bullets[i];
+          setBullets((bullets) => [
+            ...bullets.slice(0, i),
+            ...bullets.slice(i + 1),
+          ]);
+
+          // Destroy asteroid
+          asteroids[j].break(asteroids);
+          delete asteroids[j];
+          setAsteroids((asteroids) => [
+            ...asteroids.slice(0, j),
+            ...asteroids.slice(j + 1),
+          ]);
+
+          setScore(score + 1);
+        }
+      }
+    }
+  }
+
+  // Render game objects
+  function renderGameObjects(ctx) {
+    // Ship
+    if (ship) {
+      if (keys["w"]) ship.move();
       if (keys["a"]) ship.turnLeft();
       if (keys["d"]) ship.turnRight();
+
+      // Render ship
       ship.update();
       ship.draw(keys["w"]);
+    }
 
-      // Update and draw asteroids
-      for (let asteroid of asteroids) {
+    // Asteroids
+    for (let asteroid of asteroids) {
+      if (asteroid) {
+        // Render asteroid
         asteroid.update();
         asteroid.draw();
+      }
+    }
 
-        // Ship -> asteroid collision
-        if (BoxCollision(ship.collider, asteroid.collider)) {
-          console.log("ship go boom!");
+    // Bullets
+    for (let i = 0; i < bullets.length; i++) {
+      if (bullets[i]) {
+        // Render bullet
+        bullets[i].update();
+        bullets[i].draw();
+
+        // If bullet goes off the screen
+        if (
+          bullets[i].x > ctx.canvas.width + bullets[i].width ||
+          bullets[i].x < -bullets[i].width ||
+          bullets[i].y > ctx.canvas.height + bullets[i].height ||
+          bullets[i].y < -bullets[i].height
+        ) {
+          // Destroy bullet
+          delete bullets[i];
+          setBullets((bullets) => [
+            ...bullets.slice(0, i),
+            ...bullets.slice(i + 1),
+          ]);
         }
       }
+    }
+  }
 
-      for (let bullet of bullets) {
-        bullet.update();
-        bullet.draw();
+  // Main game loop
+  useGameLoop(
+    (time, fps) => {
+      // Canvas
+      const ctx = canvas.current.getContext("2d");
+
+      // If the game isn't over
+      if (lives > 0 && state !== State.end) {
+        setFps(fps);
+
+        // Clear canvas each frame
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
+
+        // Handle collisions
+        handleCollisions();
+
+        // Draw and update game objects
+        renderGameObjects(ctx);
       }
 
-      // Bullet -> asteroid collision
-      for (let i = 0; i < bullets.length; i++) {
-        for (let j = 0; j < asteroids.length; j++) {
-          if (
-            bullets[i]?.collider &&
-            asteroids[j]?.collider &&
-            BoxCollision(bullets[i].collider, asteroids[j].collider)
-          ) {
-            // Destroy bullet
-            delete bullets[i];
-            bullets = [...bullets.slice(0, i), ...bullets.slice(i + 1)];
+      // End the game
+      else {
+        // Set the game state to end
+        setState(State.end);
 
-            // Destroy asteroid
-            asteroids[j].break(asteroids);
-            delete asteroids[j];
-            asteroids = [...asteroids.slice(0, j), ...asteroids.slice(j + 1)];
+        // Detach event listeners
+        document.body.removeEventListener("keydown", keyDown);
+        document.body.removeEventListener("keyup", keyUp);
 
-            // setScore does not subscribe to the changes of score in render
-            setScore((score) => score + 1);
-          }
-        }
+        // Clear canvas each frame
+        ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
       }
-
-      requestAnimationFrame(render);
-    };
-    render();
-  }, []);
+    },
+    [state, score, lives, asteroids, ship, bullets]
+  );
 
   const [leaderboard, setLeaderboard] = useState([]);
 
-  const optimismProvider = new ethers.providers.JsonRpcProvider(
-    "https://optimism-mainnet.infura.io/v3/df242983004b4def9344238f6589c187"
-  );
-
-  const mainnetProvider = new ethers.providers.JsonRpcProvider(
-    "https://mainnet.infura.io/v3/df242983004b4def9344238f6589c187"
-  );
-
-  const ABI = [
-    "function getLeaderboard() public view returns (address[10], uint256[10], uint256[10])",
-  ];
-
-  const address = "0x8bDC49Dc956c0c0C3B6f29B9374d2fbb3D3BFeDe";
-  const contract = new ethers.Contract(address, ABI, optimismProvider);
-
-  async function getLeaderboard() {
+  async function getLeaderboard(contract) {
     const data = await contract.getLeaderboard();
     let formattedLeaderboard = [];
     for (let i = 0; i < (await data[0].length); i++) {
@@ -164,7 +263,7 @@ export default function Asteroids() {
     return formattedLeaderboard;
   }
 
-  async function reverseResolvePlayers(formattedLeaderboard) {
+  async function reverseResolvePlayers(mainnetProvider, formattedLeaderboard) {
     let temp = formattedLeaderboard;
     for (let i = 0; i < formattedLeaderboard.length; i++) {
       let ens = await mainnetProvider.lookupAddress(temp[i].player);
@@ -174,28 +273,66 @@ export default function Asteroids() {
   }
 
   useEffect(() => {
-    getLeaderboard().then((formattedLeaderboard) =>
-      reverseResolvePlayers(formattedLeaderboard)
+    const optimismProvider = new ethers.providers.JsonRpcProvider(
+      "https://optimism-mainnet.infura.io/v3/df242983004b4def9344238f6589c187"
+    );
+
+    const mainnetProvider = new ethers.providers.JsonRpcProvider(
+      "https://mainnet.infura.io/v3/df242983004b4def9344238f6589c187"
+    );
+
+    const ABI = [
+      "function getLeaderboard() public view returns (address[10], uint256[10], uint256[10])",
+    ];
+
+    const address = "0x8bDC49Dc956c0c0C3B6f29B9374d2fbb3D3BFeDe";
+    const contract = new ethers.Contract(address, ABI, optimismProvider);
+
+    getLeaderboard(contract).then((formattedLeaderboard) =>
+      reverseResolvePlayers(mainnetProvider, formattedLeaderboard)
     );
   }, []);
 
   return (
     <>
-      <h2>Skills</h2>
-      <p>The languages, frameworks, and tools I design and build with</p>
+      {lives > 0 && state !== State.end ? (
+        <>
+          <h2>Skills</h2>
+          <p>The languages, frameworks, and tools I design and build with</p>
+          <span>{fps}</span>
+        </>
+      ) : (
+        <div id="game-over">
+          <h2>Game Over</h2>
+          <p>Congrats, you got a new highscore!</p>
+          <span>{score}</span>
+          <span id="highscore-title">Highscores</span>
+          <ol>
+            {leaderboard.map((highscore, index) => (
+              <li key={index}>
+                {highscore.player.includes("0x")
+                  ? highscore.player.substring(0, 7)
+                  : highscore.player}
+                : {highscore.score}
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
       <span id="controls">
         [w] <span className="control">move</span>
         <br />
-        [a] & [d] <span className="control">turn</span>
+        [a] {"&"} [d] <span className="control">turn</span>
         <br />
         [space] <span className="control">shoot</span>
       </span>
       <div id="round-data">
         <span id="score">Score: {score}</span>
         <div id="lives">
-          <img src="/ship.svg" />
-          <img src="/ship.svg" />
-          <img src="/ship.svg" />
+          {lives > 0 &&
+            [...Array(lives)].map((index) => (
+              <img key={index} src="/ship.svg" />
+            ))}
         </div>
       </div>
       <div id="highscores">
@@ -216,8 +353,7 @@ export default function Asteroids() {
           </ol>
         )}
       </div>
-
-      <canvas ref={canvas}></canvas>
+      <canvas ref={canvas} />
       <style jsx>{`
         #highscore-title {
           font-family: PressStartP2;
