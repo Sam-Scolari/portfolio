@@ -308,7 +308,7 @@ export default function Asteroids() {
           <h2>Game Over</h2>
           <p>Congrats, you got a new highscore!</p>
           <span id="end-score">{score}</span>
-          <span id="highscore-title">Highscores</span>
+          <span id="highscore-title-end">Highscores</span>
           <ol>
             {leaderboard.map((highscore, index) => (
               <li key={index}>
@@ -357,6 +357,9 @@ export default function Asteroids() {
       </div>
       <canvas ref={canvas} />
       <style jsx>{`
+        section {
+          cursor: ${state === State.end ? "auto" : "none"};
+        }
         #game-over {
           display: flex;
           flex-direction: column;
@@ -366,12 +369,18 @@ export default function Asteroids() {
           color: #5ee96c;
           font-size: 3rem;
           font-family: PressStartP2;
-          margin-top: 16px;
-          margin-bottom: 16px;
+          margin-top: 32px;
+          margin-bottom: 32px;
         }
         #highscore-title {
           font-family: PressStartP2;
           text-align: right;
+        }
+
+        #highscore-title-end {
+          font-family: PressStartP2;
+          font-size: 1.5rem;
+          margin-bottom: 16px;
         }
 
         ol {

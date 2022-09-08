@@ -46,9 +46,9 @@ const projects: Project[] = [
     },
   },
   {
-    id: "nouns-ooo",
-    name: "Nouns.ooo",
-    image: "/projects/nouns-ooo.jpg",
+    id: "backbone-react-hooks",
+    name: "Backbone React Hooks",
+    image: "/projects/backbone-react-hooks.png",
     description: "",
     links: {
       figma: null,

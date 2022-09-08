@@ -1,13 +1,8 @@
 import Greeting from "./Greeting";
-import Connect from "./Connect";
-import useLayout from "../../hooks/useLayout";
+import ScrollDown from "./ScrollDown";
 import { SocialIcon } from "../../Header";
 
-export default function Landing({
-  setWasPressed,
-  connectByPass,
-  setConnectByPass,
-}) {
+export default function Landing() {
   return (
     <section>
       <div>
@@ -44,11 +39,7 @@ export default function Landing({
           />
         </div>
       </div>
-      <Connect
-        setWasPressed={setWasPressed}
-        connectByPass={connectByPass}
-        setConnectByPass={setConnectByPass}
-      />
+      <ScrollDown />
       <style jsx>{`
         .social-icons {
           display: none;
