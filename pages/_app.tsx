@@ -59,6 +59,22 @@ function MyApp({ Component, pageProps }: AppProps) {
           content="width=device-width, initial-scale=1.0, maximum-scale=1.0"
         ></meta>
       </Head>
+      <div
+        style={{
+          zIndex: 100000,
+          position: "absolute",
+          backgroundColor: "#e0453d",
+          color: "white",
+          fontWeight: "bold",
+          height: 30,
+          width: "100vw",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        <h5>Under Construction</h5>
+      </div>
       <Header />
       <WagmiConfig client={wagmiClient}>
         <RainbowKitProvider
