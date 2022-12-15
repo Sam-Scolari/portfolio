@@ -89,11 +89,11 @@ export default function Header() {
 }
 
 function ProfilePicture() {
-  const [meatspace, setMeatspace] = useState(true);
+  const [meatspace, setMeatspace] = useState(false);
   return (
     <div>
       <Image
-        src={meatspace ? "/meatspacepfp.jpg" : "/pfp.webp"}
+        src={meatspace ? "/meatspacepfp.jpg" : "/pfp.jpg"}
         loading="eager"
         alt="Sam's profile picture"
         width={60}
