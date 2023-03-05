@@ -52,6 +52,7 @@ export default function Carousel(props: { projects: any }) {
                 }}
                 draggable={false}
                 src={project.image}
+                alt={project.name}
                 class="w-full h-full rounded-2xl transition-transform duration-300 object-cover "
               />
             </div>
