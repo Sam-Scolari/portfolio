@@ -1,0 +1,79 @@
+[
+  {
+    "name": "Test",
+    "image": "/projects/test.jpg",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": ""
+    }
+  },
+  {
+    "name": "Test",
+    "image": "/projects/test.jpg",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": ""
+    }
+  },
+  {
+    "name": "Nouns Esports",
+    "image": "/projects/nouns-esports.jpg",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": "https://nouns.gg"
+    }
+  },
+  {
+    "name": "Game Engine",
+    "image": "/projects/game-engine.png",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": ""
+    }
+  },
+  {
+    "name": "Astronauts Esports",
+    "image": "/projects/astronauts-esports.png",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": ""
+    }
+  },
+  {
+    "name": "Test",
+    "image": "/projects/test.jpg",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": ""
+    }
+  },
+  {
+    "name": "Test",
+    "image": "/projects/test.jpg",
+    "description": "",
+    "links": {
+      "github": "",
+      "case-study": "",
+      "figma": "",
+      "site": ""
+    }
+  }
+]

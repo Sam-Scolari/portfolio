@@ -1,0 +1,66 @@
+---
+import Cursor from "../components/Cursor";
+
+import Header from "../components/Header.astro";
+import Landing from "../sections/Landing.astro";
+import Asteroids from "../games/Asteroids";
+import MyWork from "../sections/MyWork";
+import Footer from "../components/Footer";
+import GameOfLife from "../games/GameOfLife";
+---
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" type="image/png" href="meatspace.webp" />
+    <link
+      rel="preload"
+      href="/fonts/Inter.ttf"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/PressStart2P.ttf"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="preload"
+      href="/fonts/Silkscreen.ttf"
+      as="font"
+      crossorigin="anonymous"
+    />
+    <style>
+      @font-face {
+        font-family: "Inter";
+        src: url(/fonts/Inter.ttf) format("truetype");
+      }
+      @font-face {
+        font-family: "PressStart2P";
+        src: url(/fonts/PressStart2P.ttf) format("truetype");
+      }
+      @font-face {
+        font-family: "Silkscreen";
+        src: url(/fonts/Silkscreen.ttf) format("truetype");
+      }
+
+      * {
+        cursor: url(/cursors/default.png), auto;
+      }
+    </style>
+    <title>Sam Scolari</title>
+  </head>
+  <body class="bg-[url(pattern.webp)] w-screen font-inter overflow-x-hidden">
+    <Cursor client:load />
+    <GameOfLife client:load />
+    <Header />
+    <Landing />
+    <Asteroids client:load />
+    <MyWork client:idle />
+    <Footer client:idle />
+  </body>
+</html>

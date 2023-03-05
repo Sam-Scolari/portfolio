@@ -1,45 +1,26 @@
 {
-  "name": "portfolio",
-  "version": "0.1.0",
+  "name": "@sam-scolari/portfolio",
+  "type": "module",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint"
+    "dev": "astro dev",
+    "start": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
   },
   "dependencies": {
-    "@apollo/client": "^3.6.9",
-    "@emoji-mart/data": "^1.0.2",
-    "@rainbow-me/rainbowkit": "^0.3.1",
-    "@react-three/cannon": "^6.3.0",
-    "@react-three/drei": "^9.14.3",
-    "@react-three/fiber": "^8.0.27",
-    "apollo-server-micro": "^3.10.0",
-    "canvas-confetti": "^1.5.1",
-    "emoji-mart": "^5.1.0",
-    "ethers": "^5.6.9",
-    "fs": "^0.0.1-security",
-    "micro-cors": "^0.1.1",
-    "next": "^12.1.6",
-    "node": "^v16.9.1",
-    "prisma-client": "^0.0.0",
-    "react": "^18.2.0",
-    "react-color": "^2.19.3",
-    "react-dom": "18.2.0",
-    "react-typewriter-hook": "^1.0.1",
-    "three": "^0.141.0",
-    "usehooks-ts": "^2.6.0"
+    "@astrojs/solid-js": "^2.0.0",
+    "@astrojs/tailwind": "^3.0.0",
+    "astro": "^2.0.2",
+    "canvas-confetti": "^1.6.0",
+    "game-engine": "file:../game-engine",
+    "solid-js": "^1.6.9",
+    "solid-toast": "^0.4.0",
+    "tailwindcss": "^3.2.4"
   },
   "devDependencies": {
-    "@types/canvas-confetti": "^1.4.2",
-    "@types/node": "18.0.0",
-    "@types/react": "18.0.14",
-    "@types/react-dom": "18.0.5",
-    "@types/react-typist": "^2.0.3",
-    "babel-eslint": "^10.1.0",
-    "eslint": "8.18.0",
-    "eslint-config-next": "12.1.6",
-    "typescript": "4.7.4"
+    "@types/canvas-confetti": "^1.6.0"
   }
 }

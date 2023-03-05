@@ -1,0 +1,18 @@
+---
+const { href, src, alt } = Astro.props;
+---
+
+<a
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  draggable={false}
+  class="cursor-pointer pointer-events-auto hover:scale-125 transition-transform duration-300 select-none"
+>
+  <img
+    draggable={false}
+    src={src}
+    alt={alt}
+    class="w-10 rounded-lg overflow-hidden"
+  /></a
+>

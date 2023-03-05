@@ -1,0 +1,41 @@
+---
+import Name from "../components/Name";
+---
+
+<div
+  class="pointer-events-none w-full h-screen flex flex-col gap-6 items-center justify-center relative z-10"
+>
+  <p class="font-semibold text-4xl select-none">Hi, my name is</p>
+  <Name client:load />
+  <p class="text-grey text-2xl select-none">
+    I design and build fun web experiences!
+  </p>
+  <div
+    class="absolute bottom-16 flex flex-col gap-2 items-center text-xl font-medium select-none"
+  >
+    <svg
+      width="26"
+      viewBox="0 0 71 100"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <rect
+        x="3"
+        y="3"
+        width="65"
+        height="94"
+        rx="32.5"
+        stroke="black"
+        stroke-width="6"></rect>
+      <rect
+        x="28"
+        y="16"
+        width="14"
+        height="27"
+        rx="7"
+        fill="black"
+        class="animate-slide"></rect>
+    </svg>
+    Scroll Down
+  </div>
+</div>
