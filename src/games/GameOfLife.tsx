@@ -1,4 +1,4 @@
-import Game, { Box, GameObject, Scene } from "game-engine";
+import Game, { Box, GameObject, Scene } from "@sam-scolari/game-engine";
 import { createEffect, createSignal, onMount } from "solid-js";
 
 export default function GameOfLife() {

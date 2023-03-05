@@ -1,4 +1,4 @@
-import Game, { Scene } from "game-engine";
+import Game, { Scene } from "@sam-scolari/game-engine";
 import { onMount } from "solid-js";
 
 export default function Footer() {

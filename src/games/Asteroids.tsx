@@ -1,5 +1,5 @@
 import { onMount } from "solid-js";
-import Game, { Image, Text, Scene, Sprite } from "game-engine";
+import Game, { Image, Text, Scene, Sprite } from "@sam-scolari/game-engine";
 
 export default function Asteroids() {
   let canvas: HTMLCanvasElement;
