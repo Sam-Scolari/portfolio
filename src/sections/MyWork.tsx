@@ -6,8 +6,15 @@ export default function MyWork() {
     Math.floor(Object.keys(Projects).length / 2)
   );
 
+  // const currentElement = () => {
+  //   return document.getElementById(
+  //     Projects[currentIndex()].name
+  //   ) as HTMLDivElement;
+  // };
+
   onMount(() => {
     const carousel = document.getElementById("carousel") as HTMLDivElement;
+
     carousel.scrollTo(carousel.scrollWidth / 2 - 450 * 2, 0);
 
     carousel.addEventListener("scroll", () => {
@@ -31,15 +38,16 @@ export default function MyWork() {
       </div>
       <div
         id="carousel"
-        class="w-full gap-16 select-none scrollbar-hidden overflow-y-visible  flex overflow-x-scroll snap-x snap-mandatory"
+        class="w-full items-center gap-16 select-none scrollbar-hidden overflow-y-visible  flex overflow-x-scroll snap-x snap-mandatory"
       >
         <For each={Projects}>
           {(project) => (
             <img
+              id={project.name}
               draggable={false}
               src={project.image}
               alt={project.name}
-              class="cursor-pointer hover:scale-110 min-w-[450px] h-[30vh] rounded-2xl transition-transform duration-300 object-cover snap-center first:ml-[100vw] last:mr-[100vw]"
+              class="cursor-pointer hover:scale-110 max-sm:min-w-[calc(100vw_-_80px)] min-w-[450px] aspect-video rounded-2xl transition-transform duration-300 object-cover snap-center first:ml-[100vw] last:mr-[100vw]"
             />
           )}
         </For>

@@ -22,6 +22,9 @@ module.exports = {
       silkscreen: ["Silkscreen"],
     },
     extend: {
+      screens: {
+        xs: "450px",
+      },
       backgroundImage: {
         "gradient-radial":
           "radial-gradient(circle at center, var(--gradient-color-stops))",

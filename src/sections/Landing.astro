@@ -3,11 +3,17 @@ import Name from "../components/Name";
 ---
 
 <div
-  class="pointer-events-none w-full h-screen flex flex-col gap-6 items-center justify-center relative z-10"
+  class="pointer-events-none w-full h-screen flex flex-col gap-6 max-md:gap-4 max-sm:gap-2 items-center justify-center relative z-10"
 >
-  <p class="font-semibold text-4xl select-none">Hi, my name is</p>
+  <p
+    class="font-semibold text-4xl max-lg:text-3xl max-md:text-2xl max-sm:text-xl select-none"
+  >
+    Hi, my name is
+  </p>
   <Name client:load />
-  <p class="text-grey text-2xl select-none">
+  <p
+    class="text-grey text-2xl max-lg:text-xl max-md:text-lg max-sm:text-base select-none"
+  >
     I design and build fun web experiences!
   </p>
   <div

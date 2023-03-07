@@ -23,7 +23,7 @@ export default function Name() {
             },
           });
         }}
-        class="pointer-events-auto font-bold text-8xl max-lg:text-7xl max-md:text-6xl max-sm:text-5xl select-none hover:scale-125 transition-transform duration-300 cursor-pointer"
+        class="pointer-events-auto font-bold text-8xl max-lg:text-7xl max-md:text-6xl max-sm:text-5xl max-xs:text-4xl select-none hover:scale-125 transition-transform duration-300 cursor-pointer"
       >
         samscolari.
         <span
