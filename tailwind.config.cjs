@@ -22,9 +22,6 @@ module.exports = {
       silkscreen: ["Silkscreen"],
     },
     extend: {
-      cursor: {
-        pointer: "url(/cursors/pointer.png),pointer",
-      },
       backgroundImage: {
         "gradient-radial":
           "radial-gradient(circle at center, var(--gradient-color-stops))",

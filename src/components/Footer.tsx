@@ -6,7 +6,7 @@ export default function Footer() {
 
   onMount(() => {
     const game = new Game(canvas, { debug: {} });
-    game.clipPath = () => {
+    game.clipPath = (() => {
       const path = new Path2D();
 
       path.moveTo(0, 30);
@@ -26,7 +26,7 @@ export default function Footer() {
       path.lineTo(0, 0);
 
       return path;
-    };
+    })();
 
     const scene = new Scene();
     scene.background = "black";

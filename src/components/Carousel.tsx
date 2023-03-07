@@ -3,7 +3,7 @@ import { For, createEffect, createSignal, onMount } from "solid-js";
 export default function Carousel(props: { projects: any }) {
   const length = Object.keys(props.projects).length;
 
-  const gap = 16;
+  const gap = 32;
   const width = 450;
   const middleIndex = Math.floor(length / 2);
 
@@ -41,7 +41,7 @@ export default function Carousel(props: { projects: any }) {
           // };
 
           return (
-            <div class="relative  h-full snap-center first:ml-[100vw] last:mr-[100vw]">
+            <div class="relative hover:scale-110 transition-transform duration-300 h-full snap-center first:ml-[100vw] last:mr-[100vw]">
               <img
                 style={{
                   // "transform-style": "preserve-3d",

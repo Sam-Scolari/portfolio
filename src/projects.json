@@ -1,7 +1,7 @@
 [
   {
-    "name": "Test",
-    "image": "/projects/test.jpg",
+    "name": "Redesign Challenge",
+    "image": "/projects/redesign-challenge.png",
     "description": "",
     "links": {
       "github": "",
@@ -11,8 +11,8 @@
     }
   },
   {
-    "name": "Test",
-    "image": "/projects/test.jpg",
+    "name": "Stream Manager",
+    "image": "/projects/stream-manager.png",
     "description": "",
     "links": {
       "github": "",
@@ -55,8 +55,8 @@
     }
   },
   {
-    "name": "Test",
-    "image": "/projects/test.jpg",
+    "name": "Twitch Chat",
+    "image": "/projects/twitch-chat.png",
     "description": "",
     "links": {
       "github": "",
@@ -66,8 +66,8 @@
     }
   },
   {
-    "name": "Test",
-    "image": "/projects/test.jpg",
+    "name": "Pocket Wallet",
+    "image": "/projects/pocket-wallet.png",
     "description": "",
     "links": {
       "github": "",
