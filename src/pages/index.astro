@@ -3,10 +3,10 @@ import Cursor from "../components/Cursor";
 
 import Header from "../components/Header.astro";
 import Landing from "../sections/Landing.astro";
-import Asteroids from "../games/Asteroids";
 import MyWork from "../sections/MyWork";
 import Footer from "../components/Footer";
 import GameOfLife from "../games/GameOfLife";
+import MySkillS from "../sections/MySkills";
 ---
 
 <!DOCTYPE html>
@@ -55,7 +55,7 @@ import GameOfLife from "../games/GameOfLife";
     <GameOfLife client:load />
     <Header />
     <Landing />
-    <Asteroids client:load />
+    <MySkillS client:load />
     <MyWork client:idle />
     <Footer client:idle />
   </body>

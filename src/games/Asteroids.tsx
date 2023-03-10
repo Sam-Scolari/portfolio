@@ -1,4 +1,4 @@
-import { createSignal, onMount } from "solid-js";
+import { onMount } from "solid-js";
 import Game, {
   Image,
   Text,
@@ -9,9 +9,9 @@ import Game, {
 } from "@sam-scolari/game-engine";
 
 export default function Asteroids() {
-  let canvas: HTMLCanvasElement;
-
   onMount(() => {
+    const canvas = document.getElementById("my-skills") as HTMLCanvasElement;
+
     const game = new Game(canvas);
     let score = 0;
 
@@ -166,7 +166,7 @@ export default function Asteroids() {
 
     let blinking = true;
     ship.position.x = canvas.width / 2 - ship.size.width / 2;
-    ship.position.y = canvas.height / 2 - ship.size.height / 2;
+    ship.position.y = canvas.height / 1.25 - ship.size.height / 2;
     scene.add(ship);
 
     ship.onUpdate = (inputs) => {
@@ -230,7 +230,7 @@ export default function Asteroids() {
       ship.direction = 0;
       ship.position = {
         x: canvas.width / 2 - ship.size.width / 2,
-        y: canvas.height / 2 - ship.size.height / 2,
+        y: canvas.height / 1.25 - ship.size.height / 2,
       };
       blinking = true;
     }
@@ -364,8 +364,5 @@ export default function Asteroids() {
     game.start();
   });
 
-  return (
-    // @ts-ignore
-    <canvas ref={canvas} class="w-full h-[90vh] cursor-default" />
-  );
+  return <canvas id="my-skills" class="w-full h-[90vh] cursor-default" />;
 }
