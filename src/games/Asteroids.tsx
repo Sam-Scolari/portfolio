@@ -6,6 +6,9 @@ import Game, {
   Sprite,
   Box,
   Span,
+  Rigidbody,
+  Blink,
+  WarpAround,
 } from "@sam-scolari/game-engine";
 
 export default function Asteroids() {
@@ -163,6 +166,7 @@ export default function Asteroids() {
     shipMoving.visible = false;
 
     const ship = new Image([shipStationary, shipMoving]);
+    ship.physics = new Rigidbody(ship);
 
     let blinking = true;
     ship.position.x = canvas.width / 2 - ship.size.width / 2;
@@ -170,60 +174,35 @@ export default function Asteroids() {
     scene.add(ship);
 
     ship.onUpdate = (inputs) => {
-      // Blink
-      if (blinking && Math.floor(Date.now() / 450) % 2) {
-        ship.visible = false;
-      } else ship.visible = true;
+      if (blinking) Blink(ship, 450);
+      else ship.visible = true;
 
-      // If ship goes off the right of the screen
-      if (ship.position.x > canvas.width + ship.size.width) {
-        ship.position.x = 0 - ship.size.width;
-      }
-
-      // If ship goes off the left of the screen
-      if (ship.position.x < -ship.size.width) {
-        ship.position.x = canvas.width + ship.size.width;
-      }
-
-      // If ship goes off the bottom of the screen
-      if (ship.position.y > canvas.height + ship.size.height) {
-        ship.position.y = 0 - ship.size.height;
-      }
-
-      // If ship goes off the top of the screen
-      if (ship.position.y < -ship.size.height) {
-        ship.position.y = canvas.height + ship.size.height;
-      }
+      WarpAround(ship, canvas);
 
       if (!ship.sprites[0].visible) {
         ship.sprites[1].visible = false;
         ship.sprites[0].visible = true;
       }
+
       if (inputs["w"]) {
         if (!ship.sprites[1].visible) {
           ship.sprites[0].visible = false;
           ship.sprites[1].visible = true;
         }
-        ship.velocity.x -= Math.sin(ship.direction) * 0.1;
-        ship.velocity.y += Math.cos(ship.direction) * 0.1;
+        ship.physics.addForce(0.1);
       }
 
       if (inputs["a"]) {
-        ship.direction -= Math.PI / 100;
+        ship.physics.addTorque(-(Math.PI / 100));
       }
 
       if (inputs["d"]) {
-        ship.direction += Math.PI / 100;
+        ship.physics.addTorque(Math.PI / 100);
       }
-
-      ship.velocity.x *= 0.99;
-      ship.velocity.y *= 0.99;
-      ship.position.x -= ship.velocity.x;
-      ship.position.y -= ship.velocity.y;
     };
 
     function resetShip() {
-      ship.velocity = {
+      ship.physics.velocity = {
         x: 0,
         y: 0,
       };
@@ -250,26 +229,15 @@ export default function Asteroids() {
     function createAstroids() {
       asteroids.forEach((asteroid) => {
         asteroid.tag = "asteroid";
-        asteroid.velocity = {
-          x: 0.5 + Math.random() * 0.75,
-          y: 0.5 + Math.random() * 0.75,
-        };
-        asteroid.freezeRotation = true;
+        asteroid.physics = new Rigidbody(asteroid);
+        asteroid.physics.linearDrag = 0;
+        const force = 0.75 + Math.random() * 1.25;
         asteroid.direction = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        asteroid.physics.addForce(force);
+        asteroid.freezeRotation = true;
 
         asteroid.onUpdate = () => {
-          // If asteroid goes off screen
-          if (asteroid.position.x > canvas.width + asteroid.size.width)
-            asteroid.position.x = 0 - asteroid.size.width;
-          if (asteroid.position.x < -asteroid.size.width)
-            asteroid.position.x = canvas.width + asteroid.size.width;
-          if (asteroid.position.y > canvas.height + asteroid.size.height)
-            asteroid.position.y = 0 - asteroid.size.height;
-          if (asteroid.position.y < -asteroid.size.height)
-            asteroid.position.y = canvas.height + asteroid.size.height;
-
-          asteroid.position.x += asteroid.velocity.x * asteroid.direction;
-          asteroid.position.y += asteroid.velocity.y * asteroid.direction;
+          WarpAround(asteroid, canvas);
 
           if (!blinking && asteroid.collidesWith(ship)) {
             resetShip();
@@ -315,7 +283,10 @@ export default function Asteroids() {
 
         bullet.size = { width: 4, height: 4 };
         bullet.direction = ship.direction;
-        bullet.velocity = { x: 6, y: 6 };
+        bullet.physics = new Rigidbody(bullet);
+        bullet.physics.linearDrag = 0;
+        bullet.physics.addForce(6);
+
         bullet.fill = "white";
 
         bullet.position = {
@@ -336,9 +307,6 @@ export default function Asteroids() {
           ) {
             scene.remove(bullet);
           }
-
-          bullet.position.x += bullet.velocity.x * Math.sin(bullet.direction);
-          bullet.position.y -= bullet.velocity.y * Math.cos(bullet.direction);
 
           for (const asteroid of scene.getGameObjectsByTag("asteroid")) {
             if (bullet.collidesWith(asteroid)) {
