@@ -189,7 +189,7 @@ export default function Asteroids() {
           ship.sprites[0].visible = false;
           ship.sprites[1].visible = true;
         }
-        ship.physics.addForce(0.1);
+        ship.physics.addForce(0.15);
       }
 
       if (inputs["a"]) {
@@ -231,7 +231,7 @@ export default function Asteroids() {
         asteroid.tag = "asteroid";
         asteroid.physics = new Rigidbody(asteroid);
         asteroid.physics.linearDrag = 0;
-        const force = 0.75 + Math.random() * 1.25;
+        const force = 1 + Math.random() * 2.5;
         asteroid.direction = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
         asteroid.physics.addForce(force);
         asteroid.freezeRotation = true;
@@ -285,7 +285,7 @@ export default function Asteroids() {
         bullet.direction = ship.direction;
         bullet.physics = new Rigidbody(bullet);
         bullet.physics.linearDrag = 0;
-        bullet.physics.addForce(6);
+        bullet.physics.addForce(12);
 
         bullet.fill = "white";
 
