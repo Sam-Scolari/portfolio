@@ -4,7 +4,7 @@ import Cursor from "../components/Cursor";
 import Header from "../components/Header.astro";
 import Landing from "../sections/Landing.astro";
 import MyWork from "../sections/MyWork";
-import Footer from "../components/Footer";
+import Footer from "../components/Footer.astro";
 import GameOfLife from "../games/GameOfLife";
 import MySkillS from "../sections/MySkills";
 ---
@@ -57,6 +57,6 @@ import MySkillS from "../sections/MySkills";
     <Landing />
     <MySkillS client:load />
     <MyWork client:idle />
-    <Footer client:idle />
+    <Footer />
   </body>
 </html>
