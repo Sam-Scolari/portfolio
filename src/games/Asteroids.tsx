@@ -167,6 +167,7 @@ export default function Asteroids() {
 
     const ship = new Image([shipStationary, shipMoving]);
     ship.physics = new Rigidbody(ship);
+    ship.physics.gravity = 0;
 
     let blinking = true;
     ship.position.x = canvas.width / 2 - ship.size.width / 2;
@@ -233,6 +234,7 @@ export default function Asteroids() {
         asteroid.physics.linearDrag = 0;
         const force = 1 + Math.random() * 2.5;
         asteroid.direction = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
+        asteroid.physics.gravity = 0;
         asteroid.physics.addForce(force);
         asteroid.freezeRotation = true;
 
@@ -285,6 +287,7 @@ export default function Asteroids() {
         bullet.direction = ship.direction;
         bullet.physics = new Rigidbody(bullet);
         bullet.physics.linearDrag = 0;
+        bullet.physics.gravity = 0;
         bullet.physics.addForce(12);
 
         bullet.fill = "white";

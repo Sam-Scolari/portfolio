@@ -1,4 +1,11 @@
-import Game, { Scene, Image, Sprite } from "@sam-scolari/game-engine";
+import Game, {
+  Scene,
+  Image,
+  Sprite,
+  Blink,
+  Rigidbody,
+  Text,
+} from "@sam-scolari/game-engine";
 import { onMount } from "solid-js";
 
 export default function LunarLander() {
@@ -27,30 +34,59 @@ export default function LunarLander() {
       return path;
     })();
 
+    let boost = 100;
+
+    const boostText = new Text([`${boost.toString()}%`]);
+    boostText.position = { x: 64, y: 120 };
+    boostText.fontSize = 32;
+    boostText.fill = "white";
+    boostText.onUpdate = () => {
+      boostText.textNodes[0] = `${boost.toString()}%`;
+    };
+
     const shipSprite = new Sprite("/lunar-lander/ship.svg", 82, 83.4);
     const ship = new Image(shipSprite);
-    ship.position = { x: canvas.width / 2, y: canvas.height / 2 };
+    ship.position = { x: canvas.width / 2, y: canvas.height / 4 };
+    ship.physics = new Rigidbody(ship);
+    ship.physics.gravity = 0.02;
+    ship.physics.linearDrag = 0;
     let blinking = true;
-    ship.onUpdate = () => {
-      if (blinking && Math.floor(Date.now() / 450) % 2) {
-        ship.visible = false;
-      } else ship.visible = true;
+    ship.onUpdate = (inputs) => {
+      if (blinking) {
+        ship.physics.lock = true;
+        Blink(ship, 450);
+      } else {
+        ship.physics.lock = false;
+        ship.visible = true;
+      }
 
-      if (!blinking) {
-        if (ship.position.y < canvas.height - ship.size.height / 2) {
-          ship.position.y += 1;
-        }
+      if (ship.position.y > canvas.height - ship.size.height / 2) {
+        ship.position.y = canvas.height - ship.size.height / 2;
+      }
+
+      if (inputs[" "]) {
+        ship.physics.addForce(0.02, 0);
+        boost -= 0.1;
+      }
+
+      if (inputs["a"]) {
+        ship.physics.addTorque(-(Math.PI / 1000));
+      }
+
+      if (inputs["d"]) {
+        ship.physics.addTorque(Math.PI / 1000);
       }
     };
 
     const scene = new Scene();
     scene.background = "black";
     scene.add(ship);
+    scene.add(boostText);
 
     game.load(scene);
 
     game.onKeyDown((e) => {
-      if (e.key === "s") {
+      if (["a", "d", " "].includes(e.key)) {
         blinking = false;
       }
     });

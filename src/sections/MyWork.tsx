@@ -45,6 +45,12 @@ export default function MyWork() {
             {(project) => (
               <img
                 onClick={() => setDetails(true)}
+                onMouseEnter={(e) => {
+                  e.currentTarget.src = project.gif;
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.src = project.image;
+                }}
                 id={project.name}
                 draggable={false}
                 src={project.image}
@@ -100,9 +106,9 @@ export default function MyWork() {
           opacity: details() ? "1" : 0,
           "pointer-events": details() ? "auto" : "none",
         }}
-        class="absolute w-full h-full gap-16 transition-opacity duration-300 flex items-center"
+        class="absolute h-full mr-8 transition-opacity duration-300 flex items-center"
       >
-        <div class="flex flex-col w-full p-12 gap-8">
+        <div class="flex flex-col w-1/2 p-12 gap-8">
           <div
             onClick={() => setDetails(false)}
             class="flex  items-center gap-4 cursor-pointer text-2xl font-semibold"
@@ -113,12 +119,12 @@ export default function MyWork() {
           <h2 class="text-5xl font-semibold">{currentProject().name}</h2>
           <p class="text-grey ">{currentProject().description}</p>
         </div>
-        <div class="w-full h-full flex items-center relative">
+        <div class="h-full flex items-center">
           <img
             draggable={false}
-            src={currentProject().image}
+            src={currentProject().gif || currentProject().image}
             alt={currentProject().name}
-            class="h-3/4 aspect-video object-cover absolute left-0 rounded-2xl select-none"
+            class="h-3/4 aspect-video object-cover rounded-2xl select-none translate-x-[32px]"
           />
         </div>
       </div>
