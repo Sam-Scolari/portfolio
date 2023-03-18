@@ -15,34 +15,6 @@ export default function GameOfLife() {
 
     const scene = new Scene();
 
-    // const matrix: Array<Array<GameObject>> = (() => {
-    //   let array = [];
-
-    //   for (
-    //     let i = 0;
-    //     i < Math.round(window.innerHeight / (spacing + size)) + 1;
-    //     i++
-    //   ) {
-    //     array.push([]);
-    //     for (
-    //       let j = 0;
-    //       j < Math.round(window.innerWidth / (spacing + size));
-    //       j++
-    //     ) {
-    //       const tile = new Box();
-    //       tile.size = { width: size, height: size };
-    //       tile.fill = "black";
-    //       tile.visible = false;
-
-    //       scene.add(tile);
-    //       //@ts-ignore
-    //       array[i].push(tile);
-    //     }
-    //   }
-
-    //   return array;
-    // })();
-
     type Matrix = { [key: string]: { [key: string]: GameObject } };
 
     let matrix: Matrix = (() => {
@@ -93,11 +65,11 @@ export default function GameOfLife() {
 
     setInterval(() => {
       if (!paused()) {
-        const state = matrix;
+        const changes = [];
 
         for (let i = 0; i < Object.keys(matrix).length; i++) {
           for (let j = 0; j < Object.keys(matrix[i]).length; j++) {
-            const tile = state[i][j];
+            const tile = matrix[i][j];
 
             const neighbors = {
               top: matrix[i - 1]?.[j],
@@ -119,19 +91,21 @@ export default function GameOfLife() {
 
             if (tile.visible) {
               if (count < 2 || count > 3) {
-                tile.visible = false;
+                changes.push({ i, j, visible: false });
               }
             } else {
               if (count === 3) {
-                tile.visible = true;
+                changes.push({ i, j, visible: true });
               }
             }
           }
         }
 
-        matrix = state;
+        for (const change of changes) {
+          matrix[change.i][change.j].visible = change.visible;
+        }
       }
-    }, 1000);
+    }, 100);
 
     game.onKeyDown((e) => {
       if (e.key === "Enter") {

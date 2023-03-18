@@ -46,7 +46,9 @@ export default function MyWork() {
               <img
                 onClick={() => setDetails(true)}
                 onMouseEnter={(e) => {
-                  e.currentTarget.src = project.gif;
+                  if (project.gif === "/projects/twitch-chat.gif") {
+                    e.currentTarget.src = project.gif;
+                  }
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.src = project.image;
@@ -122,9 +124,9 @@ export default function MyWork() {
         <div class="h-full flex items-center">
           <img
             draggable={false}
-            src={currentProject().gif || currentProject().image}
+            src={currentProject().image}
             alt={currentProject().name}
-            class="h-3/4 aspect-video object-cover rounded-2xl select-none translate-x-[32px]"
+            class="h-3/4 aspect-video object-cover rounded-tl-2xl rounded-bl-2xl select-none translate-x-[32px]"
           />
         </div>
       </div>
