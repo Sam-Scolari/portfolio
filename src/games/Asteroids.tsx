@@ -17,6 +17,7 @@ export default function Asteroids() {
 
     const game = new Game(canvas);
     let score = 0;
+    let lives = 3;
 
     game.clipPath = (() => {
       const path = new Path2D();
@@ -160,6 +161,23 @@ export default function Asteroids() {
     scene.add(ad);
     scene.add(space);
 
+    const lifeSprite = new Sprite("/asteroids/ship.svg", 38, 53);
+
+    let _lives = (() => {
+      let objects = [];
+      for (let i = 0; i < lives; i++) {
+        const life = new Image([lifeSprite]);
+        life.scale = { x: 0.7, y: 0.7 };
+        life.position.x = 80 + 36 * i;
+        life.position.y = 160;
+
+        objects.push(life);
+        scene.add(life);
+      }
+
+      return objects;
+    })();
+
     const shipStationary = new Sprite("/asteroids/ship.svg", 38, 53);
     const shipMoving = new Sprite("/asteroids/ship2.svg", 38, 53);
 
@@ -190,7 +208,7 @@ export default function Asteroids() {
           ship.sprites[0].visible = false;
           ship.sprites[1].visible = true;
         }
-        ship.physics.addForce(0.15);
+        ship.physics.addForce(12);
       }
 
       if (inputs["a"]) {
@@ -232,7 +250,7 @@ export default function Asteroids() {
         asteroid.tag = "asteroid";
         asteroid.physics = new Rigidbody(asteroid);
         asteroid.physics.linearDrag = 0;
-        const force = 1 + Math.random() * 2.5;
+        const force = 1 + Math.random() * 2;
         asteroid.direction = Math.floor(Math.random() * 2) == 1 ? 1 : -1;
         asteroid.physics.gravity = 0;
         asteroid.physics.addForce(force);
@@ -243,6 +261,16 @@ export default function Asteroids() {
 
           if (!blinking && asteroid.collidesWith(ship)) {
             resetShip();
+            lives--;
+
+            console.log(lives);
+
+            if (lives > 0) {
+              _lives[lives].visible = false;
+            } else {
+              _lives[0].visible = false;
+              // gameover
+            }
           }
         };
 
@@ -288,7 +316,7 @@ export default function Asteroids() {
         bullet.physics = new Rigidbody(bullet);
         bullet.physics.linearDrag = 0;
         bullet.physics.gravity = 0;
-        bullet.physics.addForce(12);
+        bullet.physics.addForce(8);
 
         bullet.fill = "white";
 
