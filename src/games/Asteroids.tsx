@@ -212,11 +212,11 @@ export default function Asteroids() {
       }
 
       if (inputs["a"]) {
-        ship.physics.addTorque(-(Math.PI / 100));
+        ship.physics.addTorque(-4.5);
       }
 
       if (inputs["d"]) {
-        ship.physics.addTorque(Math.PI / 100);
+        ship.physics.addTorque(4.5);
       }
     };
 
