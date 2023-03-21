@@ -70,6 +70,7 @@ export default function LunarLander() {
       if (ship.position.y > canvas.height - ship.size.height / 2) {
         ship.position.y = canvas.height - ship.size.height / 2;
         ship.physics.velocity = { x: 0, y: 0 };
+        boost = 0;
       }
 
       if (inputs[" "] && boost > 0) {
