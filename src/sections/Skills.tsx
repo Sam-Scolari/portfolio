@@ -1,7 +1,7 @@
 import { onMount } from "solid-js";
 import Asteroids from "../games/Asteroids";
 
-export default function MySkillS() {
+export default function Skills() {
   onMount(() => {
     const canvas = document.getElementById("my-skills") as HTMLCanvasElement;
     const header = document.getElementById("header") as HTMLDivElement;

@@ -38,17 +38,24 @@ export default function LunarLander() {
 
     const boostText = new Text([`${boost.toString()}%`]);
     boostText.position = { x: 64, y: 120 };
-    boostText.fontSize = 32;
+    boostText.fontSize = 14;
     boostText.fill = "white";
+    boostText.font = "PressStart2P";
+    boostText.visible = false;
     boostText.onUpdate = () => {
-      boostText.textNodes[0] = `${boost.toString()}%`;
+      boostText.textNodes[0] = `${boost.toFixed(1)}%`;
     };
 
     const shipSprite = new Sprite("/lunar-lander/ship.svg", 55, 52.27);
     const ship = new Image(shipSprite);
-    ship.position = { x: canvas.width / 2, y: canvas.height / 4 };
+
+    const footer = document.getElementById("footer") as HTMLElement;
+    ship.position = {
+      x: canvas.width * 0.9,
+      y: footer.clientHeight / 2 - ship.size.height / 2 + 30,
+    };
     ship.physics = new Rigidbody(ship);
-    ship.physics.gravity = 0.02;
+    ship.physics.gravity = 0.5;
     ship.physics.linearDrag = 0;
     let blinking = true;
     ship.onUpdate = (inputs) => {
@@ -62,36 +69,69 @@ export default function LunarLander() {
 
       if (ship.position.y > canvas.height - ship.size.height / 2) {
         ship.position.y = canvas.height - ship.size.height / 2;
+        ship.physics.velocity = { x: 0, y: 0 };
       }
 
-      if (inputs[" "]) {
-        ship.physics.addForce(0.02, 0);
+      if (inputs[" "] && boost > 0) {
+        ship.physics.addForce(0.7, 0);
         boost -= 0.1;
       }
 
       if (inputs["a"]) {
-        ship.physics.addTorque(-(Math.PI / 1000));
+        ship.physics.addTorque(-(Math.PI / 10));
       }
 
       if (inputs["d"]) {
-        ship.physics.addTorque(Math.PI / 1000);
+        ship.physics.addTorque(Math.PI / 10);
       }
+    };
+
+    const startText = new Text(["Press [enter] to start"]);
+    startText.position = {
+      x: canvas.width * 0.9 - 500,
+      y: footer.clientHeight / 2 - ship.size.height / 2 + 30 + 12, // 30 is the clip path margin
+    };
+    startText.fontSize = 18;
+    startText.fill = "white";
+    startText.font = "PressStart2P";
+
+    const velocityText = new Text(["0 m/s"]);
+    velocityText.position = { x: 64, y: 160 };
+    velocityText.fontSize = 14;
+    velocityText.fill = "white";
+    velocityText.font = "PressStart2P";
+    velocityText.visible = false;
+    velocityText.onUpdate = () => {
+      velocityText.textNodes[0] = `${(ship.physics.velocity.y * 100).toFixed(
+        2
+      )} m/s`;
     };
 
     const scene = new Scene();
     scene.background = "black";
     scene.add(ship);
     scene.add(boostText);
+    scene.add(startText);
+    scene.add(velocityText);
 
     game.load(scene);
 
     game.onKeyDown((e) => {
-      if (["a", "d", " "].includes(e.key)) {
+      if (["Enter"].includes(e.key)) {
         blinking = false;
+        const footer = document.getElementById("footer") as HTMLElement;
+        footer.style.height = game.viewport.height + "px";
+        window.scrollTo({
+          top: document.body.scrollHeight,
+          behavior: "smooth",
+        });
+        startText.visible = false;
+        boostText.visible = true;
+        velocityText.visible = true;
       }
     });
 
     game.start();
   });
-  return <canvas id="lunar-lander" class="w-full h-full" />;
+  return <canvas id="lunar-lander" class="w-full h-[calc(100vh_-_130px)]" />;
 }

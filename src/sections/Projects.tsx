@@ -1,22 +1,31 @@
-import Projects from "../projects.json";
+import ProjectData from "../projects.json";
 import { For, Show, createEffect, createSignal, onMount } from "solid-js";
 
-export default function MyWork() {
+export default function Projects() {
   const [details, setDetails] = createSignal(false);
 
   const [currentIndex, setCurrentIndex] = createSignal(
     Math.floor(Object.keys(Projects).length / 2)
   );
 
+  const cardWidth = () => {
+    if (window.innerWidth < 640) {
+      return window.innerWidth - 80;
+    }
+
+    return 450;
+  };
+
   onMount(() => {
     const carousel = document.getElementById("carousel") as HTMLDivElement;
 
-    carousel.scrollTo(carousel.scrollWidth / 2 - 450 * 2, 0);
+    carousel.scrollTo(carousel.scrollWidth / 2 - cardWidth() * 2, 0);
 
     carousel.addEventListener("scroll", () => {
       // This needs to factor in the width change of the cards at a mobile display
       const index = Math.floor(
-        (carousel.scrollLeft - window.innerWidth / 2 - 450 / 2) / 450
+        (carousel.scrollLeft - window.innerWidth / 2 - cardWidth() / 2) /
+          cardWidth()
       );
 
       if (currentIndex() !== index) {
@@ -25,7 +34,7 @@ export default function MyWork() {
     });
   });
 
-  const currentProject = () => Projects[currentIndex()];
+  const currentProject = () => ProjectData[currentIndex()];
 
   return (
     <div class="relative w-full h-screen flex flex-col items-center justify-center">
@@ -37,14 +46,14 @@ export default function MyWork() {
         class="flex flex-col w-full h-full items-center  gap-16 justify-center transition-opacity duration-300"
       >
         <div class="flex flex-col items-center gap-4">
-          <h2 class="text-5xl font-semibold select-none">My Work</h2>
+          <h2 class="text-5xl font-semibold select-none">Projects</h2>
           <p class="text-grey text-xl select-none">Check out some of my work</p>
         </div>
         <div
           id="carousel"
           class="w-full h-[30vh] scroll-smooth items-center gap-16 select-none scrollbar-hidden overflow-y-visible  flex overflow-x-scroll snap-x snap-mandatory"
         >
-          <For each={Projects}>
+          <For each={ProjectData}>
             {(project) => (
               <img
                 onClick={() => setDetails(true)}
@@ -119,23 +128,37 @@ export default function MyWork() {
             <img src="/icons/arrow-left.svg" class="w-6" />
             My Work
           </div>
-          <h2
+          <div
             onClick={() => {
               if (currentProject().links.site) {
                 window.open(currentProject().links.site);
               }
             }}
             style={{
-              color: currentProject().links.site ? "blue" : "black",
-              "text-decoration": currentProject().links.site
-                ? "underline"
-                : "none",
               cursor: currentProject().links.site ? "pointer" : "default",
             }}
-            class="text-5xl font-semibold"
+            class="flex items-start w-min"
           >
-            {currentProject().name}
-          </h2>
+            <h2
+              style={{
+                color: currentProject().links.site ? "blue" : "black",
+                "text-decoration": currentProject().links.site
+                  ? "underline"
+                  : "none",
+              }}
+              class="text-5xl font-semibold whitespace-nowrap"
+            >
+              {currentProject().name}
+            </h2>
+            <Show when={currentProject().links.site}>
+              <img
+                src="/icons/open.svg"
+                alt={`Open ${currentProject().links.site}`}
+                class="w-4"
+              />
+            </Show>
+          </div>
+
           <p class="text-grey ">{currentProject().description}</p>
           <div class="flex gap-4">
             <For each={Object.entries(currentProject().links)}>
@@ -143,11 +166,17 @@ export default function MyWork() {
                 <Show when={link && type !== "site"}>
                   <a
                     href={link}
-                    class="rounded-xl overflow-hidden w-10"
+                    class="flex items-center gap-2 hover:bg-[#E7E7E7] bg-white border-[#E7E7E7] rounded-lg p-2 border-2 text-lg text-grey"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
-                    <img src={`/socials/${type}.\webp`} />
+                    <img
+                      src={`/socials/${type}.\webp`}
+                      class="rounded-lg w-8"
+                    />
+                    {type === "mirror"
+                      ? "Case Study"
+                      : type[0].toUpperCase() + type.substring(1)}
                   </a>
                 </Show>
               )}
