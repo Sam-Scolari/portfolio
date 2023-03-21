@@ -9,6 +9,7 @@ import Game, {
   Rigidbody,
   Blink,
   WarpAround,
+  GameObject,
 } from "@sam-scolari/game-engine";
 
 export default function Asteroids() {
@@ -245,6 +246,24 @@ export default function Asteroids() {
       new Image(new Sprite("/asteroids/astro.webp")),
     ];
 
+    function gameOver() {
+      const scene = new Scene();
+      scene.background = "black";
+
+      const text = new Text(["Game Over"]);
+      text.font = font;
+      text.fontSize = 48;
+      text.fill = "white";
+      text.position = {
+        x: canvas.width / 2 - 250,
+        y: canvas.height / 2,
+      };
+
+      scene.add(text);
+
+      game.load(scene);
+    }
+
     function createAstroids() {
       asteroids.forEach((asteroid) => {
         asteroid.tag = "asteroid";
@@ -263,13 +282,11 @@ export default function Asteroids() {
             resetShip();
             lives--;
 
-            console.log(lives);
-
             if (lives > 0) {
               _lives[lives].visible = false;
             } else {
               _lives[0].visible = false;
-              // gameover
+              gameOver();
             }
           }
         };
@@ -342,6 +359,58 @@ export default function Asteroids() {
           for (const asteroid of scene.getGameObjectsByTag("asteroid")) {
             if (bullet.collidesWith(asteroid)) {
               scene.remove(asteroid, () => {
+                if (asteroid.scale.x > 0.5) {
+                  let newAsteroids = [
+                    new Image((asteroid as Image).sprites[0]),
+                    new Image((asteroid as Image).sprites[0]),
+                    new Image((asteroid as Image).sprites[0]),
+                  ];
+
+                  for (const newAsteroid of newAsteroids) {
+                    newAsteroid.tag = "asteroid";
+                    newAsteroid.position = asteroid.position;
+                    newAsteroid.physics = new Rigidbody(newAsteroid);
+                    newAsteroid.physics.linearDrag = 0;
+                    newAsteroid.physics.gravity = 0;
+                    newAsteroid.physics.velocity = {
+                      x: asteroid.physics.velocity.x / 1 + Math.random() * 2,
+                      y: asteroid.physics.velocity.y / 1 + Math.random() * 2,
+                    };
+                    // newAsteroid.direction =
+                    //   asteroid.direction * Math.random() * Math.PI * 2 +
+                    //   Math.PI / 4;
+                    newAsteroid.freezeRotation = true;
+
+                    newAsteroid.onUpdate = () => {
+                      WarpAround(newAsteroid, canvas);
+
+                      if (!blinking && newAsteroid.collidesWith(ship)) {
+                        resetShip();
+                        lives--;
+
+                        if (lives > 0) {
+                          _lives[lives].visible = false;
+                        } else {
+                          _lives[0].visible = false;
+                          gameOver();
+                        }
+                      }
+                    };
+
+                    if (asteroid.scale.x === 0.75) {
+                      newAsteroid.scale = { x: 0.5, y: 0.5 };
+                    }
+
+                    if (asteroid.scale.x === 1) {
+                      newAsteroid.scale = { x: 0.75, y: 0.75 };
+                    }
+
+                    console.log(asteroid, newAsteroid);
+
+                    scene.add(newAsteroid);
+                  }
+                }
+
                 const asteroids = scene.getGameObjectsByTag("asteroid");
 
                 if (asteroids.length <= 1) {
@@ -349,6 +418,7 @@ export default function Asteroids() {
                   resetShip();
                 }
               });
+
               scene.remove(bullet);
               score++;
             }

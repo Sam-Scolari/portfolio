@@ -3,35 +3,35 @@
     "name": "Redesign Challenge",
     "image": "/projects/redesign-challenge.png",
     "gif": "/projects/redesign-challenge.gif",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "One of the ways I like to level up my design skills is by redesigning websites that I think could be improved. In this challenge I gave 3 different website a refresh.",
     "links": {
       "github": "",
-      "case-study": "",
-      "figma": "",
+      "mirror": "https://mirror.xyz/dashboard/edit/prJ-0rLXmHRljw_xCm-BA61H-cX3Ae4LTWpGK1-Eesw",
+      "figma": "https://www.figma.com/file/6QJpNHO0okfredjd6XoOdd/Redesign-Challenge?node-id=2%3A2&t=3baDELkwdArBuHo7-1",
       "site": ""
     }
   },
   {
-    "name": "Stream Manager",
-    "image": "/projects/stream-manager.png",
-    "gif": "/projects/stream-manager.gif",
+    "name": "Live Studio",
+    "image": "/projects/live-studio.jpg",
+    "gif": "/projects/live-studio.gif",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "links": {
-      "github": "",
-      "case-study": "",
+      "github": "https://github.com/Sam-Scolari/live-studio",
+      "mirror": "",
       "figma": "",
-      "site": ""
+      "site": "https://live-studio.samscolari.me"
     }
   },
   {
     "name": "Nouns Esports",
     "image": "/projects/nouns-esports.jpg",
     "gif": "/projects/nouns-esports.gif",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "Driving innovation at the intersection of web3 and gaming. Nouns is a decentralized esports organization where anyone, anywhere can contribute towards its growth and success!",
     "links": {
-      "github": "",
-      "case-study": "",
-      "figma": "",
+      "github": "https://github.com/Sam-Scolari/nouns-gg",
+      "mirror": "",
+      "figma": "https://www.figma.com/file/Qca1kUn4GM9TQN9mALfDnv/Nouns-Esports?node-id=0%3A1&t=Cw3i4RKpbb4em7LA-1",
       "site": "https://nouns.gg"
     }
   },
@@ -39,12 +39,12 @@
     "name": "Game Engine",
     "image": "/projects/game-engine.png",
     "gif": "/projects/game-engine.gif",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "When building my portfolio I wanted to include four different 2D games. When developing Asteroids I quickly realized that I was repeating a lot of code and that I should create a standard foundation for each game.",
     "links": {
-      "github": "",
-      "case-study": "",
+      "github": "https://github.com/Sam-Scolari/game-engine",
+      "mirror": "",
       "figma": "",
-      "site": ""
+      "site": "https://game-engine.samscolari.me"
     }
   },
   {
@@ -54,9 +54,9 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "links": {
       "github": "",
-      "case-study": "",
-      "figma": "",
-      "site": ""
+      "mirror": "",
+      "figma": "https://www.figma.com/file/Bpr4SUYWdgEZbVL6B5V4tR/Astronaut-VR-Esports?node-id=0%3A1&t=oU2aRl1vhZnWFvL3-1",
+      "site": "https://astronautesports.gg"
     }
   },
   {
@@ -65,10 +65,10 @@
     "gif": "/projects/twitch-chat.gif",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "links": {
-      "github": "",
-      "case-study": "",
+      "github": "https://github.com/Sam-Scolari/twitch-chat",
+      "mirror": "",
       "figma": "",
-      "site": ""
+      "site": "https://twitch-chat.samscolari.me"
     }
   },
   {
@@ -78,8 +78,8 @@
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "links": {
       "github": "",
-      "case-study": "",
-      "figma": "",
+      "mirror": "",
+      "figma": "https://www.figma.com/file/AURH5yzPaykikJ5OKxi0pc/Pocket---Crypto-Wallet?node-id=0%3A1&t=4dqA0Enh3ijyBTW9-1",
       "site": ""
     }
   }

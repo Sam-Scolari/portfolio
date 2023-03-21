@@ -44,7 +44,7 @@ export default function LunarLander() {
       boostText.textNodes[0] = `${boost.toString()}%`;
     };
 
-    const shipSprite = new Sprite("/lunar-lander/ship.svg", 82, 83.4);
+    const shipSprite = new Sprite("/lunar-lander/ship.svg", 55, 52.27);
     const ship = new Image(shipSprite);
     ship.position = { x: canvas.width / 2, y: canvas.height / 4 };
     ship.physics = new Rigidbody(ship);

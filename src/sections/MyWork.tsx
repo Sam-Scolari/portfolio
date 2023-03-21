@@ -1,5 +1,5 @@
 import Projects from "../projects.json";
-import { For, createEffect, createSignal, onMount } from "solid-js";
+import { For, Show, createEffect, createSignal, onMount } from "solid-js";
 
 export default function MyWork() {
   const [details, setDetails] = createSignal(false);
@@ -14,7 +14,10 @@ export default function MyWork() {
     carousel.scrollTo(carousel.scrollWidth / 2 - 450 * 2, 0);
 
     carousel.addEventListener("scroll", () => {
-      const index = Math.floor(carousel.scrollLeft / (450 + 64)) - 1;
+      // This needs to factor in the width change of the cards at a mobile display
+      const index = Math.floor(
+        (carousel.scrollLeft - window.innerWidth / 2 - 450 / 2) / 450
+      );
 
       if (currentIndex() !== index) {
         setCurrentIndex(index);
@@ -46,9 +49,7 @@ export default function MyWork() {
               <img
                 onClick={() => setDetails(true)}
                 onMouseEnter={(e) => {
-                  if (project.gif === "/projects/twitch-chat.gif") {
-                    e.currentTarget.src = project.gif;
-                  }
+                  e.currentTarget.src = project.gif;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.src = project.image;
@@ -118,8 +119,40 @@ export default function MyWork() {
             <img src="/icons/arrow-left.svg" class="w-6" />
             My Work
           </div>
-          <h2 class="text-5xl font-semibold">{currentProject().name}</h2>
+          <h2
+            onClick={() => {
+              if (currentProject().links.site) {
+                window.open(currentProject().links.site);
+              }
+            }}
+            style={{
+              color: currentProject().links.site ? "blue" : "black",
+              "text-decoration": currentProject().links.site
+                ? "underline"
+                : "none",
+              cursor: currentProject().links.site ? "pointer" : "default",
+            }}
+            class="text-5xl font-semibold"
+          >
+            {currentProject().name}
+          </h2>
           <p class="text-grey ">{currentProject().description}</p>
+          <div class="flex gap-4">
+            <For each={Object.entries(currentProject().links)}>
+              {([type, link]) => (
+                <Show when={link && type !== "site"}>
+                  <a
+                    href={link}
+                    class="rounded-xl overflow-hidden w-10"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    <img src={`/socials/${type}.\webp`} />
+                  </a>
+                </Show>
+              )}
+            </For>
+          </div>
         </div>
         <div class="h-full flex items-center">
           <img
