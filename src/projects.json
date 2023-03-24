@@ -3,10 +3,10 @@
     "name": "Redesign Challenge",
     "image": "/projects/redesign-challenge.png",
     "gif": "/projects/redesign-challenge.gif",
-    "description": "One of the ways I like to level up my design skills is by redesigning websites that I think could be improved. In this challenge I gave 3 different website a refresh.",
+    "description": "One of the ways I like to level up my design skills is by redesigning websites that I think could be improved. This challenge is a redesign of 3 different websites that I think could use a design refresh.",
     "links": {
       "github": "",
-      "mirror": "https://mirror.xyz/dashboard/edit/prJ-0rLXmHRljw_xCm-BA61H-cX3Ae4LTWpGK1-Eesw",
+      "mirror": "https://mirror.xyz/samscolari.eth/prJ-0rLXmHRljw_xCm-BA61H-cX3Ae4LTWpGK1-Eesw",
       "figma": "https://www.figma.com/file/6QJpNHO0okfredjd6XoOdd/Redesign-Challenge?node-id=2%3A2&t=3baDELkwdArBuHo7-1",
       "site": ""
     }
@@ -63,10 +63,10 @@
     "name": "Twitch Chat",
     "image": "/projects/twitch-chat.png",
     "gif": "/projects/twitch-chat.gif",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "I recently came across a project called GunJS, a peer to peer database for the web. I wanted to learn how to use gun so I created a simple Twitch chat clone while giving users the ability to send chats on the rails of Gun, no servers needed.",
     "links": {
       "github": "https://github.com/Sam-Scolari/twitch-chat",
-      "mirror": "",
+      "mirror": "https://mirror.xyz/samscolari.eth/od9JJi1RC4ktJsj_A3DIeWJ83ZjU7rBvMJ7qc0O7-tQ",
       "figma": "",
       "site": "https://twitch-chat.samscolari.me"
     }
@@ -75,10 +75,10 @@
     "name": "Pocket Wallet",
     "image": "/projects/pocket-wallet.png",
     "gif": "/projects/pocket-wallet.gif",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "description": "During my journey of exploring the world of web3 I noticed the alarming amount of terrible user experiences when it came to wallets. Few felt easy to pick up and learn as a beginner and many also felt too technical, giving me way more information than I cared to see. Pocket Wallet is my attempt at fixing these issues.",
     "links": {
       "github": "",
-      "mirror": "",
+      "mirror": "https://mirror.xyz/samscolari.eth/AQ3rwciPVKyvt93Bh5By7PoNkDmxv8xMBN_E9Gj0vIM",
       "figma": "https://www.figma.com/file/AURH5yzPaykikJ5OKxi0pc/Pocket---Crypto-Wallet?node-id=0%3A1&t=4dqA0Enh3ijyBTW9-1",
       "site": ""
     }
