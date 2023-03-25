@@ -9,7 +9,6 @@ import Game, {
   Rigidbody,
   Blink,
   WarpAround,
-  GameObject,
 } from "@sam-scolari/game-engine";
 
 export default function Asteroids() {

@@ -2,7 +2,7 @@
   {
     "name": "Redesign Challenge",
     "image": "/projects/redesign-challenge.png",
-    "gif": "/projects/redesign-challenge.gif",
+    "gif": "",
     "description": "One of the ways I like to level up my design skills is by redesigning websites that I think could be improved. This challenge is a redesign of 3 different websites that I think could use a design refresh.",
     "links": {
       "github": "",
@@ -14,7 +14,7 @@
   {
     "name": "Live Studio",
     "image": "/projects/live-studio.jpg",
-    "gif": "/projects/live-studio.gif",
+    "gif": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "links": {
       "github": "https://github.com/Sam-Scolari/live-studio",
@@ -50,7 +50,7 @@
   {
     "name": "Astronauts Esports",
     "image": "/projects/astronauts-esports.png",
-    "gif": "/projects/astronauts-esports.gif",
+    "gif": "",
     "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
     "links": {
       "github": "",
@@ -74,7 +74,7 @@
   {
     "name": "Pocket Wallet",
     "image": "/projects/pocket-wallet.png",
-    "gif": "/projects/pocket-wallet.gif",
+    "gif": "",
     "description": "During my journey of exploring the world of web3 I noticed the alarming amount of terrible user experiences when it came to wallets. Few felt easy to pick up and learn as a beginner and many also felt too technical, giving me way more information than I cared to see. Pocket Wallet is my attempt at fixing these issues.",
     "links": {
       "github": "",

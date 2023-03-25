@@ -8,6 +8,8 @@ export default function Projects() {
     Math.floor(Object.keys(Projects).length / 2)
   );
 
+  const [cachedIndex, setCachedIndex] = createSignal(0);
+
   const cardWidth = () => {
     if (window.innerWidth < 640) {
       return window.innerWidth - 80;
@@ -54,11 +56,15 @@ export default function Projects() {
           class="w-full h-[30vh] scroll-smooth items-center gap-16 select-none scrollbar-hidden overflow-y-visible  flex overflow-x-scroll snap-x snap-mandatory"
         >
           <For each={ProjectData}>
-            {(project) => (
+            {(project, index) => (
               <img
-                onClick={() => setDetails(true)}
+                onClick={() => {
+                  setCachedIndex(currentIndex());
+                  setCurrentIndex(index());
+                  setDetails(true);
+                }}
                 onMouseEnter={(e) => {
-                  e.currentTarget.src = project.gif;
+                  if (project.gif) e.currentTarget.src = project.gif;
                 }}
                 onMouseLeave={(e) => {
                   e.currentTarget.src = project.image;
@@ -122,7 +128,10 @@ export default function Projects() {
       >
         <div class="flex flex-col w-1/2 p-12 gap-8">
           <div
-            onClick={() => setDetails(false)}
+            onClick={() => {
+              setCurrentIndex(cachedIndex());
+              setDetails(false);
+            }}
             class="flex  items-center gap-4 cursor-pointer text-2xl font-semibold"
           >
             <img src="/icons/arrow-left.svg" class="w-6" />
@@ -186,7 +195,7 @@ export default function Projects() {
         <div class="h-full flex items-center">
           <img
             draggable={false}
-            src={currentProject().image}
+            src={currentProject().gif || currentProject().image}
             alt={currentProject().name}
             class="h-3/4 aspect-video object-cover rounded-tl-2xl rounded-bl-2xl select-none translate-x-[32px]"
           />

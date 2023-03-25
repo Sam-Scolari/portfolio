@@ -11,7 +11,6 @@ export default function GameOfLife() {
 
     const spacing = 2;
     const size = 18;
-    const offset = size / 2;
 
     const scene = new Scene();
 
@@ -22,21 +21,21 @@ export default function GameOfLife() {
 
       for (
         let i = 0;
-        i < Math.round(window.innerHeight / (spacing + size)) + 1;
+        i < Math.round(window.innerHeight / (spacing + size)) + 4;
         i++
       ) {
         object[i] = {};
         for (
           let j = 0;
-          j < Math.round(window.innerWidth / (spacing + size));
+          j < Math.round(window.innerWidth / (spacing + size)) + 4;
           j++
         ) {
           const tile = new Box();
           tile.size = { width: size, height: size };
 
           tile.position = {
-            x: j * (size + spacing) - offset,
-            y: i * (size + spacing) - offset,
+            x: j * (size + spacing),
+            y: i * (size + spacing),
           };
 
           tile.fill = "black";

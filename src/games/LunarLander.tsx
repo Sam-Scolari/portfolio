@@ -11,7 +11,7 @@ import { onMount } from "solid-js";
 export default function LunarLander() {
   onMount(() => {
     const canvas = document.getElementById("lunar-lander") as HTMLCanvasElement;
-    const game = new Game(canvas);
+    const game = new Game(canvas, { overrideObserverRatio: 0.2 });
     game.clipPath = (() => {
       const path = new Path2D();
 
