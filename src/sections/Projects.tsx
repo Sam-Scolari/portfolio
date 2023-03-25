@@ -132,9 +132,13 @@ export default function Projects() {
               setCurrentIndex(cachedIndex());
               setDetails(false);
             }}
-            class="flex  items-center gap-4 cursor-pointer text-2xl font-semibold"
+            class="flex items-center gap-4 cursor-pointer text-2xl font-semibold select-none"
           >
-            <img src="/icons/arrow-left.svg" class="w-6" />
+            <img
+              src="/icons/arrow-left.svg"
+              draggable={false}
+              class="w-6 select-none"
+            />
             My Work
           </div>
           <div
@@ -155,7 +159,7 @@ export default function Projects() {
                   ? "underline"
                   : "none",
               }}
-              class="text-5xl font-semibold whitespace-nowrap"
+              class="text-5xl font-semibold whitespace-nowrap select-none"
             >
               {currentProject().name}
             </h2>
@@ -163,7 +167,8 @@ export default function Projects() {
               <img
                 src="/icons/open.svg"
                 alt={`Open ${currentProject().links.site}`}
-                class="w-4"
+                draggable={false}
+                class="w-4 select-none"
               />
             </Show>
           </div>
@@ -175,13 +180,15 @@ export default function Projects() {
                 <Show when={link && type !== "site"}>
                   <a
                     href={link}
-                    class="flex items-center gap-2 hover:bg-[#E7E7E7] bg-white border-[#E7E7E7] rounded-lg p-2 border-2 text-lg text-grey"
+                    class="flex items-center select-none gap-2 hover:bg-[#E7E7E7] bg-white border-[#E7E7E7] rounded-lg p-2 border-2 text-lg text-grey"
                     target="_blank"
+                    draggable={false}
                     rel="noopener noreferrer"
                   >
                     <img
                       src={`/socials/${type}.\webp`}
-                      class="rounded-lg w-8"
+                      draggable={false}
+                      class="rounded-lg w-8 select-none"
                     />
                     {type === "mirror"
                       ? "Case Study"

@@ -36,18 +36,19 @@ export default function LunarLander() {
 
     let boost = 100;
 
-    const boostText = new Text([`${boost.toString()}%`]);
+    const boostText = new Text([`${boost.toString()}% Fuel`]);
     boostText.position = { x: 64, y: 120 };
     boostText.fontSize = 14;
     boostText.fill = "white";
     boostText.font = "PressStart2P";
     boostText.visible = false;
     boostText.onUpdate = () => {
-      boostText.textNodes[0] = `${boost.toFixed(1)}%`;
+      boostText.textNodes[0] = `${boost.toFixed(1)}% Fuel`;
     };
 
     const shipSprite = new Sprite("/lunar-lander/ship.svg", 55, 52.27);
-    const ship = new Image(shipSprite);
+    const shipFireSprite = new Sprite("/lunar-lander/shipFire.svg", 55, 52.27);
+    const ship = new Image([shipSprite, shipFireSprite]);
 
     const footer = document.getElementById("footer") as HTMLElement;
     ship.position = {
@@ -59,6 +60,8 @@ export default function LunarLander() {
     ship.physics.linearDrag = 0;
     let blinking = true;
     ship.onUpdate = (inputs) => {
+      ship.sprites[1].visible = false;
+
       if (blinking) {
         ship.physics.lock = true;
         Blink(ship, 450);
@@ -76,6 +79,7 @@ export default function LunarLander() {
       if (inputs[" "] && boost > 0) {
         ship.physics.addForce(0.7, 0);
         boost -= 0.1;
+        ship.sprites[1].visible = true;
       }
 
       if (inputs["a"]) {

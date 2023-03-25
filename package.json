@@ -13,7 +13,7 @@
   "dependencies": {
     "@astrojs/solid-js": "^2.0.0",
     "@astrojs/tailwind": "^3.0.0",
-    "@sam-scolari/game-engine": "file:../game-engine",
+    "@sam-scolari/game-engine": "^0.0.6",
     "astro": "^2.0.2",
     "canvas-confetti": "^1.6.0",
     "solid-js": "^1.6.9",
