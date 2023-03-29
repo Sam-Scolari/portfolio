@@ -48,15 +48,15 @@
     }
   },
   {
-    "name": "Astronauts Esports",
-    "image": "/projects/astronauts-esports.png",
-    "gif": "",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "name": "I'm Feeling Nounish",
+    "image": "/projects/im-feeling-nounish.webp",
+    "gif": "/projects/im-feeling-nounish.gif",
+    "description": "Inspired by The Useless Web and Google's \"I'm feeling lucky\" button, this project aims to innovate on the way we think about discovery (props, ideas, projects, people, etc...) in the Nouns ecosystem. Right now I'm Feeling Nounish works by serving the user a random link to a project or person, but with funding I want to expand the project and explore new and fun ways for people to discover new nounish people, places and things!",
     "links": {
       "github": "",
       "mirror": "",
-      "figma": "https://www.figma.com/file/Bpr4SUYWdgEZbVL6B5V4tR/Astronaut-VR-Esports?node-id=0%3A1&t=oU2aRl1vhZnWFvL3-1",
-      "site": "https://astronautesports.gg"
+      "figma": "",
+      "site": "https://nouns.ooo"
     }
   },
   {
