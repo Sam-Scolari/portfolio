@@ -180,7 +180,7 @@ export default function Projects() {
                 <Show when={link && type !== "site"}>
                   <a
                     href={link}
-                    class="flex items-center select-none gap-2 hover:bg-[#E7E7E7] bg-white border-[#E7E7E7] rounded-lg p-2 border-2 text-lg text-grey"
+                    class="flex items-center capitalize select-none gap-2 hover:bg-[#E7E7E7] bg-white border-[#E7E7E7] rounded-lg p-2 border-2 text-lg text-grey"
                     target="_blank"
                     draggable={false}
                     rel="noopener noreferrer"
@@ -192,7 +192,7 @@ export default function Projects() {
                     />
                     {type === "mirror"
                       ? "Case Study"
-                      : type[0].toUpperCase() + type.substring(1)}
+                      : type.replaceAll("-", " ")}
                   </a>
                 </Show>
               )}

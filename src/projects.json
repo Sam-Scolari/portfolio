@@ -2,85 +2,86 @@
   {
     "name": "Redesign Challenge",
     "image": "/projects/redesign-challenge.png",
-    "gif": "",
     "description": "One of the ways I like to level up my design skills is by redesigning websites that I think could be improved. This challenge is a redesign of 3 different websites that I think could use a design refresh.",
     "links": {
       "github": "",
       "mirror": "https://mirror.xyz/samscolari.eth/prJ-0rLXmHRljw_xCm-BA61H-cX3Ae4LTWpGK1-Eesw",
       "figma": "https://www.figma.com/file/6QJpNHO0okfredjd6XoOdd/Redesign-Challenge?node-id=2%3A2&t=3baDELkwdArBuHo7-1",
-      "site": ""
+      "site": "",
+      "prop-house": ""
     }
   },
   {
-    "name": "Live Studio",
-    "image": "/projects/live-studio.jpg",
-    "gif": "",
-    "description": "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "name": "Nouncil",
+    "image": "/projects/nouncil.jpg",
+    "description": "A council of Nounish builders working within the framework of NounsDAO to proliferate CC0 and nounish culture.",
     "links": {
-      "github": "https://github.com/Sam-Scolari/live-studio",
+      "github": "https://github.com/Sam-Scolari/nouncil",
       "mirror": "",
       "figma": "",
-      "site": "https://live-studio.samscolari.me"
+      "site": "https://nouncil.wtf",
+      "prop-house": ""
+    }
+  },
+
+  {
+    "name": "Game Engine",
+    "image": "/projects/game-engine.png",
+    "description": "When building my portfolio I wanted to include different 2D games. I quickly realized that I was repeating a lot of code and that I should create a standard foundation for each game.",
+    "links": {
+      "github": "https://github.com/Sam-Scolari/game-engine",
+      "mirror": "",
+      "figma": "",
+      "site": "https://game-engine.samscolari.me",
+      "prop-house": ""
     }
   },
   {
     "name": "Nouns Esports",
-    "image": "/projects/nouns-esports.png",
-    "gif": "/projects/nouns-esports.gif",
+    "image": "/projects/nouns-esports.jpg",
     "description": "Driving innovation at the intersection of web3 and gaming. Nouns is a decentralized esports organization where anyone, anywhere can contribute towards its growth and success!",
     "links": {
       "github": "https://github.com/Sam-Scolari/nouns-gg",
       "mirror": "",
       "figma": "https://www.figma.com/file/Qca1kUn4GM9TQN9mALfDnv/Nouns-Esports?node-id=0%3A1&t=Cw3i4RKpbb4em7LA-1",
-      "site": "https://nouns.gg"
-    }
-  },
-  {
-    "name": "Game Engine",
-    "image": "/projects/game-engine.png",
-    "gif": "/projects/game-engine.gif",
-    "description": "When building my portfolio I wanted to include four different 2D games. When developing Asteroids I quickly realized that I was repeating a lot of code and that I should create a standard foundation for each game.",
-    "links": {
-      "github": "https://github.com/Sam-Scolari/game-engine",
-      "mirror": "",
-      "figma": "",
-      "site": "https://game-engine.samscolari.me"
+      "site": "https://nouns.gg",
+      "prop-house": ""
     }
   },
   {
     "name": "I'm Feeling Nounish",
-    "image": "/projects/im-feeling-nounish.webp",
-    "gif": "/projects/im-feeling-nounish.gif",
-    "description": "Inspired by The Useless Web and Google's \"I'm feeling lucky\" button, this project aims to innovate on the way we think about discovery (props, ideas, projects, people, etc...) in the Nouns ecosystem. Right now I'm Feeling Nounish works by serving the user a random link to a project or person, but with funding I want to expand the project and explore new and fun ways for people to discover new nounish people, places and things!",
+    "image": "/projects/im-feeling-nounish.jpg",
+    "description": "Inspired by The Useless Web and Google's \"I'm feeling lucky\" button, this project is a fun way for people to discover new nounish people, places and things!",
     "links": {
-      "github": "",
+      "github": "https://github.com/feeling-nounish/website",
       "mirror": "",
       "figma": "",
-      "site": "https://nouns.ooo"
+      "site": "https://nouns.ooo",
+      "prop-house": "https://prop.house/nouns/hack-week-developers-developers-developers/4882"
     }
   },
   {
-    "name": "Twitch Chat",
-    "image": "/projects/twitch-chat.png",
-    "gif": "/projects/twitch-chat.gif",
-    "description": "I recently came across a project called GunJS, a peer to peer database for the web. I wanted to learn how to use gun so I created a simple Twitch chat clone while giving users the ability to send chats on the rails of Gun, no servers needed.",
+    "name": "Astronaut Esports",
+    "image": "/projects/astronaut-esports.jpg",
+    "description": "",
     "links": {
-      "github": "https://github.com/Sam-Scolari/twitch-chat",
+      "github": "https://github.com/boosh0x/astronaut-esports-website",
       "mirror": "https://mirror.xyz/samscolari.eth/od9JJi1RC4ktJsj_A3DIeWJ83ZjU7rBvMJ7qc0O7-tQ",
       "figma": "",
-      "site": "https://twitch-chat.samscolari.me"
+      "site": "https://astronautesports.com",
+      "prop-house": ""
     }
   },
   {
     "name": "Pocket Wallet",
     "image": "/projects/pocket-wallet.png",
-    "gif": "",
     "description": "During my journey of exploring the world of web3 I noticed the alarming amount of terrible user experiences when it came to wallets. Few felt easy to pick up and learn as a beginner and many also felt too technical, giving me way more information than I cared to see. Pocket Wallet is my attempt at fixing these issues.",
     "links": {
       "github": "",
       "mirror": "https://mirror.xyz/samscolari.eth/AQ3rwciPVKyvt93Bh5By7PoNkDmxv8xMBN_E9Gj0vIM",
       "figma": "https://www.figma.com/file/AURH5yzPaykikJ5OKxi0pc/Pocket---Crypto-Wallet?node-id=0%3A1&t=4dqA0Enh3ijyBTW9-1",
-      "site": ""
+      "site": "",
+      "prop-house": ""
     }
   }
 ]
